@@ -91,11 +91,27 @@
     <link href="http://example.com/2024/05/05/test1/"/>
     <id>http://example.com/2024/05/05/test1/</id>
     <published>2024-05-04T17:00:20.000Z</published>
-    <updated>2024-05-04T17:00:20.698Z</updated>
+    <updated>2024-05-05T08:32:55.138Z</updated>
+    
+    <content type="html"><![CDATA[<p>sasasa</p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;sasasa&lt;/p&gt;
+</summary>
+      
     
     
     
+    <category term="web前端" scheme="http://example.com/categories/web%E5%89%8D%E7%AB%AF/"/>
     
+    
+    <category term="jQuery" scheme="http://example.com/tags/jQuery/"/>
+    
+    <category term="表格" scheme="http://example.com/tags/%E8%A1%A8%E6%A0%BC/"/>
+    
+    <category term="表单验证" scheme="http://example.com/tags/%E8%A1%A8%E5%8D%95%E9%AA%8C%E8%AF%81/"/>
     
   </entry>
   
