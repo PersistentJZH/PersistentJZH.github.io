@@ -1,0 +1,6 @@
+{
+  "attachmentFolderPath": "./dns",
+  "newLinkFormat": "shortest",
+  "useMarkdownLinks": true,
+  "promptDelete": false
+}

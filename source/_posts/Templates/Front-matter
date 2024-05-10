@@ -1,0 +1,9 @@
+---
+title: '<% tp.file.title %>'
+tags:
+mathjax: true
+date: <% tp.date.now("YYYY-MM-DD HH:mm:ss") %>
+updated: <% tp.date.now("YYYY-MM-DD HH:mm:ss") %>
+thumbnail: false
+cover: false
+---

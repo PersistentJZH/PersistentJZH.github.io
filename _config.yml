@@ -29,6 +29,11 @@ category_dir: categories
 code_dir: downloads/code
 i18n_dir: :lang
 skip_render:
+  # 这里排除的是obsidian编辑器需要的文件
+  - '_posts/.obsidian/*'
+  - '_posts/Scripts/*'
+  - '_posts/Templates/*'
+  - '**/README.md'
 
 # Writing
 new_post_name: :title.md # File name of new posts
@@ -153,6 +158,8 @@ envelope_comment:
     type: envelope	_posts
 
 
+butterfly_article_double_row:
+  enable: true
 
 backup:
   type: git
@@ -160,4 +167,11 @@ backup:
   message: Back up my blog
   repository:
     github: git@github.com:PersistentJZH/PersistentJZH.github.io.git,backup
+
+auto_category:
+  enable: true
+  depth:
+
+# hexo-filter-gitcalendar
+# see https://akilar.top/posts/1f9c68c9/
 

@@ -572,7 +572,7 @@ cache-base@^1.0.1:
 
 call-bind@^1.0.2:
   version "1.0.7"
-  resolved "https://registry.npmmirror.com/call-bind/-/call-bind-1.0.7.tgz"
+  resolved "https://registry.npmjs.org/call-bind/-/call-bind-1.0.7.tgz"
   integrity sha512-GHTSNSYICQ7scH7sZ+M2rFopRoLh8t2bLSW6BbgrtLsahOIB5iyAVJf9GjWK3cYTDaMj4XdBpM1cA6pIS0Kv2w==
   dependencies:
     es-define-property "^1.0.0"
@@ -734,7 +734,7 @@ chokidar@^2.0.4:
   optionalDependencies:
     fsevents "^1.2.7"
 
-chokidar@^3.3.0, chokidar@^3.5.1, chokidar@^3.5.3:
+chokidar@^3.0.0, chokidar@^3.3.0, chokidar@^3.5.1, chokidar@^3.5.3:
   version "3.6.0"
   resolved "https://registry.npmmirror.com/chokidar/-/chokidar-3.6.0.tgz"
   integrity sha512-7VT13fmjotKpGipCW9JEQAusEPE+Ei8nl6/g4FBAmIm0GOOLMua9NDDo/DWp0ZAxCr3cPq5ZpBqmPAQgDda2Pw==
@@ -1144,7 +1144,7 @@ deepmerge@^4.2.2:
 
 define-data-property@^1.1.4:
   version "1.1.4"
-  resolved "https://registry.npmmirror.com/define-data-property/-/define-data-property-1.1.4.tgz"
+  resolved "https://registry.npmjs.org/define-data-property/-/define-data-property-1.1.4.tgz"
   integrity sha512-rBMvIzlpA8v6E+SJZoo++HAYqsLrkg7MSfIinMPFhmkorw7X+dOXVJQs+QT69zGkzMyfDnIMN2Wid1+NbL3T+A==
   dependencies:
     es-define-property "^1.0.0"
@@ -1210,7 +1210,7 @@ dev-ip@^1.0.1:
 
 doctypes@^1.1.0:
   version "1.1.0"
-  resolved "https://registry.npmmirror.com/doctypes/-/doctypes-1.1.0.tgz"
+  resolved "https://registry.npmjs.org/doctypes/-/doctypes-1.1.0.tgz"
   integrity sha512-LLBi6pEqS6Do3EKQ3J0NqHWV5hhb78Pi8vvESYwyOy2c31ZEZVdtitdzsQsKb7878PEERhzUk0ftqGhG6Mz+pQ==
 
 dom-serializer@^1.0.1:
@@ -1413,14 +1413,14 @@ entities@^4.2.0, entities@^4.4.0, entities@^4.5.0:
 
 es-define-property@^1.0.0:
   version "1.0.0"
-  resolved "https://registry.npmmirror.com/es-define-property/-/es-define-property-1.0.0.tgz"
+  resolved "https://registry.npmjs.org/es-define-property/-/es-define-property-1.0.0.tgz"
   integrity sha512-jxayLKShrEqqzJ0eumQbVhTYQM27CfT1T35+gCgDFoL82JLsXqTJ76zv6A0YLOgEnLUMvLzsDsGIrl8NFpT2gQ==
   dependencies:
     get-intrinsic "^1.2.4"
 
 es-errors@^1.3.0:
   version "1.3.0"
-  resolved "https://registry.npmmirror.com/es-errors/-/es-errors-1.3.0.tgz"
+  resolved "https://registry.npmjs.org/es-errors/-/es-errors-1.3.0.tgz"
   integrity sha512-Zf5H2Kxt2xjTvbJvP2ZWLEICxA6j+hAmMzIlypy4xcBg1vKVnx89Wy0GbS+kf5cwCVFFzdCFh2XSCFNULS6csw==
 
 escalade@^3.1.1:
@@ -1714,7 +1714,7 @@ get-caller-file@^2.0.5:
 
 get-intrinsic@^1.1.3, get-intrinsic@^1.2.4:
   version "1.2.4"
-  resolved "https://registry.npmmirror.com/get-intrinsic/-/get-intrinsic-1.2.4.tgz"
+  resolved "https://registry.npmjs.org/get-intrinsic/-/get-intrinsic-1.2.4.tgz"
   integrity sha512-5uYhsJH8VJBTv7oslg4BznJYhDoRI6waYCxMmCdnTrcCrHA/fCFKoTFz2JKKE0HdDFUF7/oQuhzumXJK7paBRQ==
   dependencies:
     es-errors "^1.3.0"
@@ -1783,7 +1783,7 @@ glob@^7.1.6:
 
 gopd@^1.0.1:
   version "1.0.1"
-  resolved "https://registry.npmmirror.com/gopd/-/gopd-1.0.1.tgz"
+  resolved "https://registry.npmjs.org/gopd/-/gopd-1.0.1.tgz"
   integrity sha512-d65bNlIadxvpb/A2abVdlqKqV563juRnZ1Wtk6s1sIR8uNsXR70xqIzVqxVf1eTqDunwT2MkczEeaezCKTZhwA==
   dependencies:
     get-intrinsic "^1.1.3"
@@ -1817,24 +1817,24 @@ has-flag@^4.0.0:
 
 has-property-descriptors@^1.0.2:
   version "1.0.2"
-  resolved "https://registry.npmmirror.com/has-property-descriptors/-/has-property-descriptors-1.0.2.tgz"
+  resolved "https://registry.npmjs.org/has-property-descriptors/-/has-property-descriptors-1.0.2.tgz"
   integrity sha512-55JNKuIW+vq4Ke1BjOTjM2YctQIvCT7GFzHwmfZPGo5wnrgkid0YQtnAleFSqumZm4az3n2BS+erby5ipJdgrg==
   dependencies:
     es-define-property "^1.0.0"
 
 has-proto@^1.0.1:
   version "1.0.3"
-  resolved "https://registry.npmmirror.com/has-proto/-/has-proto-1.0.3.tgz"
+  resolved "https://registry.npmjs.org/has-proto/-/has-proto-1.0.3.tgz"
   integrity sha512-SJ1amZAJUiZS+PhsVLf5tGydlaVB8EdFpaSO4gmiUKUOxk8qzn5AIy4ZeJUmh22znIdk/uMAUT2pl3FxzVUH+Q==
 
 has-symbols@^1.0.3:
   version "1.0.3"
-  resolved "https://registry.npmmirror.com/has-symbols/-/has-symbols-1.0.3.tgz"
+  resolved "https://registry.npmjs.org/has-symbols/-/has-symbols-1.0.3.tgz"
   integrity sha512-l3LCuF6MgDNwTDKkdYGEihYjt5pRPbEg46rtlmnSPlUbgmB8LOIrKJbYYFBSbnPaJexMKtiPO8hmeRjRz2Td+A==
 
 has-tostringtag@^1.0.0:
   version "1.0.2"
-  resolved "https://registry.npmmirror.com/has-tostringtag/-/has-tostringtag-1.0.2.tgz"
+  resolved "https://registry.npmjs.org/has-tostringtag/-/has-tostringtag-1.0.2.tgz"
   integrity sha512-NqADB8VjPFLM2V0VvHUewwwsw0ZWBaIdgo+ieHtK3hasLz4qeCRjYcqfB6AQrBggRKppKF8L52/VqdVsO47Dlw==
   dependencies:
     has-symbols "^1.0.3"
@@ -1882,6 +1882,14 @@ hexo-asset-img@^1.1.0:
   resolved "https://registry.npmmirror.com/hexo-asset-img/-/hexo-asset-img-1.1.0.tgz"
   integrity sha512-vqOEkx2QtvaoV4GJmfJeNpgcYBXFpksFKFhG9EW2R3yZHvihSF5hkfYJXmhtfvsm6KK8NwVEmt39Ji8aQ9ZDSA==
 
+hexo-auto-category@^0.2.2:
+  version "0.2.2"
+  resolved "https://registry.npmjs.org/hexo-auto-category/-/hexo-auto-category-0.2.2.tgz"
+  integrity sha512-PJ4rohgVk8trHTfFTDCvU5xSoLl3vxNLQ+l+wrns6ps1eUZrR6xSJwPK9xJ9Vii2BDNdjTQ/ZFfEX8Y7dhucdw==
+  dependencies:
+    hexo-front-matter "^2.0.0"
+    hexo-fs "^3.1.0"
+
 hexo-browsersync@^0.3.0:
   version "0.3.0"
   resolved "https://registry.npmmirror.com/hexo-browsersync/-/hexo-browsersync-0.3.0.tgz"
@@ -1898,6 +1906,11 @@ hexo-bunyan@^1.0.0:
     moment "^2.10.6"
     mv "~2"
     safe-json-stringify "~1"
+
+hexo-butterfly-article-double-row@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.npmjs.org/hexo-butterfly-article-double-row/-/hexo-butterfly-article-double-row-1.0.2.tgz"
+  integrity sha512-rKFj4uUrjerTzmZvagTI2orsoxmmMj9Runfdht/4SxKY7ARfpYBd6CAmc14Pi9IE1T+5n6VKMA+WW4g86ZZeFA==
 
 hexo-butterfly-envelope@^1.0.15:
   version "1.0.15"
@@ -1958,12 +1971,26 @@ hexo-deployer-git@^4.0.0:
     nunjucks "^3.2.3"
     picocolors "^1.0.0"
 
+hexo-filter-gitcalendar@^1.0.11:
+  version "1.0.11"
+  resolved "https://registry.npmjs.org/hexo-filter-gitcalendar/-/hexo-filter-gitcalendar-1.0.11.tgz"
+  integrity sha512-lMglEPY9oA4NsTZFWFU9ul3M7axZChbhcB9SWJ0IAmxDImjfeS+jqehB6wTdqnyQUsXqL1KlVa9W2YEfzoY4gw==
+  dependencies:
+    pug "^3.0.0"
+
 hexo-front-matter@^0.2.3:
   version "0.2.3"
   resolved "https://registry.npmjs.org/hexo-front-matter/-/hexo-front-matter-0.2.3.tgz"
   integrity sha512-GL/pGfYqsvjMgxjhOWv1zAc7t4JoGUow+CH9Tes/5N2wKxxTzt2woKEMHz1+c01CmhdVYUR4lO3R1ZAcxc0caA==
   dependencies:
     js-yaml "^3.6.1"
+
+hexo-front-matter@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.npmjs.org/hexo-front-matter/-/hexo-front-matter-2.0.0.tgz"
+  integrity sha512-IR3tjAyK2Ga/0a/WDAoNy5+n3ju2/mkuAsCDEeGgGLf5+7kkiOkkG/FrnueuYgz0h2MPfWDLBiDsSTCmB0sLCA==
+  dependencies:
+    js-yaml "^3.13.1"
 
 hexo-front-matter@^4.2.1:
   version "4.2.1"
@@ -1991,6 +2018,16 @@ hexo-fs@^1.0.0, hexo-fs@^1.0.2:
     chokidar "^2.0.4"
     escape-string-regexp "^1.0.5"
     graceful-fs "^4.1.11"
+
+hexo-fs@^3.1.0:
+  version "3.1.0"
+  resolved "https://registry.npmjs.org/hexo-fs/-/hexo-fs-3.1.0.tgz"
+  integrity sha512-SfoDH7zlU9Iop+bAfEONXezbNIkpVX1QqjNCBYpapilZR+xVOCfTEdlNixanrKBbLGPb2fXqrdDBFgrKuiVGQQ==
+  dependencies:
+    bluebird "^3.5.1"
+    chokidar "^3.0.0"
+    graceful-fs "^4.1.11"
+    hexo-util "^2.0.0"
 
 hexo-fs@^4.0.0, hexo-fs@^4.1.1, hexo-fs@^4.1.3:
   version "4.1.3"
@@ -2196,6 +2233,20 @@ hexo-util@^0.6.3:
     highlight.js "^9.4.0"
     html-entities "^1.2.0"
     striptags "^2.1.1"
+
+hexo-util@^2.0.0:
+  version "2.7.0"
+  resolved "https://registry.npmjs.org/hexo-util/-/hexo-util-2.7.0.tgz"
+  integrity sha512-hQM3h34nhDg0bSe/Tg1lnpODvNkz7h2u0+lZGzlKL0Oufp+5KCAEUX9wal7/xC7ax3/cwEn8IuoU75kNpZLpJQ==
+  dependencies:
+    bluebird "^3.5.2"
+    camel-case "^4.0.0"
+    cross-spawn "^7.0.0"
+    deepmerge "^4.2.2"
+    highlight.js "^11.0.1"
+    htmlparser2 "^7.0.0"
+    prismjs "^1.17.1"
+    strip-indent "^3.0.0"
 
 hexo-util@^2.1.0:
   version "2.7.0"
@@ -2688,7 +2739,7 @@ is-promise@~1:
 
 is-regex@^1.0.3:
   version "1.1.4"
-  resolved "https://registry.npmmirror.com/is-regex/-/is-regex-1.1.4.tgz"
+  resolved "https://registry.npmjs.org/is-regex/-/is-regex-1.1.4.tgz"
   integrity sha512-kvRdxDsxZjhzUX07ZnLydzS1TU/TJlTUHHY4YLL87e37oUA49DfkLqgy+VjFocowy29cKvcSiu+kIv728jTTVg==
   dependencies:
     call-bind "^1.0.2"
@@ -2771,7 +2822,7 @@ jake@^10.8.5:
 
 js-stringify@^1.0.2:
   version "1.0.2"
-  resolved "https://registry.npmmirror.com/js-stringify/-/js-stringify-1.0.2.tgz"
+  resolved "https://registry.npmjs.org/js-stringify/-/js-stringify-1.0.2.tgz"
   integrity sha512-rtS5ATOo2Q5k1G+DADISilDA6lv79zIiwFd6CcjuIxGKLFm5C+RLImRscVap9k55i+MOZwgliw+NejvkLuGD5g==
 
 js-yaml-js-types@^1.0.0:
@@ -2782,6 +2833,14 @@ js-yaml-js-types@^1.0.0:
     esprima "^4.0.1"
 
 js-yaml@^3.12.0, js-yaml@^3.6.1:
+  version "3.14.1"
+  resolved "https://registry.npmjs.org/js-yaml/-/js-yaml-3.14.1.tgz"
+  integrity sha512-okMH7OXXJ7YrN9Ok3/SXrnu4iX9yOk+25nqX4imS2npuvTYDmo/QEZoqwZkYaIDk3jVvBOTOIEgEhaLOynBS9g==
+  dependencies:
+    argparse "^1.0.7"
+    esprima "^4.0.0"
+
+js-yaml@^3.13.1:
   version "3.14.1"
   resolved "https://registry.npmjs.org/js-yaml/-/js-yaml-3.14.1.tgz"
   integrity sha512-okMH7OXXJ7YrN9Ok3/SXrnu4iX9yOk+25nqX4imS2npuvTYDmo/QEZoqwZkYaIDk3jVvBOTOIEgEhaLOynBS9g==
@@ -3747,21 +3806,7 @@ pug-walk@^2.0.0:
   resolved "https://registry.npmjs.org/pug-walk/-/pug-walk-2.0.0.tgz"
   integrity sha512-yYELe9Q5q9IQhuvqsZNwA5hfPkMJ8u92bQLIMcsMxf/VADjNtEYptU+inlufAFYcWdHlwNfZOEnOOQrZrcyJCQ==
 
-pug@^3.0.0:
-  version "3.0.2"
-  resolved "https://registry.npmjs.org/pug/-/pug-3.0.2.tgz"
-  integrity sha512-bp0I/hiK1D1vChHh6EfDxtndHji55XP/ZJKwsRqrz6lRia6ZC2OZbdAymlxdVFwd1L70ebrVJw4/eZ79skrIaw==
-  dependencies:
-    pug-code-gen "^3.0.2"
-    pug-filters "^4.0.0"
-    pug-lexer "^5.0.1"
-    pug-linker "^4.0.0"
-    pug-load "^3.0.0"
-    pug-parser "^6.0.0"
-    pug-runtime "^3.0.1"
-    pug-strip-comments "^2.0.0"
-
-pug@^3.0.2:
+pug@^3.0.0, pug@^3.0.2:
   version "3.0.2"
   resolved "https://registry.npmjs.org/pug/-/pug-3.0.2.tgz"
   integrity sha512-bp0I/hiK1D1vChHh6EfDxtndHji55XP/ZJKwsRqrz6lRia6ZC2OZbdAymlxdVFwd1L70ebrVJw4/eZ79skrIaw==
@@ -4097,7 +4142,7 @@ server-destroy@1.0.1:
 
 set-function-length@^1.2.1:
   version "1.2.2"
-  resolved "https://registry.npmmirror.com/set-function-length/-/set-function-length-1.2.2.tgz"
+  resolved "https://registry.npmjs.org/set-function-length/-/set-function-length-1.2.2.tgz"
   integrity sha512-pgRc4hJ4/sNjWCSS9AmnS40x3bNMDTknHgL5UaMBTMyJnU90EgWh1Rz+MC9eFu4BuN/UwZjKQuY/1v3rM7HMfg==
   dependencies:
     define-data-property "^1.1.4"
