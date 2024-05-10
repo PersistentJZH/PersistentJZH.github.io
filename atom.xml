@@ -35,6 +35,36 @@
     
     
     
+    <category term="后端" scheme="http://example.com/categories/%E5%90%8E%E7%AB%AF/"/>
+    
+    <category term="后端2" scheme="http://example.com/categories/%E5%90%8E%E7%AB%AF/%E5%90%8E%E7%AB%AF2/"/>
+    
+    
+    <category term="你好" scheme="http://example.com/tags/%E4%BD%A0%E5%A5%BD/"/>
+    
+    <category term="web" scheme="http://example.com/tags/web/"/>
+    
+    <category term="安全" scheme="http://example.com/tags/%E5%AE%89%E5%85%A8/"/>
+    
+    <category term="sec" scheme="http://example.com/tags/sec/"/>
+    
+    <category term="yyy" scheme="http://example.com/tags/yyy/"/>
+    
+    <category term="ttt" scheme="http://example.com/tags/ttt/"/>
+    
+    <category term="后端" scheme="http://example.com/tags/%E5%90%8E%E7%AB%AF/"/>
+    
+    <category term="前端" scheme="http://example.com/tags/%E5%89%8D%E7%AB%AF/"/>
+    
+    <category term="终端" scheme="http://example.com/tags/%E7%BB%88%E7%AB%AF/"/>
+    
+    <category term="世界" scheme="http://example.com/tags/%E4%B8%96%E7%95%8C/"/>
+    
+    <category term="风险" scheme="http://example.com/tags/%E9%A3%8E%E9%99%A9/"/>
+    
+    <category term="管控" scheme="http://example.com/tags/%E7%AE%A1%E6%8E%A7/"/>
+    
+    <category term="ok" scheme="http://example.com/tags/ok/"/>
     
   </entry>
   
