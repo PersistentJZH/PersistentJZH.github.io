@@ -3,12 +3,12 @@
 ## Source: https://github.com/hexojs/hexo/
 
 # Site
-title: 志豪的Blog
+title: 陋室
 subtitle: ''
 description: ''
 keywords:
-author: John Doe
-language: en
+author: Jian
+language: zh-CN
 timezone: ''
 
 # URL
@@ -160,3 +160,4 @@ backup:
   message: Back up my blog
   repository:
     github: git@github.com:PersistentJZH/PersistentJZH.github.io.git,backup
+

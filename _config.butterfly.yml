@@ -16,6 +16,7 @@ menu:
   友链: /link/ || fas fa-link
   关于: /about/ || fas fa-heart
   相册: /gallery/ || fas fa-heart
+  留言: /comments/ || fas fa-heart
 
 # Code Blocks (代碼相關)
 # --------------------------------------
@@ -43,7 +44,7 @@ favicon: /img/favicon.png
 
 # Avatar (頭像)
 avatar:
-  img: https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png
+  img: /img/avatar.jpg
   effect: false
 
 # Disable all banner image
@@ -104,7 +105,7 @@ post_meta:
     date_type: created # created or updated or both 主頁文章日期是創建日或者更新日或都顯示
     date_format: date # date/relative 顯示日期還是相對日期
     categories: true # true or false 主頁是否顯示分類
-    tags: false # true or false 主頁是否顯示標籤
+    tags: true # true or false 主頁是否顯示標籤
     label: true # true or false 顯示描述性文字
   post:
     date_type: both # created or updated or both 文章頁日期是創建日或者更新日或都顯示
@@ -645,7 +646,7 @@ text_align_justify: false
 background:
 
 # Footer Background
-footer_bg: false
+footer_bg: true
 
 # Add mask to header or footer (为 header 或 footer 添加黑色半透遮罩)
 mask:
@@ -672,12 +673,12 @@ activate_power_mode:
 # canvas_ribbon (靜止彩帶背景)
 # See: https://github.com/hustcc/ribbon.js
 canvas_ribbon:
-  enable: false
+  enable: true
   size: 150
   alpha: 0.6
   zIndex: -1
-  click_to_change: false
-  mobile: false
+  click_to_change: true
+  mobile: true
 
 # Fluttering Ribbon (動態彩帶)
 canvas_fluttering_ribbon:
@@ -732,14 +733,15 @@ beautify:
 font:
   global-font-size:
   code-font-size:
-  font-family:
-  code-font-family:
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Lato, Roboto, "PingFang SC", "Microsoft JhengHei", "Microsoft YaHei", sans-serif
+  code-font-family: consolas, Menlo, "PingFang SC", "Microsoft JhengHei", "Microsoft YaHei", sans-serif
 
 # Font settings for the site title and site subtitle
 # 左上角網站名字 主頁居中網站名字
 blog_title_font:
-  font_link:
-  font-family:
+  font_link: https://fonts.googleapis.com/css?family=Titillium+Web&display=swap
+  font-family: Titillium Web, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft JhengHei', 'Microsoft YaHei', sans-serif
+
 
 # The setting of divider icon (水平分隔線圖標設置)
 hr_icon:
@@ -785,7 +787,7 @@ preloader:
 # wordcount (字數統計)
 # see https://butterfly.js.org/posts/ceeb73f/#字數統計
 wordcount:
-  enable: false
+  enable: true
   post_wordcount: true
   min2read: true
   total_wordcount: true
@@ -870,7 +872,7 @@ snackbar:
 
 # https://instant.page/
 # prefetch (預加載)
-instantpage: false
+instantpage: true
 
 # https://github.com/vinta/pangu.js
 # Insert a space between Chinese character and English character (中英文之間添加空格)
@@ -919,9 +921,10 @@ css_prefix: true
 inject:
   head:
   bottom:
-
-    - <script src="https://cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js"></script> # 背景动态线条
     - <canvas id="universe"></canvas>
+
+
+
 
 wowjs:
   enable: true #控制动画开关。true是打开，false是关闭

@@ -2,6 +2,8 @@
 title: test4
 date: 2024-05-05 18:02:36
 tags:
+top-img: WechatIMG72.jpg
+cover: WechatIMG72.jpg
 ---
 
 
