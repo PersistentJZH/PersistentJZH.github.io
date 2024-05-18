@@ -22,5 +22,5 @@ http://example.com/tags/%E7%AE%A1%E6%8E%A7/
 http://example.com/tags/ok/
 http://example.com/categories/%E5%89%8D%E7%AB%AF/
 http://example.com/categories/%E5%90%8E%E7%AB%AF/
-http://example.com/categories/%E5%90%8E%E7%AB%AF/%E5%90%8E%E7%AB%AF2/
 http://example.com/categories/%E5%90%8E%E7%AB%AF/%E5%90%8E%E7%AB%AF1/
+http://example.com/categories/%E5%90%8E%E7%AB%AF/%E5%90%8E%E7%AB%AF2/
