@@ -1,5 +1,4 @@
 http://example.com/2024/05/10/%E5%90%8E%E7%AB%AF/%E5%90%8E%E7%AB%AF2/dns/
-http://example.com/2024/05/10/%E5%90%8E%E7%AB%AF/%E5%90%8E%E7%AB%AF2/%E6%9C%AA%E5%91%BD%E5%90%8D/
 http://example.com/2024/05/10/%E5%89%8D%E7%AB%AF/%E7%AC%AC%E4%BA%8C%E7%AF%87/
 http://example.com/2024/05/10/%E5%90%8E%E7%AB%AF/%E5%90%8E%E7%AB%AF1/%E7%AC%AC%E4%B8%80%E7%AF%87/
 http://example.com/tags/index.html
@@ -21,7 +20,7 @@ http://example.com/tags/%E4%B8%96%E7%95%8C/
 http://example.com/tags/%E9%A3%8E%E9%99%A9/
 http://example.com/tags/%E7%AE%A1%E6%8E%A7/
 http://example.com/tags/ok/
-http://example.com/categories/%E5%90%8E%E7%AB%AF/
 http://example.com/categories/%E5%89%8D%E7%AB%AF/
+http://example.com/categories/%E5%90%8E%E7%AB%AF/
 http://example.com/categories/%E5%90%8E%E7%AB%AF/%E5%90%8E%E7%AB%AF1/
 http://example.com/categories/%E5%90%8E%E7%AB%AF/%E5%90%8E%E7%AB%AF2/

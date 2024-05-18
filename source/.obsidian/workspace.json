@@ -11,11 +11,9 @@
             "id": "9f26374a4a49e42f",
             "type": "leaf",
             "state": {
-              "type": "markdown",
+              "type": "image",
               "state": {
-                "file": "_posts/test3.md",
-                "mode": "source",
-                "source": false
+                "file": "_posts/后端/后端1/第一篇/Pasted image 20240518200523.png"
               }
             }
           }
@@ -85,6 +83,7 @@
             "state": {
               "type": "backlink",
               "state": {
+                "file": "_posts/后端/后端1/第一篇/Pasted image 20240518200523.png",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -101,6 +100,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
+                "file": "_posts/后端/后端1/第一篇/Pasted image 20240518200523.png",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -123,7 +123,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "未命名.md"
+                "file": "_posts/后端/后端1/第一篇/Pasted image 20240518200523.png"
               }
             }
           }
@@ -144,8 +144,16 @@
       "command-palette:打开命令面板": false
     }
   },
-  "active": "4a55ad1d23d54ca9",
+  "active": "9f26374a4a49e42f",
   "lastOpenFiles": [
+    "CNAME",
+    "_posts/后端/后端1/第一篇/image-20240518200618525.png",
+    "_posts/后端/后端1/第一篇/image-20240510175244242.png",
+    "_posts/后端/后端1/第一篇/Pasted image 20240518200523.png",
+    "_posts/后端/后端1/第一篇.md",
+    "Pasted image 20240518200452.png",
+    "_posts/后端/后端2/dns.md",
+    "_posts/前端/第二篇.md",
     "_posts/test3.md",
     "未命名.md",
     "_posts/test-img.md"

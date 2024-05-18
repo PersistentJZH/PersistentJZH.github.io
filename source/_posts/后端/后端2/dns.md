@@ -1,8 +1,8 @@
 ---
-title: 未命名
+title: dns
 mathjax: true
 thumbnail: false
-cover: false
+cover: 
 categories:
   - 后端
   - 后端2
@@ -80,3 +80,4 @@ HTTPS的全称是**HTTP over SSL/TLS**，也就是运行在 SSL/TLS 协议上的
 [![](https://www.onctf.com/images/image-20230110155407488.png)](https://www.onctf.com/images/image-20230110155407488.png)
 
 这就是我们访问[www.baidu.com的请求头中的host](http://www.baidu.xn--comhost-i43kr33fyr7bkuxda3942e/)
+
