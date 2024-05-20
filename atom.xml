@@ -6,7 +6,7 @@
   <link href="http://example.com/atom.xml" rel="self"/>
   
   <link href="http://example.com/"/>
-  <updated>2024-05-10T09:56:01.000Z</updated>
+  <updated>2024-05-20T10:14:44.000Z</updated>
   <id>http://example.com/</id>
   
   <author>
@@ -15,6 +15,33 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Zookeeper</title>
+    <link href="http://example.com/2024/05/20/%E5%90%8E%E7%AB%AF/%E5%90%8E%E7%AB%AF1/zookeeper/Zookeeper/"/>
+    <id>http://example.com/2024/05/20/%E5%90%8E%E7%AB%AF/%E5%90%8E%E7%AB%AF1/zookeeper/Zookeeper/</id>
+    <published>2024-05-20T10:14:44.000Z</published>
+    <updated>2024-05-20T10:14:44.000Z</updated>
+    
+    <content type="html"><![CDATA[<p><img src="/2024/05/20/%E5%90%8E%E7%AB%AF/%E5%90%8E%E7%AB%AF1/zookeeper/Zookeeper/image-20240520181453453.png"></p><p><a href="https://www.w3cschool.cn/zookeeper/zookeeper_fundamentals.html">https://www.w3cschool.cn/zookeeper/zookeeper_fundamentals.html</a></p><h1 id="Znode的类型"><a href="#Znode的类型" class="headerlink" title="Znode的类型"></a>Znode的类型</h1><p>Znode被分为持久（persistent）节点，顺序（sequential）节点和临时（ephemeral）节点。</p><ul><li><p><strong>持久节点</strong>  - 即使在创建该特定znode的客户端断开连接后，持久节点仍然存在。默认情况下，除非另有说明，否则所有znode都是持久的。</p></li><li><p><strong>临时节点</strong> - 客户端活跃时，临时节点就是有效的。当客户端与ZooKeeper集合断开连接时，临时节点会自动删除。因此，只有临时节点不允许有子节点。如果临时节点被删除，则下一个合适的节点将填充其位置。临时节点在leader选举中起着重要作用。</p></li><li><p><strong>顺序节点</strong> - 顺序节点可以是持久的或临时的。当一个新的znode被创建为一个顺序节点时，ZooKeeper通过将10位的序列号附加到原始名称来设置znode的路径。例如，如果将具有路径 <strong>&#x2F;myapp</strong> 的znode创建为顺序节点，则ZooKeeper会将路径更改为 <strong>&#x2F;myapp0000000001</strong> ，并将下一个序列号设置为0000000002。如果两个顺序节点是同时创建的，那么ZooKeeper不会对每个znode使用相同的数字。顺序节点在锁定和同步中起重要作用。<br><img src="/2024/05/20/%E5%90%8E%E7%AB%AF/%E5%90%8E%E7%AB%AF1/zookeeper/Zookeeper/image-20240520184926955.png"></p></li></ul>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;&lt;img src=&quot;/2024/05/20/%E5%90%8E%E7%AB%AF/%E5%90%8E%E7%AB%AF1/zookeeper/Zookeeper/image-20240520181453453.png&quot;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://ww</summary>
+      
+    
+    
+    
+    <category term="后端" scheme="http://example.com/categories/%E5%90%8E%E7%AB%AF/"/>
+    
+    <category term="后端1" scheme="http://example.com/categories/%E5%90%8E%E7%AB%AF/%E5%90%8E%E7%AB%AF1/"/>
+    
+    <category term="zookeeper" scheme="http://example.com/categories/%E5%90%8E%E7%AB%AF/%E5%90%8E%E7%AB%AF1/zookeeper/"/>
+    
+    
+  </entry>
   
   <entry>
     <title>dns</title>
