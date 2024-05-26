@@ -14,5 +14,5 @@ http://example.com/tags/jsaij/
 http://example.com/tags/sasa/
 http://example.com/categories/%E5%89%8D%E7%AB%AF/
 http://example.com/categories/%E5%90%8E%E7%AB%AF/
-http://example.com/categories/%E5%90%8E%E7%AB%AF/kafka/
 http://example.com/categories/%E5%90%8E%E7%AB%AF/zookeeper/
+http://example.com/categories/%E5%90%8E%E7%AB%AF/kafka/
