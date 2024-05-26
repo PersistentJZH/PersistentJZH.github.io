@@ -134,14 +134,14 @@
   </url>
   
   <url>
-    <loc>http://example.com/categories/%E5%90%8E%E7%AB%AF/kafka/</loc>
+    <loc>http://example.com/categories/%E5%90%8E%E7%AB%AF/zookeeper/</loc>
     <lastmod>2024-05-26</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>http://example.com/categories/%E5%90%8E%E7%AB%AF/zookeeper/</loc>
+    <loc>http://example.com/categories/%E5%90%8E%E7%AB%AF/kafka/</loc>
     <lastmod>2024-05-26</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
