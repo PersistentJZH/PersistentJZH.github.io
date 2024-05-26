@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "后端/kafka/kafka.md",
+                "file": "杂记/啤酒江湖的醉意.md",
                 "mode": "source",
                 "source": false
               }
@@ -85,7 +85,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "后端/kafka/kafka.md",
+                "file": "杂记/啤酒江湖的醉意.md",
                 "collapseAll": true,
                 "extraContext": true,
                 "sortOrder": "alphabetical",
@@ -102,7 +102,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "后端/kafka/kafka.md",
+                "file": "杂记/啤酒江湖的醉意.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -125,7 +125,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "后端/kafka/kafka.md"
+                "file": "杂记/啤酒江湖的醉意.md"
               }
             }
           }
@@ -150,9 +150,16 @@
   },
   "active": "45425a90c8539a1c",
   "lastOpenFiles": [
+    "杂记/啤酒江湖的醉意/image-20240527001434239.png",
+    "杂记/啤酒江湖的醉意/image-20240527001400733.png",
+    "杂记/啤酒江湖的醉意/image-20240527001134866.png",
+    "后端/kafka/kafka.md",
+    "前端/第二篇.md",
+    "杂记/啤酒江湖的醉意.md",
+    "杂记/啤酒江湖的醉意",
+    "杂记",
     "后端/kafka/kafka/image-20240524120002017.png",
     "后端/zookeeper/Zookeeper.md",
-    "后端/kafka/kafka.md",
     "后端/zookeeper/Zookeeper/image-20240520181453453.png",
     "后端/kafka/kafka",
     "后端/kafka",
@@ -165,24 +172,19 @@
     "后端/zookeeper/Zookeeper",
     "后端/zookeeper",
     "后端/后端2/dns.md",
-    "前端/第二篇.md",
     "后端/后端1/第一篇/Pasted image 20240518200523.png",
     "后端/后端1/第一篇/image-20240518200618525.png",
     "后端/后端1/第一篇/image-20240510175244242.png",
     "未命名.canvas",
     "后端/后端1/第一篇",
     "后端/后端2",
-    "后端/后端1",
-    "未命名",
     "前端/前端folder1/未命名.md",
     "前端/前端folder1/未命名/image-20240510173742662.png",
     "后端/第一篇.md",
-    "后端/第一篇/image-20240510173600835.png",
     "前端/folder2/未命名.md",
     "后端/未命名 2.md",
     "后端/未命名 1.md",
     "test4.md",
-    "后端/未命名 1/image-20240510173143439.png",
     "未命名.md",
     "test-img.md",
     "后端/test.md",
@@ -194,7 +196,6 @@
     "Templates/Front-matter.md",
     "前端/未命名 5.md",
     "前端/未命名 4.md",
-    "Scripts/get_url.js.md",
-    "前端/未命名 2.md"
+    "Scripts/get_url.js.md"
   ]
 }
