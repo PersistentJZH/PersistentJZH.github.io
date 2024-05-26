@@ -41,24 +41,24 @@ social:
 # --------------------------------------
 
 # Favicon（網站圖標）
-favicon: /img/favicon.png
+favicon: /img/WechatIMG77.jpg
 
 # Avatar (頭像)
 avatar:
-  img: /img/avatar.jpg
+  img: /img/WechatIMG77.jpg
   effect: false
 
 # Disable all banner image
 disable_top_img: false
 
 # The banner image of home page
-index_img: /img/index.jpg
+index_img: /img/wallhaven-gpkgld.png
 
 # If the banner of page not setting, it will show the top_img
 default_top_img:
 
 # The banner image of archive page
-archive_img:
+archive_img: /img/wallhaven-4dqkrj.jpg
 
 # If the banner of tag page not setting, it will show the top_img
 # note: tag page, not tags page (子標籤頁面的 top_img)
@@ -67,7 +67,7 @@ tag_img:
 # The banner image of tag page
 # format:
 #  - tag name: xxxxx
-tag_per_img:
+tag_per_img: /img/wallhaven-4dqkrj.jpg
 
 # If the banner of category page not setting, it will show the top_img
 # note: category page, not categories page (子分類頁面的 top_img)
@@ -76,7 +76,7 @@ category_img:
 # The banner image of category page
 # format:
 #  - category name: xxxxx
-category_per_img:
+category_per_img: /img/wallhaven-4dqkrj.jpg
 
 cover:
   # display the cover or not (是否顯示文章封面)

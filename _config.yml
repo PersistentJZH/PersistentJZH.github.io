@@ -3,9 +3,9 @@
 ## Source: https://github.com/hexojs/hexo/
 
 # Site
-title: 陋室
+title: 小屋
 subtitle: '屋子'
-description: '123'
+description: '欢迎来到小屋'
 keywords:
 author: Jian
 language: zh-CN
@@ -159,7 +159,7 @@ envelope_comment:
 
 
 butterfly_article_double_row:
-  enable: true
+  enable: false
 
 backup:
   type: git
