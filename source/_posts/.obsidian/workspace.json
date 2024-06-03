@@ -4,11 +4,11 @@
     "type": "split",
     "children": [
       {
-        "id": "00b8a8e6121fd09c",
+        "id": "b377c52786ff0eb1",
         "type": "tabs",
         "children": [
           {
-            "id": "45425a90c8539a1c",
+            "id": "af6d23556121e701",
             "type": "leaf",
             "state": {
               "type": "markdown",
@@ -69,7 +69,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 200
+    "width": 307.5
   },
   "right": {
     "id": "60cd4afab2d5469d",
@@ -120,13 +120,21 @@
             }
           },
           {
-            "id": "9771504fd19466dc",
+            "id": "2f37b1bb749fc4be",
             "type": "leaf",
             "state": {
               "type": "outline",
               "state": {
                 "file": "杂记/啤酒江湖的醉意.md"
               }
+            }
+          },
+          {
+            "id": "afa1f9c64052e925",
+            "type": "leaf",
+            "state": {
+              "type": "quiet-outline",
+              "state": {}
             }
           }
         ],
@@ -145,28 +153,34 @@
       "templates:插入模板": false,
       "command-palette:打开命令面板": false,
       "templater-obsidian:Templater": false,
+      "obsidian-kanban:创建新看板": false,
       "hidden-folder-obsidian:显示文件夹": false
     }
   },
-  "active": "45425a90c8539a1c",
+  "active": "af6d23556121e701",
   "lastOpenFiles": [
-    "杂记/啤酒江湖的醉意/image-20240527001434239.png",
-    "杂记/啤酒江湖的醉意/image-20240527001400733.png",
-    "杂记/啤酒江湖的醉意/image-20240527001134866.png",
-    "后端/kafka/kafka.md",
+    "后端/mysql/binlog.md",
+    "2024-05-30.md",
     "前端/第二篇.md",
-    "杂记/啤酒江湖的醉意.md",
-    "杂记/啤酒江湖的醉意",
-    "杂记",
+    "后端/mysql/binlog/binlog-20240603173730442.webp",
+    "后端/mysql/binlog",
+    "后端/mysql",
+    "后端/zookeeper/Zookeeper/image-20240520184926955.png",
     "后端/kafka/kafka/image-20240524120002017.png",
+    "后端/kafka/kafka.md",
     "后端/zookeeper/Zookeeper.md",
     "后端/zookeeper/Zookeeper/image-20240520181453453.png",
+    "杂记/啤酒江湖的醉意/image-20240527001134866.png",
+    "杂记/啤酒江湖的醉意.md",
+    "杂记/啤酒江湖的醉意/image-20240527001434239.png",
+    "杂记/啤酒江湖的醉意/image-20240527001400733.png",
+    "杂记/啤酒江湖的醉意",
+    "杂记",
     "后端/kafka/kafka",
     "后端/kafka",
     "后端/后端1/zookeeper/未命名.md",
     "后端/kafka",
     "后端/kafka",
-    "后端/zookeeper/Zookeeper/image-20240520184926955.png",
     "后端/后端1/第一篇.md",
     "后端/后端1/zookeeper/Zookeeper/image-20240520181432736.png",
     "后端/zookeeper/Zookeeper",
@@ -174,12 +188,8 @@
     "后端/后端2/dns.md",
     "后端/后端1/第一篇/Pasted image 20240518200523.png",
     "后端/后端1/第一篇/image-20240518200618525.png",
-    "后端/后端1/第一篇/image-20240510175244242.png",
     "未命名.canvas",
-    "后端/后端1/第一篇",
-    "后端/后端2",
     "前端/前端folder1/未命名.md",
-    "前端/前端folder1/未命名/image-20240510173742662.png",
     "后端/第一篇.md",
     "前端/folder2/未命名.md",
     "后端/未命名 2.md",
@@ -194,8 +204,6 @@
     "未命名 1.md",
     "前端/未命名 3.md",
     "Templates/Front-matter.md",
-    "前端/未命名 5.md",
-    "前端/未命名 4.md",
-    "Scripts/get_url.js.md"
+    "前端/未命名 5.md"
   ]
 }

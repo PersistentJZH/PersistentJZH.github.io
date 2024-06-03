@@ -1,6 +1,7 @@
 {
   "attachmentFolderPath": "./啤酒江湖的醉意",
-  "newLinkFormat": "shortest",
-  "useMarkdownLinks": true,
-  "promptDelete": false
+  "focusNewTab": true,
+  "readableLineLength": false,
+  "showLineNumber": false,
+  "showIndentGuide": false
 }

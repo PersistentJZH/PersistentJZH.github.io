@@ -2,5 +2,13 @@
   "obsidian-custom-attachment-location",
   "templater-obsidian",
   "obsidian-image-toolkit",
-  "hidden-folder-obsidian"
+  "hidden-folder-obsidian",
+  "obsidian-auto-split",
+  "dataview",
+  "editing-toolbar",
+  "obsidian-kanban",
+  "obsidian-minimal-settings",
+  "obsidian-quiet-outline",
+  "oz-image-plugin",
+  "image-converter"
 ]

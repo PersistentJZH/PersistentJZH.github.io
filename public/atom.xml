@@ -6,7 +6,7 @@
   <link href="http://example.com/atom.xml" rel="self"/>
   
   <link href="http://example.com/"/>
-  <updated>2024-05-26T16:10:05.000Z</updated>
+  <updated>2024-06-03T03:38:19.000Z</updated>
   <id>http://example.com/</id>
   
   <author>
@@ -15,6 +15,47 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>binlog</title>
+    <link href="http://example.com/2024/06/03/%E5%90%8E%E7%AB%AF/mysql/binlog/"/>
+    <id>http://example.com/2024/06/03/%E5%90%8E%E7%AB%AF/mysql/binlog/</id>
+    <published>2024-06-03T03:38:19.000Z</published>
+    <updated>2024-06-03T03:38:19.000Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="binlog的三种格式"><a href="#binlog的三种格式" class="headerlink" title="binlog的三种格式"></a>binlog的三种格式</h1><p>binlog主要有三种格式：<strong>row、statement、mixed</strong> </p><h2 id="查看binlog配置"><a href="#查看binlog配置" class="headerlink" title="查看binlog配置"></a>查看binlog配置</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">MariaDB [(none)]&gt; show variables like <span class="string">&#x27;%binlog%&#x27;</span>;</span><br><span class="line">+-----------------------------------------+----------------------+</span><br><span class="line">| Variable_name                           | Value                |</span><br><span class="line">+-----------------------------------------+----------------------+</span><br><span class="line">| binlog_annotate_row_events              | OFF                  |</span><br><span class="line">| binlog_cache_size                       | 32768                |</span><br><span class="line">| binlog_checksum                         | NONE                 |</span><br><span class="line">| binlog_direct_non_transactional_updates | OFF                  |</span><br><span class="line">| binlog_format                           | ROW                  |</span><br><span class="line">| binlog_optimize_thread_scheduling       | ON                   |</span><br><span class="line">| binlog_stmt_cache_size                  | 32768                |</span><br><span class="line">| innodb_locks_unsafe_for_binlog          | OFF                  |</span><br><span class="line">| max_binlog_cache_size                   | 18446744073709547520 |</span><br><span class="line">| max_binlog_size                         | 1073741824           |</span><br><span class="line">| max_binlog_stmt_cache_size              | 18446744073709547520 |</span><br><span class="line">| sync_binlog                             | 0                    |</span><br><span class="line">+-----------------------------------------+----------------------+</span><br><span class="line">12 rows <span class="keyword">in</span> <span class="built_in">set</span> (0.00 sec)</span><br></pre></td></tr></table></figure><h2 id="binlog文件的查看"><a href="#binlog文件的查看" class="headerlink" title="binlog文件的查看"></a>binlog文件的查看</h2><p>binlog通常放在&#x2F;var&#x2F;lib&#x2F;mysql，binlog日志有2种查看方式，具体如下：</p><ol><li><p><strong>mysql查看binlog</strong></p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; show binlog events;   <span class="comment">#只查看第一个binlog文件的内容</span></span><br><span class="line"></span><br><span class="line">mysql&gt; show binlog events <span class="keyword">in</span> <span class="string">&#x27;mysql-bin.000002&#x27;</span>; <span class="comment">#查看指定binlog文件的内容</span></span><br><span class="line"></span><br><span class="line">mysql&gt; show binary logs;  <span class="comment">#获取binlog文件列表</span></span><br><span class="line"></span><br><span class="line">mysql&gt; show master status； <span class="comment">#查看当前正在写入的binlog文件</span></span><br></pre></td></tr></table></figure></li><li><p><strong>使用mysqlbinlog工具</strong></p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">1.导出的方式查看</span><br><span class="line">/usr/local/mysql/bin/mysqlbinlog --start-datetime=<span class="string">&quot;2013-03-01 00:00:00&quot;</span> --stop-datetime=<span class="string">&quot;2014-03-21 23:59:59&quot;</span> /usr/local/mysql/var/mysql-bin.000007 -r test2.sql</span><br><span class="line"></span><br><span class="line">2.一般的statement格式的二进制文件，用下面命令就可以</span><br><span class="line">mysqlbinlog mysql-bin.000001</span><br><span class="line"></span><br><span class="line">3.如果是row格式，加上-v或者-vv参数就行，如</span><br><span class="line">mysqlbinlog -vv mysql-bin.000001</span><br></pre></td></tr></table></figure></li></ol><h2 id="row"><a href="#row" class="headerlink" title="row"></a>row</h2><p>row格式文件比较大，保存的是一行一行的数据,可通过binlog_row_image&#x3D;FULL | MINIMAL | NOBLOB 设置日志记录的方式。<br>FULL: 记录行中所有列修改前后的数据。<br>MINIMAL: 记录行中所有列修改前的数据+被修改列修改后的数据。<br>NOBLOB: 记录行中所有列修改前的数据+(未对行中TEXT和BLOB类型列修改时, 记录TEXT和BLOB类型以外的列的数据.)</p><h2 id="statement"><a href="#statement" class="headerlink" title="statement"></a>statement</h2><p>statement格式文件比较小，statement保存的是sql语句，statement容易丢数据，有时候，SQL语句里面会用到一些函数，比如说取当前日期的函数sysdate，你要是用statement，binlog里同步过去的就是这个带有函数的SQL语句，而主库的当前日期，和binlog同步到slave上的当前日期，肯定是有差异的，这样两条数据就不一致了，所以这样同步的数据，就会有问题。</p><h2 id="mixed"><a href="#mixed" class="headerlink" title="mixed"></a>mixed</h2><p>mixed格式介于row和statement二者之间，混合STATEMENT和ROW两种格式, MySQL会根据执行的SQL语句自动选择。</p><h2 id="优缺点对比"><a href="#优缺点对比" class="headerlink" title="优缺点对比"></a>优缺点对比</h2><p>row:<br>    优点:<br>        1. 可以避免MySQL复制中出现主从不一致的问题（不会丢数据）<br>        2. 对每一行数据的修改比STATEMENT模式高效（why）<br>        3. 可在误删改数据后, 同时无备份可以恢复时, 通过分析binlog日志进行反向处理达到恢复数据目的<br>    缺点:<br>        1. 文件格式大<br>区别：</p><ol start="4"><li>statement容易丢数据原因是，有时候，SQL语句里面会用到一些函数，比如说取当前日期的函数sysdate，你要是用statement，binlog里同步过去的就是这个带有函数的SQL语句，而主库的当前日期，和binlog同步到slave上的当前日期，肯定是有差异的，这样两条数据就不一致了，所以这样同步的数据，就会有问题</li><li>row是直接把表插入到备份库中，statement是导出主库语句后，导入到备份库中，存在时间差。</li></ol><h2 id="如何优雅的删除MYSQL的binlog"><a href="#如何优雅的删除MYSQL的binlog" class="headerlink" title="如何优雅的删除MYSQL的binlog"></a>如何优雅的删除MYSQL的binlog</h2><ol><li><p>手动方式删除</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">purge binary logs to <span class="string">&#x27;mysql-bin.000068&#x27;</span>;</span><br><span class="line">purge binary logs before <span class="string">&#x27;2021-08-22 18:00:00&#x27;</span>;</span><br></pre></td></tr></table></figure></li><li><p>自动清除</p></li></ol><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">SHOW VARIABLES LIKE <span class="string">&#x27;expire_logs_days&#x27;</span>;</span><br><span class="line">SET GLOBAL expire_logs_days = 30;</span><br></pre></td></tr></table></figure><p>设置之后不会立即清除，触发条件是：</p><ol><li><strong>binlog大小超过max_binlog_size</strong></li><li><strong>手动执行flush logs</strong>(flush logs;)</li><li><strong>重新启动时(MySQL将会new一个新文件用于记录binlog)</strong></li></ol><h1 id="主从同步"><a href="#主从同步" class="headerlink" title="主从同步"></a>主从同步</h1><p>![[binlog-20240603173730442.webp]]</p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h1 id=&quot;binlog的三种格式&quot;&gt;&lt;a href=&quot;#binlog的三种格式&quot; class=&quot;headerlink&quot; title=&quot;binlog的三种格式&quot;&gt;&lt;/a&gt;binlog的三种格式&lt;/h1&gt;&lt;p&gt;binlog主要有三种格式：&lt;strong&gt;row、statemen</summary>
+      
+    
+    
+    
+    <category term="后端" scheme="http://example.com/categories/%E5%90%8E%E7%AB%AF/"/>
+    
+    <category term="mysql" scheme="http://example.com/categories/%E5%90%8E%E7%AB%AF/mysql/"/>
+    
+    
+    <category term="mysql" scheme="http://example.com/tags/mysql/"/>
+    
+    <category term="binlog" scheme="http://example.com/tags/binlog/"/>
+    
+  </entry>
+  
+  <entry>
+    <title></title>
+    <link href="http://example.com/2024/05/30/2024-05-30/"/>
+    <id>http://example.com/2024/05/30/2024-05-30/</id>
+    <published>2024-05-30T09:41:29.242Z</published>
+    <updated>2024-05-30T09:41:29.242Z</updated>
+    
+    
+    
+    
+    
+  </entry>
   
   <entry>
     <title>啤酒江湖的醉意(李海洲)</title>
@@ -98,21 +139,6 @@
     <category term="jsaij" scheme="http://example.com/tags/jsaij/"/>
     
     <category term="sasa" scheme="http://example.com/tags/sasa/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>第二篇</title>
-    <link href="http://example.com/2024/05/10/%E5%89%8D%E7%AB%AF/%E7%AC%AC%E4%BA%8C%E7%AF%87/"/>
-    <id>http://example.com/2024/05/10/%E5%89%8D%E7%AB%AF/%E7%AC%AC%E4%BA%8C%E7%AF%87/</id>
-    <published>2024-05-10T09:53:07.000Z</published>
-    <updated>2024-05-10T09:53:07.000Z</updated>
-    
-    
-    
-    
-    <category term="前端" scheme="http://example.com/categories/%E5%89%8D%E7%AB%AF/"/>
-    
     
   </entry>
   
