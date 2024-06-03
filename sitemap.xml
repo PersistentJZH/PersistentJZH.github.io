@@ -11,15 +11,6 @@
   </url>
   
   <url>
-    <loc>http://example.com/2024/05/30/2024-05-30/</loc>
-    
-    <lastmod>2024-05-30</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>http://example.com/2024/05/27/%E6%9D%82%E8%AE%B0/%E5%95%A4%E9%85%92%E6%B1%9F%E6%B9%96%E7%9A%84%E9%86%89%E6%84%8F/</loc>
     
     <lastmod>2024-05-26</lastmod>
@@ -101,20 +92,6 @@
 
   
   <url>
-    <loc>http://example.com/tags/%E6%9D%82%E6%8A%80/</loc>
-    <lastmod>2024-06-03</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>http://example.com/tags/%E9%87%8D%E5%BA%86/</loc>
-    <lastmod>2024-06-03</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>http://example.com/tags/mysql/</loc>
     <lastmod>2024-06-03</lastmod>
     <changefreq>weekly</changefreq>
@@ -163,14 +140,21 @@
     <priority>0.2</priority>
   </url>
   
-
-  
   <url>
-    <loc>http://example.com/categories/%E6%9D%82%E8%AE%B0/</loc>
+    <loc>http://example.com/tags/%E6%9D%82%E6%8A%80/</loc>
     <lastmod>2024-06-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
+  
+  <url>
+    <loc>http://example.com/tags/%E9%87%8D%E5%BA%86/</loc>
+    <lastmod>2024-06-03</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+
   
   <url>
     <loc>http://example.com/categories/%E5%90%8E%E7%AB%AF/</loc>
@@ -180,7 +164,7 @@
   </url>
   
   <url>
-    <loc>http://example.com/categories/%E5%90%8E%E7%AB%AF/mysql/</loc>
+    <loc>http://example.com/categories/%E6%9D%82%E8%AE%B0/</loc>
     <lastmod>2024-06-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -188,6 +172,13 @@
   
   <url>
     <loc>http://example.com/categories/%E5%90%8E%E7%AB%AF/kafka/</loc>
+    <lastmod>2024-06-03</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>http://example.com/categories/%E5%90%8E%E7%AB%AF/mysql/</loc>
     <lastmod>2024-06-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
