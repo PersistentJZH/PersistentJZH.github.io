@@ -2,6 +2,15 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://example.com/2024/06/03/%E5%90%8E%E7%AB%AF/%E5%88%86%E5%B8%83%E5%BC%8F/%E5%88%86%E5%B8%83%E5%BC%8F%E7%90%86%E8%AE%BA/</loc>
+    
+    <lastmod>2024-06-03</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>http://example.com/2024/06/03/%E5%90%8E%E7%AB%AF/mysql/binlog/</loc>
     
     <lastmod>2024-06-03</lastmod>
@@ -92,6 +101,20 @@
 
   
   <url>
+    <loc>http://example.com/tags/%E6%9D%82%E6%8A%80/</loc>
+    <lastmod>2024-06-03</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>http://example.com/tags/%E9%87%8D%E5%BA%86/</loc>
+    <lastmod>2024-06-03</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
     <loc>http://example.com/tags/mysql/</loc>
     <lastmod>2024-06-03</lastmod>
     <changefreq>weekly</changefreq>
@@ -140,28 +163,7 @@
     <priority>0.2</priority>
   </url>
   
-  <url>
-    <loc>http://example.com/tags/%E6%9D%82%E6%8A%80/</loc>
-    <lastmod>2024-06-03</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>http://example.com/tags/%E9%87%8D%E5%BA%86/</loc>
-    <lastmod>2024-06-03</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
 
-  
-  <url>
-    <loc>http://example.com/categories/%E5%90%8E%E7%AB%AF/</loc>
-    <lastmod>2024-06-03</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
   
   <url>
     <loc>http://example.com/categories/%E6%9D%82%E8%AE%B0/</loc>
@@ -171,7 +173,7 @@
   </url>
   
   <url>
-    <loc>http://example.com/categories/%E5%90%8E%E7%AB%AF/kafka/</loc>
+    <loc>http://example.com/categories/%E5%90%8E%E7%AB%AF/</loc>
     <lastmod>2024-06-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -186,6 +188,13 @@
   
   <url>
     <loc>http://example.com/categories/%E5%90%8E%E7%AB%AF/zookeeper/</loc>
+    <lastmod>2024-06-03</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>http://example.com/categories/%E5%90%8E%E7%AB%AF/kafka/</loc>
     <lastmod>2024-06-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
