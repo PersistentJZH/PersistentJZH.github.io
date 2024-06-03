@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "杂记/啤酒江湖的醉意.md",
+                "file": "后端/分布式/分布式理论.md",
                 "mode": "source",
                 "source": false
               }
@@ -85,7 +85,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "杂记/啤酒江湖的醉意.md",
+                "file": "后端/分布式/分布式理论.md",
                 "collapseAll": true,
                 "extraContext": true,
                 "sortOrder": "alphabetical",
@@ -102,7 +102,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "杂记/啤酒江湖的醉意.md",
+                "file": "后端/分布式/分布式理论.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -125,7 +125,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "杂记/啤酒江湖的醉意.md"
+                "file": "后端/分布式/分布式理论.md"
               }
             }
           },
@@ -159,6 +159,16 @@
   },
   "active": "af6d23556121e701",
   "lastOpenFiles": [
+    "后端/分布式/分布式理论/分布式理论-20240603181341736.webp",
+    "后端/分布式/分布式理论.md",
+    "后端/分布式/分布式理论/分布式理论-20240603190915712.webp",
+    "后端/分布式/分布式理论/分布式理论-20240603190904277.webp",
+    "后端/分布式/分布式理论/分布式理论-20240603190747667.webp",
+    "后端/分布式/分布式理论/分布式理论-20240603190649174.webp",
+    "后端/分布式/分布式理论/分布式理论-20240603183907981.webp",
+    "后端/分布式/分布式理论",
+    "杂记/啤酒江湖的醉意.md",
+    "后端/分布式",
     "后端/mysql/binlog.md",
     "2024-05-30.md",
     "前端/第二篇.md",
@@ -170,10 +180,6 @@
     "后端/kafka/kafka.md",
     "后端/zookeeper/Zookeeper.md",
     "后端/zookeeper/Zookeeper/image-20240520181453453.png",
-    "杂记/啤酒江湖的醉意/image-20240527001134866.png",
-    "杂记/啤酒江湖的醉意.md",
-    "杂记/啤酒江湖的醉意/image-20240527001434239.png",
-    "杂记/啤酒江湖的醉意/image-20240527001400733.png",
     "杂记/啤酒江湖的醉意",
     "杂记",
     "后端/kafka/kafka",
@@ -182,12 +188,7 @@
     "后端/kafka",
     "后端/kafka",
     "后端/后端1/第一篇.md",
-    "后端/后端1/zookeeper/Zookeeper/image-20240520181432736.png",
-    "后端/zookeeper/Zookeeper",
-    "后端/zookeeper",
     "后端/后端2/dns.md",
-    "后端/后端1/第一篇/Pasted image 20240518200523.png",
-    "后端/后端1/第一篇/image-20240518200618525.png",
     "未命名.canvas",
     "前端/前端folder1/未命名.md",
     "后端/第一篇.md",
@@ -203,7 +204,6 @@
     "前端/未命名 6.md",
     "未命名 1.md",
     "前端/未命名 3.md",
-    "Templates/Front-matter.md",
-    "前端/未命名 5.md"
+    "Templates/Front-matter.md"
   ]
 }
