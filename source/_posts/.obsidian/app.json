@@ -1,5 +1,5 @@
 {
-  "attachmentFolderPath": "./binlog",
+  "attachmentFolderPath": "./分布式锁",
   "focusNewTab": true,
   "readableLineLength": false,
   "showLineNumber": false,

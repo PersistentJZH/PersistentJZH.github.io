@@ -680,7 +680,7 @@ canvas_ribbon:
   alpha: 0.6
   zIndex: -1
   click_to_change: true
-  mobile: true
+  mobile: false
 
 # Fluttering Ribbon (動態彩帶)
 canvas_fluttering_ribbon:

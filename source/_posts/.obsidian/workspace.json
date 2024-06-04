@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "后端/mysql/binlog.md",
+                "file": "后端/分布式/分布式锁.md",
                 "mode": "source",
                 "source": false
               }
@@ -69,7 +69,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 307.5
+    "width": 341.5
   },
   "right": {
     "id": "60cd4afab2d5469d",
@@ -85,7 +85,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "后端/mysql/binlog.md",
+                "file": "后端/分布式/分布式锁.md",
                 "collapseAll": true,
                 "extraContext": true,
                 "sortOrder": "alphabetical",
@@ -102,7 +102,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "后端/mysql/binlog.md",
+                "file": "后端/分布式/分布式锁.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -125,7 +125,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "后端/mysql/binlog.md"
+                "file": "后端/分布式/分布式锁.md"
               }
             }
           },
@@ -142,8 +142,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300,
-    "collapsed": true
+    "width": 200
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -161,12 +160,15 @@
   "active": "2f1b38ab28f7906e",
   "lastOpenFiles": [
     "后端/分布式/分布式理论.md",
+    "后端/分布式/分布式锁.md",
+    "后端/mysql/binlog.md",
+    "().md",
+    "后端/kafka/kafka.md",
+    "后端/zookeeper/Zookeeper.md",
     "后端/分布式/分布式理论/分布式理论-20240604102310785.webp",
     "后端/分布式/分布式理论/分布式理论-20240604102102135.webp",
     "后端/mysql/binlog/binlog-20240603173730442.webp",
     "后端/mysql/binlog/binlog-20240604102040219.webp",
-    "后端/mysql/binlog.md",
-    "().md",
     "后端/分布式/分布式理论/分布式理论-20240603181341736.webp",
     "后端/分布式/分布式理论/分布式理论-20240603190915712.webp",
     "后端/分布式/分布式理论/分布式理论-20240603190904277.webp",
@@ -180,8 +182,6 @@
     "前端/第二篇.md",
     "后端/mysql/binlog",
     "后端/mysql",
-    "后端/kafka/kafka.md",
-    "后端/zookeeper/Zookeeper.md",
     "杂记/啤酒江湖的醉意",
     "杂记",
     "后端/kafka/kafka",
