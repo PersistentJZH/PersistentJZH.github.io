@@ -114,5 +114,5 @@ SET GLOBAL expire_logs_days = 30;
 
 # 主从同步
 
-![[binlog-20240603173730442.webp]]
+![](binlog-20240604102040219.webp)
 

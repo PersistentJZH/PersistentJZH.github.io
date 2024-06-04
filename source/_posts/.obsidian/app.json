@@ -1,7 +1,8 @@
 {
-  "attachmentFolderPath": "./分布式理论",
+  "attachmentFolderPath": "./binlog",
   "focusNewTab": true,
   "readableLineLength": false,
   "showLineNumber": false,
-  "showIndentGuide": false
+  "showIndentGuide": false,
+  "useMarkdownLinks": true
 }

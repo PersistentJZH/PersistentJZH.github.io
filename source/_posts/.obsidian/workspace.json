@@ -4,16 +4,16 @@
     "type": "split",
     "children": [
       {
-        "id": "b377c52786ff0eb1",
+        "id": "778d5bd24876efcc",
         "type": "tabs",
         "children": [
           {
-            "id": "af6d23556121e701",
+            "id": "2f1b38ab28f7906e",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "后端/分布式/分布式理论.md",
+                "file": "后端/mysql/binlog.md",
                 "mode": "source",
                 "source": false
               }
@@ -85,7 +85,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "后端/分布式/分布式理论.md",
+                "file": "后端/mysql/binlog.md",
                 "collapseAll": true,
                 "extraContext": true,
                 "sortOrder": "alphabetical",
@@ -102,7 +102,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "后端/分布式/分布式理论.md",
+                "file": "后端/mysql/binlog.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -125,7 +125,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "后端/分布式/分布式理论.md"
+                "file": "后端/mysql/binlog.md"
               }
             }
           },
@@ -142,7 +142,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300
+    "width": 300,
+    "collapsed": true
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -157,10 +158,16 @@
       "hidden-folder-obsidian:显示文件夹": false
     }
   },
-  "active": "af6d23556121e701",
+  "active": "2f1b38ab28f7906e",
   "lastOpenFiles": [
-    "后端/分布式/分布式理论/分布式理论-20240603181341736.webp",
     "后端/分布式/分布式理论.md",
+    "后端/分布式/分布式理论/分布式理论-20240604102310785.webp",
+    "后端/分布式/分布式理论/分布式理论-20240604102102135.webp",
+    "后端/mysql/binlog/binlog-20240603173730442.webp",
+    "后端/mysql/binlog/binlog-20240604102040219.webp",
+    "后端/mysql/binlog.md",
+    "().md",
+    "后端/分布式/分布式理论/分布式理论-20240603181341736.webp",
     "后端/分布式/分布式理论/分布式理论-20240603190915712.webp",
     "后端/分布式/分布式理论/分布式理论-20240603190904277.webp",
     "后端/分布式/分布式理论/分布式理论-20240603190747667.webp",
@@ -169,17 +176,12 @@
     "后端/分布式/分布式理论",
     "杂记/啤酒江湖的醉意.md",
     "后端/分布式",
-    "后端/mysql/binlog.md",
     "2024-05-30.md",
     "前端/第二篇.md",
-    "后端/mysql/binlog/binlog-20240603173730442.webp",
     "后端/mysql/binlog",
     "后端/mysql",
-    "后端/zookeeper/Zookeeper/image-20240520184926955.png",
-    "后端/kafka/kafka/image-20240524120002017.png",
     "后端/kafka/kafka.md",
     "后端/zookeeper/Zookeeper.md",
-    "后端/zookeeper/Zookeeper/image-20240520181453453.png",
     "杂记/啤酒江湖的醉意",
     "杂记",
     "后端/kafka/kafka",
@@ -203,7 +205,6 @@
     "未命名 2.md",
     "前端/未命名 6.md",
     "未命名 1.md",
-    "前端/未命名 3.md",
-    "Templates/Front-matter.md"
+    "前端/未命名 3.md"
   ]
 }
