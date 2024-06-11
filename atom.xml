@@ -6,7 +6,7 @@
   <link href="http://example.com/atom.xml" rel="self"/>
   
   <link href="http://example.com/"/>
-  <updated>2024-06-04T09:13:44.000Z</updated>
+  <updated>2024-06-11T12:47:33.000Z</updated>
   <id>http://example.com/</id>
   
   <author>
@@ -15,6 +15,26 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>网络</title>
+    <link href="http://example.com/2024/06/11/%E5%90%8E%E7%AB%AF/linux/%E7%BD%91%E7%BB%9C/"/>
+    <id>http://example.com/2024/06/11/%E5%90%8E%E7%AB%AF/linux/%E7%BD%91%E7%BB%9C/</id>
+    <published>2024-06-11T12:47:33.000Z</published>
+    <updated>2024-06-11T12:47:33.000Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="dmesg"><a href="#dmesg" class="headerlink" title="dmesg"></a>dmesg</h1><p>(display message)，用于显示开机信息。kernel 会将开机信息存储在 ring buffer 中。您若是开机时来不及查看信息，可利用 dmesg 来查看。<strong>开机信息亦保存在 &#x2F;var&#x2F;log 目录中</strong>，名称为 dmesg 的文件里。<br>例如可以使用此命令来查看网卡的启动情况：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">[root@iZ2vcfvp9613lxljhuxu45Z <span class="built_in">log</span>]<span class="comment"># dmesg | grep eth0</span></span><br><span class="line">[12708.338367] IPv6: ADDRCONF(NETDEV_UP): eth0: <span class="built_in">link</span> is not ready</span><br><span class="line">[12708.338571] IPv6: ADDRCONF(NETDEV_CHANGE): eth0: <span class="built_in">link</span> becomes ready</span><br><span class="line">[13622.638292] IPv6: ADDRCONF(NETDEV_UP): eth0: <span class="built_in">link</span> is not ready</span><br><span class="line">[13622.638518] IPv6: ADDRCONF(NETDEV_CHANGE): eth0: <span class="built_in">link</span> becomes ready</span><br><span class="line">[14487.003982] IPv6: ADDRCONF(NETDEV_UP): eth0: <span class="built_in">link</span> is not ready</span><br><span class="line">[14487.004170] IPv6: ADDRCONF(NETDEV_CHANGE): eth0: <span class="built_in">link</span> becomes ready</span><br><span class="line">[14602.813912] IPv6: ADDRCONF(NETDEV_UP): eth0: <span class="built_in">link</span> is not ready</span><br><span class="line">[14602.814087] IPv6: ADDRCONF(NETDEV_CHANGE): eth0: <span class="built_in">link</span> becomes ready</span><br><span class="line">[14988.269436] IPv6: ADDRCONF(NETDEV_UP): eth0: <span class="built_in">link</span> is not ready</span><br><span class="line">[14988.269665] IPv6: ADDRCONF(NETDEV_CHANGE): eth0: <span class="built_in">link</span> becomes ready</span><br></pre></td></tr></table></figure><h1 id="lspci"><a href="#lspci" class="headerlink" title="lspci"></a>lspci</h1><p>lspci 命令用于显示 Linux 系统上的设备和驱动程序, lspci 命令用于显示连接到 PCI 总线的所有设备。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">[root@iZ2vcfvp9613lxljhuxu45Z <span class="built_in">log</span>]<span class="comment"># lspci</span></span><br><span class="line">00:00.0 Host bridge: Intel Corporation 440FX - 82441FX PMC [Natoma] (rev 02)</span><br><span class="line">00:01.0 ISA bridge: Intel Corporation 82371SB PIIX3 ISA [Natoma/Triton II]</span><br><span class="line">00:01.1 IDE interface: Intel Corporation 82371SB PIIX3 IDE [Natoma/Triton II]</span><br><span class="line">00:01.2 USB controller: Intel Corporation 82371SB PIIX3 USB [Natoma/Triton II] (rev 01)</span><br><span class="line">00:01.3 Bridge: Intel Corporation 82371AB/EB/MB PIIX4 ACPI (rev 03)</span><br><span class="line">00:02.0 VGA compatible controller: Cirrus Logic GD 5446</span><br><span class="line">00:03.0 Communication controller: Red Hat, Inc. Virtio console</span><br><span class="line">00:04.0 SCSI storage controller: Red Hat, Inc. Virtio block device</span><br><span class="line">00:05.0 Ethernet controller: Red Hat, Inc. Virtio network device</span><br><span class="line">00:06.0 Unclassified device [00ff]: Red Hat, Inc. Virtio memory balloon</span><br></pre></td></tr></table></figure><h1 id="lsmod"><a href="#lsmod" class="headerlink" title="lsmod"></a>lsmod</h1><p><strong>lsmod命令</strong> 用于显示<strong>已经加载</strong>到内核中的模块的状态信息。Linux操作系统的核心具有模块化的特性，应此在编译核心时，务须把全部的功能都放入核心。您可以将这些功能编译成一个个单独的模块，待需要时再分别载入。</p><p>查看已经加载的模块</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">[root@iZ2vcfvp9613lxljhuxu45Z <span class="built_in">log</span>]<span class="comment"># lsmod</span></span><br><span class="line">Module                  Size  Used by</span><br><span class="line">af_packet_diag         12611  0</span><br><span class="line">netlink_diag           12669  0</span><br><span class="line">udp_diag               12801  0</span><br><span class="line">unix_diag              12601  0</span><br><span class="line">AliSecGuard            26649  2</span><br><span class="line">tcp_diag               12591  0</span><br><span class="line">inet_diag              18949  2 tcp_diag,udp_diag</span><br><span class="line">xt_conntrack           12760  3</span><br><span class="line">ipt_MASQUERADE         12678  17</span><br><span class="line">nf_nat_masquerade_ipv4    13463  1 ipt_MASQUERADE</span><br><span class="line">...</span><br></pre></td></tr></table></figure><p>模块详细信息</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">[root@iZ2vcfvp9613lxljhuxu45Z <span class="built_in">log</span>]<span class="comment"># modinfo ip_tables</span></span><br><span class="line">filename:       /lib/modules/3.10.0-1160.102.1.el7.x86_64/kernel/net/ipv4/netfilter/ip_tables.ko.xz</span><br><span class="line">description:    IPv4 packet filter</span><br><span class="line">author:         Netfilter Core Team &lt;coreteam@netfilter.org&gt;</span><br><span class="line">license:        GPL</span><br><span class="line">retpoline:      Y</span><br><span class="line">rhelversion:    7.9</span><br><span class="line">srcversion:     3B1EF8CB35F100EA0A8485D</span><br><span class="line">depends:</span><br><span class="line">intree:         Y</span><br><span class="line">vermagic:       3.10.0-1160.102.1.el7.x86_64 SMP mod_unload modversions</span><br><span class="line">signer:         CentOS Linux kernel signing key</span><br><span class="line">sig_key:        56:7C:0A:85:06:C7:C3:00:F0:66:03:5C:EA:63:E5:BA:FD:E2:3F:DA</span><br><span class="line">sig_hashalgo:   sha256</span><br></pre></td></tr></table></figure><p>上面输出信息的重点在于那个档名 (filename) 的部分！那一场串的文件名目录，就是我们<strong>驱动程序</strong>放置的主要目录所在。 得要注意的是，那个 3.10.0-1160.102.1.el7.x86_64 是核心版本，因此，不同的核心版本使用的驱动程序其实不一样喔！我们才会一直强调，更改核心后， 你自己编译的硬件驱动程序就需要重新编译啦！</p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h1 id=&quot;dmesg&quot;&gt;&lt;a href=&quot;#dmesg&quot; class=&quot;headerlink&quot; title=&quot;dmesg&quot;&gt;&lt;/a&gt;dmesg&lt;/h1&gt;&lt;p&gt;(display message)，用于显示开机信息。kernel 会将开机信息存储在 ring buffer 中。</summary>
+      
+    
+    
+    
+    
+  </entry>
   
   <entry>
     <title>分布式锁的实现</title>
@@ -58,8 +78,6 @@
     
     
     <category term="后端" scheme="http://example.com/categories/%E5%90%8E%E7%AB%AF/"/>
-    
-    <category term="分布式" scheme="http://example.com/categories/%E5%90%8E%E7%AB%AF/%E5%88%86%E5%B8%83%E5%BC%8F/"/>
     
     
   </entry>
