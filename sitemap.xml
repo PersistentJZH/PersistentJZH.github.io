@@ -2,6 +2,24 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://example.com/2024/08/09/%E5%90%8E%E7%AB%AF/k8s/cka/cka/</loc>
+    
+    <lastmod>2024-08-09</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://example.com/2024/08/09/%E5%90%8E%E7%AB%AF/k8s/crd/crd/</loc>
+    
+    <lastmod>2024-08-09</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>http://example.com/2024/08/09/%E5%90%8E%E7%AB%AF/linux/%E7%BD%91%E7%BB%9C/%E5%AE%B9%E5%99%A8%E7%BD%91%E7%BB%9C/%E5%AE%B9%E5%99%A8%E7%BD%91%E7%BB%9C/</loc>
     
     <lastmod>2024-08-09</lastmod>
@@ -230,20 +248,6 @@
   </url>
   
   <url>
-    <loc>http://example.com/tags/mysql/</loc>
-    <lastmod>2024-08-09</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>http://example.com/tags/binlog/</loc>
-    <lastmod>2024-08-09</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>http://example.com/tags/%E4%BD%A0%E5%A5%BD/</loc>
     <lastmod>2024-08-09</lastmod>
     <changefreq>weekly</changefreq>
@@ -278,6 +282,20 @@
     <priority>0.2</priority>
   </url>
   
+  <url>
+    <loc>http://example.com/tags/mysql/</loc>
+    <lastmod>2024-08-09</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>http://example.com/tags/binlog/</loc>
+    <lastmod>2024-08-09</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
 
   
   <url>
@@ -289,20 +307,6 @@
   
   <url>
     <loc>http://example.com/categories/%E5%90%8E%E7%AB%AF/</loc>
-    <lastmod>2024-08-09</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>http://example.com/categories/%E5%90%8E%E7%AB%AF/mysql/</loc>
-    <lastmod>2024-08-09</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>http://example.com/categories/%E5%90%8E%E7%AB%AF/zookeeper/</loc>
     <lastmod>2024-08-09</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -323,7 +327,21 @@
   </url>
   
   <url>
-    <loc>http://example.com/categories/%E5%90%8E%E7%AB%AF/%E5%88%86%E5%B8%83%E5%BC%8F/mit-6-824/</loc>
+    <loc>http://example.com/categories/%E5%90%8E%E7%AB%AF/k8s/</loc>
+    <lastmod>2024-08-09</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>http://example.com/categories/%E5%90%8E%E7%AB%AF/zookeeper/</loc>
+    <lastmod>2024-08-09</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>http://example.com/categories/%E5%90%8E%E7%AB%AF/mysql/</loc>
     <lastmod>2024-08-09</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -337,14 +355,14 @@
   </url>
   
   <url>
-    <loc>http://example.com/categories/%E5%90%8E%E7%AB%AF/%E5%88%86%E5%B8%83%E5%BC%8F/mit-6-824/lab2-raft/</loc>
+    <loc>http://example.com/categories/%E5%90%8E%E7%AB%AF/k8s/cka/</loc>
     <lastmod>2024-08-09</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>http://example.com/categories/%E5%90%8E%E7%AB%AF/k8s/</loc>
+    <loc>http://example.com/categories/%E5%90%8E%E7%AB%AF/k8s/crd/</loc>
     <lastmod>2024-08-09</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -372,7 +390,21 @@
   </url>
   
   <url>
+    <loc>http://example.com/categories/%E5%90%8E%E7%AB%AF/%E5%88%86%E5%B8%83%E5%BC%8F/mit-6-824/</loc>
+    <lastmod>2024-08-09</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
     <loc>http://example.com/categories/%E5%90%8E%E7%AB%AF/linux/%E7%BD%91%E7%BB%9C/</loc>
+    <lastmod>2024-08-09</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>http://example.com/categories/%E5%90%8E%E7%AB%AF/%E5%88%86%E5%B8%83%E5%BC%8F/mit-6-824/lab2-raft/</loc>
     <lastmod>2024-08-09</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -393,14 +425,14 @@
   </url>
   
   <url>
-    <loc>http://example.com/categories/%E5%90%8E%E7%AB%AF/linux/%E7%BD%91%E7%BB%9C/%E5%AE%B9%E5%99%A8%E7%BD%91%E7%BB%9C/</loc>
+    <loc>http://example.com/categories/%E5%90%8E%E7%AB%AF/linux/%E7%BD%91%E7%BB%9C/%E5%9F%BA%E7%A1%80/</loc>
     <lastmod>2024-08-09</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>http://example.com/categories/%E5%90%8E%E7%AB%AF/linux/%E7%BD%91%E7%BB%9C/%E5%9F%BA%E7%A1%80/</loc>
+    <loc>http://example.com/categories/%E5%90%8E%E7%AB%AF/linux/%E7%BD%91%E7%BB%9C/%E5%AE%B9%E5%99%A8%E7%BD%91%E7%BB%9C/</loc>
     <lastmod>2024-08-09</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>

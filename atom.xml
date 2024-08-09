@@ -6,7 +6,7 @@
   <link href="http://example.com/atom.xml" rel="self"/>
   
   <link href="http://example.com/"/>
-  <updated>2024-08-09T06:30:14.000Z</updated>
+  <updated>2024-08-09T09:46:22.000Z</updated>
   <id>http://example.com/</id>
   
   <author>
@@ -15,6 +15,58 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>cka</title>
+    <link href="http://example.com/2024/08/09/%E5%90%8E%E7%AB%AF/k8s/cka/cka/"/>
+    <id>http://example.com/2024/08/09/%E5%90%8E%E7%AB%AF/k8s/cka/cka/</id>
+    <published>2024-08-09T09:46:22.000Z</published>
+    <updated>2024-08-09T09:46:22.000Z</updated>
+    
+    <content type="html"><![CDATA[<p><a href="https://blog.csdn.net/weixin_53851491/article/details/137040823">https://blog.csdn.net/weixin_53851491/article/details/137040823</a></p><h1 id="查看-pod-的-CPU"><a href="#查看-pod-的-CPU" class="headerlink" title="查看 pod 的 CPU"></a>查看 pod 的 CPU</h1><p>通过 pod label name&#x3D;cpu-loader，找到运行时占用大量 CPU 的 pod，<br>并将占用 CPU 最高的 pod 名称写入文件 &#x2F;opt&#x2F;KUTR000401&#x2F;KUTR00401.txt（已存在）。</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"># 切换答题环境（考试环境有多个，每道题要在对应的环境中作答）</span><br><span class="line">kubectl config use-context k8s</span><br><span class="line"> </span><br><span class="line"># 查找CPU使用率最高的Pod。</span><br><span class="line">kubectl top pod -l name=cpu-loader --sort-by=cpu -A</span><br><span class="line"> </span><br><span class="line"># 将查到Pod名称输出到指定文件</span><br><span class="line">echo &quot;podename&quot; &gt; /opt/KUTR000401/KUTR00401.txt</span><br></pre></td></tr></table></figure><h1 id="配置网络策略-NetworkPolicy"><a href="#配置网络策略-NetworkPolicy" class="headerlink" title="配置网络策略 NetworkPolicy"></a>配置网络策略 NetworkPolicy</h1><p>在现有的 namespace my-app 中创建一个名为 allow-port-from-namespace 的新 NetworkPolicy。<br>确保新的 NetworkPolicy 允许 namespace echo 中的 Pods 连接到 namespace my-app 中的 Pods 的 9000 端口。<br>进一步确保新的 NetworkPolicy：<br>不允许对没有在监听 端口 9000 的 Pods 的访问<br>不允许非来自 namespace echo 中的 Pods 的访问</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"># 切换答题环境（考试环境有多个，每道题要在对应的环境中作答）</span><br><span class="line">kubectl config use-context k8s</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"># 查看所有 ns 的标签 label</span><br><span class="line">kubectl get ns --show-labels</span><br><span class="line"> </span><br><span class="line"># 给my-app命名空间打一个标签</span><br><span class="line">kubectl label ns my-app project=echo</span><br><span class="line"> </span><br><span class="line"># 编写一个 yaml 文件</span><br><span class="line">vim networkpolicy.yaml</span><br><span class="line"> </span><br><span class="line">apiVersion: networking.k8s.io/v1</span><br><span class="line">kind: NetworkPolicy</span><br><span class="line">metadata:</span><br><span class="line"> name: allow-port-from-namespace         #题目的名字</span><br><span class="line"> namespace: my-app                       #被访问者的命名空间</span><br><span class="line">spec:</span><br><span class="line"> podSelector: &#123;&#125;</span><br><span class="line"> policyTypes:</span><br><span class="line"> - Ingress          #策略影响入栈流量</span><br><span class="line"> ingress:</span><br><span class="line"> - from:            #允许流量的来源</span><br><span class="line"> - namespaceSelector:</span><br><span class="line"> matchLabels:</span><br><span class="line"> project: echo      #访问者的命名空间的标签 label</span><br><span class="line"> ports:</span><br><span class="line"> - protocol: TCP</span><br><span class="line"> port: 9000         #被访问者公开的端口</span><br><span class="line"> </span><br><span class="line"># 创建</span><br><span class="line">kubectl apply -f networkpolicy.yaml</span><br><span class="line"> </span><br><span class="line"># 检查</span><br><span class="line">kubectl describe networkpolicy -n my-app</span><br></pre></td></tr></table></figure><h1 id="暴露服务-service"><a href="#暴露服务-service" class="headerlink" title="暴露服务 service"></a>暴露服务 service</h1><p>请重新配置现有的 deployment front-end 以及添加名为 http 的端口规范来公开现有容器 nginx 的端口 80&#x2F;tcp。<br>创建一个名为 front-end-svc 的新 service，以公开容器端口 http。<br>配置此 service，以通过各个 Pod 所在的节点上的 NodePort 来公开他们。</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"># 切换答题环境（考试环境有多个，每道题要在对应的环境中作答）</span><br><span class="line">kubectl config use-context k8s</span><br><span class="line"> </span><br><span class="line"># 检查 deployment 信息，并记录 SELECTOR 的 Lable 标签，这里是 app=front-end</span><br><span class="line">kubectl get deployment front-end -o wide</span><br><span class="line"> </span><br><span class="line"># 配置deployment暴露端口，添加如下图配置</span><br><span class="line">kubectl edit deployment front-end</span><br><span class="line"> </span><br></pre></td></tr></table></figure>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;&lt;a href=&quot;https://blog.csdn.net/weixin_53851491/article/details/137040823&quot;&gt;https://blog.csdn.net/weixin_53851491/article/details/137040823</summary>
+      
+    
+    
+    
+    <category term="后端" scheme="http://example.com/categories/%E5%90%8E%E7%AB%AF/"/>
+    
+    <category term="k8s" scheme="http://example.com/categories/%E5%90%8E%E7%AB%AF/k8s/"/>
+    
+    <category term="cka" scheme="http://example.com/categories/%E5%90%8E%E7%AB%AF/k8s/cka/"/>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>crd</title>
+    <link href="http://example.com/2024/08/09/%E5%90%8E%E7%AB%AF/k8s/crd/crd/"/>
+    <id>http://example.com/2024/08/09/%E5%90%8E%E7%AB%AF/k8s/crd/crd/</id>
+    <published>2024-08-09T08:41:35.000Z</published>
+    <updated>2024-08-09T08:41:35.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>GET <a href="https://127.0.0.1:6443/apis/tech-jzh.zhihao.io/v1/namespaces/default/superservices?limit=500">https://127.0.0.1:6443/apis/tech-jzh.zhihao.io/v1/namespaces/default/superservices?limit=500</a> 200 OK in 5 milliseconds</p><p>GET <a href="https://127.0.0.1:6443/api/v1/namespaces/default/pods?limit=500">https://127.0.0.1:6443/api/v1/namespaces/default/pods?limit=500</a> 200 OK in 4 milliseconds</p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;GET &lt;a href=&quot;https://127.0.0.1:6443/apis/tech-jzh.zhihao.io/v1/namespaces/default/superservices?limit=500&quot;&gt;https://127.0.0.1:6443/apis/te</summary>
+      
+    
+    
+    
+    <category term="后端" scheme="http://example.com/categories/%E5%90%8E%E7%AB%AF/"/>
+    
+    <category term="k8s" scheme="http://example.com/categories/%E5%90%8E%E7%AB%AF/k8s/"/>
+    
+    <category term="crd" scheme="http://example.com/categories/%E5%90%8E%E7%AB%AF/k8s/crd/"/>
+    
+    
+  </entry>
   
   <entry>
     <title>docker网络</title>
