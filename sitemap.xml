@@ -343,4 +343,67 @@
     <priority>0.2</priority>
   </url>
   
+  <url>
+    <loc>http://example.com/categories/%E5%90%8E%E7%AB%AF/k8s/</loc>
+    <lastmod>2024-08-09</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>http://example.com/categories/%E5%90%8E%E7%AB%AF/k8s/ipvs/</loc>
+    <lastmod>2024-08-09</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>http://example.com/categories/%E5%90%8E%E7%AB%AF/k8s/webhook/</loc>
+    <lastmod>2024-08-09</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>http://example.com/categories/%E5%90%8E%E7%AB%AF/linux/cgroup/</loc>
+    <lastmod>2024-08-09</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>http://example.com/categories/%E5%90%8E%E7%AB%AF/linux/%E7%BD%91%E7%BB%9C/</loc>
+    <lastmod>2024-08-09</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>http://example.com/categories/%E5%90%8E%E7%AB%AF/linux/%E7%BD%91%E7%BB%9C/iptables/</loc>
+    <lastmod>2024-08-09</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>http://example.com/categories/%E5%90%8E%E7%AB%AF/linux/%E7%BD%91%E7%BB%9C/netfilter/</loc>
+    <lastmod>2024-08-09</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>http://example.com/categories/%E5%90%8E%E7%AB%AF/linux/%E7%BD%91%E7%BB%9C/%E5%AE%B9%E5%99%A8%E7%BD%91%E7%BB%9C/</loc>
+    <lastmod>2024-08-09</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>http://example.com/categories/%E5%90%8E%E7%AB%AF/linux/%E7%BD%91%E7%BB%9C/%E5%9F%BA%E7%A1%80/</loc>
+    <lastmod>2024-08-09</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
 </urlset>

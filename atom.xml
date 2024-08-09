@@ -33,6 +33,14 @@
     
     
     
+    <category term="后端" scheme="http://example.com/categories/%E5%90%8E%E7%AB%AF/"/>
+    
+    <category term="linux" scheme="http://example.com/categories/%E5%90%8E%E7%AB%AF/linux/"/>
+    
+    <category term="网络" scheme="http://example.com/categories/%E5%90%8E%E7%AB%AF/linux/%E7%BD%91%E7%BB%9C/"/>
+    
+    <category term="容器网络" scheme="http://example.com/categories/%E5%90%8E%E7%AB%AF/linux/%E7%BD%91%E7%BB%9C/%E5%AE%B9%E5%99%A8%E7%BD%91%E7%BB%9C/"/>
+    
     
   </entry>
   
@@ -53,6 +61,14 @@
       
     
     
+    
+    <category term="后端" scheme="http://example.com/categories/%E5%90%8E%E7%AB%AF/"/>
+    
+    <category term="linux" scheme="http://example.com/categories/%E5%90%8E%E7%AB%AF/linux/"/>
+    
+    <category term="网络" scheme="http://example.com/categories/%E5%90%8E%E7%AB%AF/linux/%E7%BD%91%E7%BB%9C/"/>
+    
+    <category term="netfilter" scheme="http://example.com/categories/%E5%90%8E%E7%AB%AF/linux/%E7%BD%91%E7%BB%9C/netfilter/"/>
     
     
   </entry>
@@ -75,6 +91,12 @@
     
     
     
+    <category term="后端" scheme="http://example.com/categories/%E5%90%8E%E7%AB%AF/"/>
+    
+    <category term="k8s" scheme="http://example.com/categories/%E5%90%8E%E7%AB%AF/k8s/"/>
+    
+    <category term="ipvs" scheme="http://example.com/categories/%E5%90%8E%E7%AB%AF/k8s/ipvs/"/>
+    
     
   </entry>
   
@@ -96,6 +118,12 @@
     
     
     
+    <category term="后端" scheme="http://example.com/categories/%E5%90%8E%E7%AB%AF/"/>
+    
+    <category term="k8s" scheme="http://example.com/categories/%E5%90%8E%E7%AB%AF/k8s/"/>
+    
+    <category term="webhook" scheme="http://example.com/categories/%E5%90%8E%E7%AB%AF/k8s/webhook/"/>
+    
     
   </entry>
   
@@ -116,6 +144,14 @@
     
     
     
+    <category term="后端" scheme="http://example.com/categories/%E5%90%8E%E7%AB%AF/"/>
+    
+    <category term="linux" scheme="http://example.com/categories/%E5%90%8E%E7%AB%AF/linux/"/>
+    
+    <category term="网络" scheme="http://example.com/categories/%E5%90%8E%E7%AB%AF/linux/%E7%BD%91%E7%BB%9C/"/>
+    
+    <category term="iptables" scheme="http://example.com/categories/%E5%90%8E%E7%AB%AF/linux/%E7%BD%91%E7%BB%9C/iptables/"/>
+    
     
   </entry>
   
@@ -128,6 +164,12 @@
     
     
     
+    
+    <category term="后端" scheme="http://example.com/categories/%E5%90%8E%E7%AB%AF/"/>
+    
+    <category term="linux" scheme="http://example.com/categories/%E5%90%8E%E7%AB%AF/linux/"/>
+    
+    <category term="cgroup" scheme="http://example.com/categories/%E5%90%8E%E7%AB%AF/linux/cgroup/"/>
     
     
   </entry>
@@ -149,6 +191,10 @@
     
     
     
+    <category term="后端" scheme="http://example.com/categories/%E5%90%8E%E7%AB%AF/"/>
+    
+    <category term="linux" scheme="http://example.com/categories/%E5%90%8E%E7%AB%AF/linux/"/>
+    
     
   </entry>
   
@@ -168,6 +214,14 @@
       
     
     
+    
+    <category term="后端" scheme="http://example.com/categories/%E5%90%8E%E7%AB%AF/"/>
+    
+    <category term="分布式" scheme="http://example.com/categories/%E5%90%8E%E7%AB%AF/%E5%88%86%E5%B8%83%E5%BC%8F/"/>
+    
+    <category term="mit-6.824" scheme="http://example.com/categories/%E5%90%8E%E7%AB%AF/%E5%88%86%E5%B8%83%E5%BC%8F/mit-6-824/"/>
+    
+    <category term="lab2-raft" scheme="http://example.com/categories/%E5%90%8E%E7%AB%AF/%E5%88%86%E5%B8%83%E5%BC%8F/mit-6-824/lab2-raft/"/>
     
     
   </entry>
@@ -245,6 +299,10 @@
     <category term="后端" scheme="http://example.com/categories/%E5%90%8E%E7%AB%AF/"/>
     
     <category term="linux" scheme="http://example.com/categories/%E5%90%8E%E7%AB%AF/linux/"/>
+    
+    <category term="网络" scheme="http://example.com/categories/%E5%90%8E%E7%AB%AF/linux/%E7%BD%91%E7%BB%9C/"/>
+    
+    <category term="基础" scheme="http://example.com/categories/%E5%90%8E%E7%AB%AF/linux/%E7%BD%91%E7%BB%9C/%E5%9F%BA%E7%A1%80/"/>
     
     
   </entry>

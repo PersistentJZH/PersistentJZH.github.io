@@ -40,3 +40,12 @@ http://example.com/categories/%E5%90%8E%E7%AB%AF/kafka/
 http://example.com/categories/%E5%90%8E%E7%AB%AF/%E5%88%86%E5%B8%83%E5%BC%8F/mit-6-824/
 http://example.com/categories/%E5%90%8E%E7%AB%AF/linux/
 http://example.com/categories/%E5%90%8E%E7%AB%AF/%E5%88%86%E5%B8%83%E5%BC%8F/mit-6-824/lab2-raft/
+http://example.com/categories/%E5%90%8E%E7%AB%AF/k8s/
+http://example.com/categories/%E5%90%8E%E7%AB%AF/k8s/ipvs/
+http://example.com/categories/%E5%90%8E%E7%AB%AF/k8s/webhook/
+http://example.com/categories/%E5%90%8E%E7%AB%AF/linux/cgroup/
+http://example.com/categories/%E5%90%8E%E7%AB%AF/linux/%E7%BD%91%E7%BB%9C/
+http://example.com/categories/%E5%90%8E%E7%AB%AF/linux/%E7%BD%91%E7%BB%9C/iptables/
+http://example.com/categories/%E5%90%8E%E7%AB%AF/linux/%E7%BD%91%E7%BB%9C/netfilter/
+http://example.com/categories/%E5%90%8E%E7%AB%AF/linux/%E7%BD%91%E7%BB%9C/%E5%AE%B9%E5%99%A8%E7%BD%91%E7%BB%9C/
+http://example.com/categories/%E5%90%8E%E7%AB%AF/linux/%E7%BD%91%E7%BB%9C/%E5%9F%BA%E7%A1%80/
