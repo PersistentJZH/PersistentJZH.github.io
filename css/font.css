@@ -1,0 +1,9 @@
+@font-face {
+  font-family: 'MouldyCheeseRegular-WyMWG';
+  font-display: swap;
+  src: url('../fonts/MouldyCheeseRegular-WyMWG.ttf') format("truetype");  
+}
+
+body {
+    font-family: 'JetBrains Mono','HarmonyOS Sans SC';
+}
