@@ -456,4 +456,18 @@
     <priority>0.2</priority>
   </url>
   
+  <url>
+    <loc>http://example.com/categories/%E5%90%8E%E7%AB%AF/k8s/%E7%BD%91%E7%BB%9C%E6%8F%92%E4%BB%B6/</loc>
+    <lastmod>2024-09-03</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>http://example.com/categories/%E5%90%8E%E7%AB%AF/linux/bond/</loc>
+    <lastmod>2024-09-03</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
 </urlset>

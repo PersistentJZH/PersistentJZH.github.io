@@ -33,6 +33,12 @@
     
     
     
+    <category term="后端" scheme="http://example.com/categories/%E5%90%8E%E7%AB%AF/"/>
+    
+    <category term="k8s" scheme="http://example.com/categories/%E5%90%8E%E7%AB%AF/k8s/"/>
+    
+    <category term="网络插件" scheme="http://example.com/categories/%E5%90%8E%E7%AB%AF/k8s/%E7%BD%91%E7%BB%9C%E6%8F%92%E4%BB%B6/"/>
+    
     
   </entry>
   
@@ -52,6 +58,12 @@
       
     
     
+    
+    <category term="后端" scheme="http://example.com/categories/%E5%90%8E%E7%AB%AF/"/>
+    
+    <category term="linux" scheme="http://example.com/categories/%E5%90%8E%E7%AB%AF/linux/"/>
+    
+    <category term="bond" scheme="http://example.com/categories/%E5%90%8E%E7%AB%AF/linux/bond/"/>
     
     
   </entry>
