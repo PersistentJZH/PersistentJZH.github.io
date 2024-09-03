@@ -6,7 +6,7 @@
   <link href="http://example.com/atom.xml" rel="self"/>
   
   <link href="http://example.com/"/>
-  <updated>2024-08-09T09:46:22.000Z</updated>
+  <updated>2024-09-03T08:44:01.000Z</updated>
   <id>http://example.com/</id>
   
   <author>
@@ -15,6 +15,46 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>网络插件</title>
+    <link href="http://example.com/2024/09/03/%E5%90%8E%E7%AB%AF/k8s/%E7%BD%91%E7%BB%9C%E6%8F%92%E4%BB%B6/%E7%BD%91%E7%BB%9C%E6%8F%92%E4%BB%B6/"/>
+    <id>http://example.com/2024/09/03/%E5%90%8E%E7%AB%AF/k8s/%E7%BD%91%E7%BB%9C%E6%8F%92%E4%BB%B6/%E7%BD%91%E7%BB%9C%E6%8F%92%E4%BB%B6/</id>
+    <published>2024-09-03T08:44:01.000Z</published>
+    <updated>2024-09-03T08:44:01.000Z</updated>
+    
+    <content type="html"><![CDATA[<p><img src="/2024/09/03/%E5%90%8E%E7%AB%AF/k8s/%E7%BD%91%E7%BB%9C%E6%8F%92%E4%BB%B6/%E7%BD%91%E7%BB%9C%E6%8F%92%E4%BB%B6/%E7%BD%91%E7%BB%9C%E6%8F%92%E4%BB%B6-20240903164402523.webp"></p><p><img src="/2024/09/03/%E5%90%8E%E7%AB%AF/k8s/%E7%BD%91%E7%BB%9C%E6%8F%92%E4%BB%B6/%E7%BD%91%E7%BB%9C%E6%8F%92%E4%BB%B6/%E7%BD%91%E7%BB%9C%E6%8F%92%E4%BB%B6-20240903221020406.webp"></p><h1 id="如何实现一个cni插件"><a href="#如何实现一个cni插件" class="headerlink" title="如何实现一个cni插件"></a>如何实现一个cni插件</h1><p>kubrnates插件默认放在&#x2F;etc&#x2F;cni&#x2F;net.d下:</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">root@kind-worker:/etc/cni/net.d<span class="comment"># cat 10-mycni.conf</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="string">&quot;name&quot;</span>: <span class="string">&quot;mycni&quot;</span>,</span><br><span class="line">  <span class="string">&quot;cniVersion&quot;</span>: <span class="string">&quot;0.4.0&quot;</span>,</span><br><span class="line">  <span class="string">&quot;type&quot;</span>: <span class="string">&quot;mycni&quot;</span>,</span><br><span class="line">  <span class="string">&quot;dataDir&quot;</span>: <span class="string">&quot;/var/lib/cni/networks&quot;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>k8s 的 cni 允许同时使用多个插件，并且会把上一个插件的执行结果作为参数传递给下一个插件，以此可以串联多个插件，让多个插件做不同的事情，比如可以让第一个插件只负责让同一台主机上的节点通信，然后第二个插件可以负责让不同节点上的 pod 通信，总之还是那句话，配置文件有了，pod 信息也被 k8s 传过来了，怎么玩儿插件，那是你的事情。</p><p>上面只是配置文件，真实插件的默认存放地址在 &#x2F;opt&#x2F;cni&#x2F;bin 这个目录下，该目录下都是 k8s 可以使用的网络插件，如果谁自己实现了个 cni 插件的话，给它搞成二进制的可执行文件后，往这目录下一扔就 ok 了，</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">root@kind-worker:/opt/cni/bin# ls</span><br><span class="line">host-local  loopback  mycni  portmap  ptp</span><br></pre></td></tr></table></figure><p>所以综上所述，CNI 规范其实是个非常简单的规范，<strong>总结一下就是要求第三方插件需要有一个配置文件，然后有个自己实现创建网络环境的功能二进制，最后 k8s 帮你调用这个插件并把容器的一些运行时环境传过去。就这么简单</strong> 本质上就是利用linux的网络能力，例如bridge, veth pair, ip route, vxlan等，不同的插件使用的能力不一样。</p><h1 id="插件网络架构"><a href="#插件网络架构" class="headerlink" title="插件网络架构"></a>插件网络架构</h1><p>包括两个组件：<br>mycni: CNI 插件，实现 IPAM，为 Pod 分配 IP 配置路由，通过网桥实现同节点上不同 Pod 的通信<br>mycnid: 节点上守护进程，监听 K8s Node，获取各个节点 CIDR 写入路由<br><img src="/2024/09/03/%E5%90%8E%E7%AB%AF/k8s/%E7%BD%91%E7%BB%9C%E6%8F%92%E4%BB%B6/%E7%BD%91%E7%BB%9C%E6%8F%92%E4%BB%B6/%E7%BD%91%E7%BB%9C%E6%8F%92%E4%BB%B6-20240903221221809.webp"></p><ol><li><strong>pod ip 的管理</strong><br>kubernates会为每个节点分配 PodCIDR，只需要保证节点上所有 Pod IP 不冲突即可。可以通过本地文件来存储已分配的 IP，当新 Pod 创建时只需要检查已分配 IP，通过 CIDR 取一个未使用的IP。通常做法是将 IP 信息存储在数据库中(etcd)。</li></ol><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">➜  ~ kubectl get nodes -o jsonpath=<span class="string">&#x27;&#123;range .items[*]&#125;&#123;.metadata.name&#125;: &#123;.spec.podCIDR&#125;&#123;&quot;\n&quot;&#125;&#123;end&#125;&#x27;</span></span><br><span class="line">kind-control-plane: 10.244.0.0/24</span><br><span class="line">kind-worker: 10.244.3.0/24</span><br><span class="line">kind-worker2: 10.244.1.0/24</span><br><span class="line">kind-worker3: 10.244.2.0/24</span><br></pre></td></tr></table></figure><ol start="2"><li><strong>同node内pod通信</strong><br>bridge + veth pair 即可</li><li><strong>不同node间pod通信</strong><br>通过ip route进行路由即可。<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">root@kind-worker:~# ip route</span><br><span class="line">default via 172.18.0.1 dev eth0</span><br><span class="line">10.244.0.0/24 via 172.18.0.5 dev eth0</span><br><span class="line">10.244.1.0/24 via 172.18.0.2 dev eth0</span><br><span class="line">10.244.2.0/24 via 172.18.0.3 dev eth0</span><br><span class="line">10.244.3.0/24 dev cni0 proto kernel scope link src 10.244.3.1 linkdown</span><br><span class="line">172.18.0.0/16 dev eth0 proto kernel scope link src 172.18.0.4</span><br></pre></td></tr></table></figure></li></ol><p>只要解决了上诉两个问题，插件的功能就是ok的。<br>未完待续。。。</p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;&lt;img src=&quot;/2024/09/03/%E5%90%8E%E7%AB%AF/k8s/%E7%BD%91%E7%BB%9C%E6%8F%92%E4%BB%B6/%E7%BD%91%E7%BB%9C%E6%8F%92%E4%BB%B6/%E7%BD%91%E7%BB%9C</summary>
+      
+    
+    
+    
+    
+  </entry>
+  
+  <entry>
+    <title>bond</title>
+    <link href="http://example.com/2024/09/02/%E5%90%8E%E7%AB%AF/linux/bond/bond/"/>
+    <id>http://example.com/2024/09/02/%E5%90%8E%E7%AB%AF/linux/bond/bond/</id>
+    <published>2024-09-02T03:49:37.000Z</published>
+    <updated>2024-09-02T03:49:37.000Z</updated>
+    
+    <content type="html"><![CDATA[<p><a href="https://www.cnblogs.com/eddie1127/p/11385604.html">https://www.cnblogs.com/eddie1127/p/11385604.html</a><br><a href="https://www.linuxprobe.com/actual-combat-nic-bond.html">https://www.linuxprobe.com/actual-combat-nic-bond.html</a><br>vlan:<a href="https://www.cnblogs.com/weq0805/p/14801129.html">https://www.cnblogs.com/weq0805/p/14801129.html</a></p><h1 id="什么是bond"><a href="#什么是bond" class="headerlink" title="什么是bond"></a>什么是bond</h1><p>所谓bond，就是把多个物理网卡绑定成一个逻辑上的网卡，使用同一个IP工作，在增加带宽的同时也可以提高冗余性，一般使用较多的就是来提高冗余，分别和不同交换机相连，提高可靠性，但有时服务器带宽不够了也可以用作增加带宽。</p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;&lt;a href=&quot;https://www.cnblogs.com/eddie1127/p/11385604.html&quot;&gt;https://www.cnblogs.com/eddie1127/p/11385604.html&lt;/a&gt;&lt;br&gt;&lt;a href=&quot;https://www</summary>
+      
+    
+    
+    
+    
+  </entry>
   
   <entry>
     <title>cka</title>
@@ -186,7 +226,7 @@
     <published>2024-07-30T07:17:35.000Z</published>
     <updated>2024-07-30T07:17:35.000Z</updated>
     
-    <content type="html"><![CDATA[<p>linux路由表<br><a href="https://linuxgeeks.github.io/2017/03/10/094107-%E5%AD%A6%E4%B9%A0%E4%BD%BF%E7%94%A8iptables/">https://linuxgeeks.github.io/2017/03/10/094107-%E5%AD%A6%E4%B9%A0%E4%BD%BF%E7%94%A8iptables/</a><br><a href="https://wangchujiang.com/linux-command/c/iptables.html">https://wangchujiang.com/linux-command/c/iptables.html</a><br><a href="https://www.yoyoask.com/?p=7052">https://www.yoyoask.com/?p=7052</a><br><a href="https://thiscute.world/posts/iptables-and-container-networks/#%E4%BA%8C%E5%AE%B9%E5%99%A8%E7%BD%91%E7%BB%9C%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86---iptables--bridge--veth">https://thiscute.world/posts/iptables-and-container-networks/#%E4%BA%8C%E5%AE%B9%E5%99%A8%E7%BD%91%E7%BB%9C%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86---iptables--bridge--veth</a></p><p>重点：<a href="https://morven.life/posts/iptables-wiki/">https://morven.life/posts/iptables-wiki/</a></p><p>当你安装Docker时，它会自动创建三个网络。你可以使用以下docker network ls命令列出这些网络：</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[root@iZ2vcfvp9613lxljhuxu45Z ~]# docker network ls</span><br><span class="line">NETWORK ID     NAME                   DRIVER    SCOPE</span><br><span class="line">27fc148d7b46   bridge                 bridge    local</span><br><span class="line">e15b91b3196a   docker-apisix_apisix   bridge    local</span><br><span class="line">d1094c6a6aa2   host                   host      local</span><br><span class="line">f39e6e2fb083   none                   null      local</span><br></pre></td></tr></table></figure>]]></content>
+    <content type="html"><![CDATA[<p>linux路由表<br><a href="https://linuxgeeks.github.io/2017/03/10/094107-%E5%AD%A6%E4%B9%A0%E4%BD%BF%E7%94%A8iptables/">https://linuxgeeks.github.io/2017/03/10/094107-%E5%AD%A6%E4%B9%A0%E4%BD%BF%E7%94%A8iptables/</a><br><a href="https://wangchujiang.com/linux-command/c/iptables.html">https://wangchujiang.com/linux-command/c/iptables.html</a><br><a href="https://www.yoyoask.com/?p=7052">https://www.yoyoask.com/?p=7052</a><br><a href="https://thiscute.world/posts/iptables-and-container-networks/#%E4%BA%8C%E5%AE%B9%E5%99%A8%E7%BD%91%E7%BB%9C%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86---iptables--bridge--veth">https://thiscute.world/posts/iptables-and-container-networks/#%E4%BA%8C%E5%AE%B9%E5%99%A8%E7%BD%91%E7%BB%9C%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86---iptables--bridge--veth</a></p><p>重点：<a href="https://morven.life/posts/iptables-wiki/">https://morven.life/posts/iptables-wiki/</a></p><p><a href="https://www.liuvv.com/p/a8480986.html">https://www.liuvv.com/p/a8480986.html</a><br><a href="https://www.ioiox.com/archives/95.html">https://www.ioiox.com/archives/95.html</a><br><img src="/2024/07/30/%E5%90%8E%E7%AB%AF/linux/%E7%BD%91%E7%BB%9C/iptables/iptables/iptables-20240828112918265.webp"></p><p><img src="/2024/07/30/%E5%90%8E%E7%AB%AF/linux/%E7%BD%91%E7%BB%9C/iptables/iptables/iptables-20240826191952297.webp"></p><ul><li>PREROUTING 数据包刚进入网络层 , 路由之前</li><li>INPUT 路由判断，流入用户空间</li><li>OUTPUT 用户空间发出，后接路由判断出口的网络接口</li><li>FORWARD 路由判断不进入用户空间，只进行转发</li><li>POSTROUTING 数据包通过网络接口出去</li></ul><h5 id="1-1-1-举例"><a href="#1-1-1-举例" class="headerlink" title="1.1.1 举例:"></a>1.1.1 举例:</h5><p>到本机某进程的报文：PREROUTING –&gt; INPUT</p><p>由本机转发的报文：PREROUTING –&gt; FORWARD –&gt; POSTROUTING</p><p>由本机的某进程发出报文（通常为响应报文）：OUTPUT –&gt; POSTROUTING</p><p>当你安装Docker时，它会自动创建三个网络。你可以使用以下docker network ls命令列出这些网络：</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[root@iZ2vcfvp9613lxljhuxu45Z ~]# docker network ls</span><br><span class="line">NETWORK ID     NAME                   DRIVER    SCOPE</span><br><span class="line">27fc148d7b46   bridge                 bridge    local</span><br><span class="line">e15b91b3196a   docker-apisix_apisix   bridge    local</span><br><span class="line">d1094c6a6aa2   host                   host      local</span><br><span class="line">f39e6e2fb083   none                   null      local</span><br></pre></td></tr></table></figure><p><strong>MASQUERADE</strong>: <a href="https://blog.csdn.net/jk110333/article/details/8229828">https://blog.csdn.net/jk110333/article/details/8229828</a></p><p>iptables加规则默认filter表</p><p>iptables -t raw -I PREROUTING -p tcp -m tcp –dport 8080 -j TRACE<br>iptables -t raw -I PREROUTING -p tcp -m tcp –sport 8080 -j TRACE<br>目标端口为8080的，表示客户端发出来的；源端口为8080的，表示server2回复的。都加上trace</p><p>iptables -t nat -I PREROUTING 1 -p tcp -m tcp –dport 8888 -j DNAT –to-destination 192.168.64.5<br>iptables -t nat -I POSTROUTING 1 -p tcp -m tcp –dport 8080 -j SNAT –to-source  192.168.64.8</p><p>iptables -t filter -I FORWARD 1 -p tcp -m tcp –dport 8080 -j ACCEPT<br>iptables -t filter -I FORWARD 1 -p tcp -m tcp –sport 8080 -j ACCEPT<br>正向的和反向的，各加一个，免得一会还要再加</p><p>– <code>iptables -F</code>：该命令用于将默认表(filter表)中的所有规则清空。<br>– <code>iptables -X</code>：该命令用于删除自定义的用户链。<br>– <code>iptables -Z</code>：该命令用于将计数器归零，即清空统计规则的数据。<br>– <code>iptables -t nat -F</code>：该命令用于将nat表中的规则清空。<br>– <code>iptables -t nat -X</code>：该命令用于删除自定义的用户链。<br>– <code>iptables -t nat -Z</code>：该命令用于将计数器归零，即清空统计规则的数据。<br>– <code>iptables -t mangle -F</code>：该命令用于将mangle表中的规则清空。<br>– <code>iptables -t mangle -X</code>：该命令用于删除自定义的用户链。<br>– <code>iptables -t mangle -Z</code>：该命令用于将计数器归零，即清空统计规则的数据。</p><p>iptables -L -n –line-number</p>]]></content>
     
     
       
@@ -482,41 +522,6 @@
     
     <category term="kafka" scheme="http://example.com/categories/%E5%90%8E%E7%AB%AF/kafka/"/>
     
-    
-  </entry>
-  
-  <entry>
-    <title>Zookeeper</title>
-    <link href="http://example.com/2024/05/20/%E5%90%8E%E7%AB%AF/zookeeper/Zookeeper/"/>
-    <id>http://example.com/2024/05/20/%E5%90%8E%E7%AB%AF/zookeeper/Zookeeper/</id>
-    <published>2024-05-20T10:14:44.000Z</published>
-    <updated>2024-05-20T10:14:44.000Z</updated>
-    
-    <content type="html"><![CDATA[<p><img src="/2024/05/20/%E5%90%8E%E7%AB%AF/zookeeper/Zookeeper/image-20240520181453453.png"></p><p><a href="https://www.w3cschool.cn/zookeeper/zookeeper_fundamentals.html">https://www.w3cschool.cn/zookeeper/zookeeper_fundamentals.html</a></p><h1 id="Znode的类型"><a href="#Znode的类型" class="headerlink" title="Znode的类型"></a>Znode的类型</h1><p>Znode被分为持久（persistent）节点，顺序（sequential）节点和临时（ephemeral）节点。</p><ul><li><p><strong>持久节点</strong>  - 即使在创建该特定znode的客户端断开连接后，持久节点仍然存在。默认情况下，除非另有说明，否则所有znode都是持久的。</p></li><li><p><strong>临时节点</strong> - 客户端活跃时，临时节点就是有效的。当客户端与ZooKeeper集合断开连接时，临时节点会自动删除。因此，只有临时节点不允许有子节点。如果临时节点被删除，则下一个合适的节点将填充其位置。临时节点在leader选举中起着重要作用。</p></li><li><p><strong>顺序节点</strong> - 顺序节点可以是持久的或临时的。当一个新的znode被创建为一个顺序节点时，ZooKeeper通过将10位的序列号附加到原始名称来设置znode的路径。例如，如果将具有路径 <strong>&#x2F;myapp</strong> 的znode创建为顺序节点，则ZooKeeper会将路径更改为 <strong>&#x2F;myapp0000000001</strong> ，并将下一个序列号设置为0000000002。如果两个顺序节点是同时创建的，那么ZooKeeper不会对每个znode使用相同的数字。顺序节点在锁定和同步中起重要作用。<br><img src="/2024/05/20/%E5%90%8E%E7%AB%AF/zookeeper/Zookeeper/image-20240520184926955.png"></p></li></ul>]]></content>
-    
-    
-      
-      
-    <summary type="html">&lt;p&gt;&lt;img src=&quot;/2024/05/20/%E5%90%8E%E7%AB%AF/zookeeper/Zookeeper/image-20240520181453453.png&quot;&gt;&lt;/p&gt;
-&lt;p&gt;&lt;a href=&quot;https://www.w3cschool.cn/zooke</summary>
-      
-    
-    
-    
-    <category term="后端" scheme="http://example.com/categories/%E5%90%8E%E7%AB%AF/"/>
-    
-    <category term="zookeeper" scheme="http://example.com/categories/%E5%90%8E%E7%AB%AF/zookeeper/"/>
-    
-    
-    <category term="你好" scheme="http://example.com/tags/%E4%BD%A0%E5%A5%BD/"/>
-    
-    <category term="云元素" scheme="http://example.com/tags/%E4%BA%91%E5%85%83%E7%B4%A0/"/>
-    
-    <category term="devops" scheme="http://example.com/tags/devops/"/>
-    
-    <category term="jsaij" scheme="http://example.com/tags/jsaij/"/>
-    
-    <category term="sasa" scheme="http://example.com/tags/sasa/"/>
     
   </entry>
   
