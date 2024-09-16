@@ -188,8 +188,16 @@ func (rf *Raft) isLogUpToDate(term, index int) bool {
 3. logs（日志）
 
 ### log太长怎么办？
-常用的方法是保存快照，log无限增长会导致内存爆炸，所以应该在log大到一定程度的时候将其持久化到硬盘（网络存储）上，raft论文指出这个快照操作不是raft层应该做的，应该交给应用程序层去做。
+常用的方法是保存快照，log无限增长会导致内存爆炸，如果持久化到硬盘，最终会消耗磁盘的大量空间，如果一个服务器重启了，它需要通过重新从头开始执行这数百万条Log来重建自己的状态。当故障重启之后，遍历并执行整个Log的内容可能要花费几个小时来完成。这在某种程度上来说是浪费，因为在重启之前，服务器已经有了一定的应用程序状态。为了应对这种场景，Raft有了快照（Snapshots）的概念。快照背后的思想是，要求应用程序将其状态的拷贝作为一种**特殊的Log条目**存储下来。这里有个有趣的事实，那就是：对于大多数的应用程序来说，应用程序的状态远小于Log的大小。某种程度上我们知道，在某些时间点，Log和应用程序的状态是可以互换的，它们是用来表示应用程序状态的不同事物。但是Log可能包含大量的重复的记录（例如对于X的重复赋值），这些记录使用了Log中的大量的空间，但是同时却压缩到了key-value表单中的一条记录。这在多副本系统中很常见。在这里，如果存储Log，可能尺寸会非常大，相应的，如果存储key-value表单，这可能比Log尺寸小得多。这就是快照的背后原理。
 
+所以，当Raft认为它的Log将会过于庞大，例如大于1MB，10MB或者任意的限制，Raft会要求应用程序在Log的特定位置，对其状态做一个快照。所以，如果Raft要求应用程序做一个快照，Raft会从Log中选取一个与快照对应的点，**然后要求应用程序**在那个点的位置做一个快照。这里极其重要，因为我们接下来将会丢弃所有那个点之前的Log记录。如果我们有一个点的快照，那么我们可以安全的将那个点之前的Log丢弃。（在key-value数据库的例子中）快照本质上就是key-value表单。
+不幸的是，这里丢弃了快照之前的Log，引入了大量的复杂性。如果有的Follower的Log较短，在Leader的快照之前就结束，那么除非有一种新的机制，否则那个Follower永远也不可能恢复完整的Log。因为，如果一个Follower只有前两个槽位的Log，Leader不再有槽位3的Log可以通过AppendEntries RPC发给Follower，Follower的Log也就不可能补齐至Leader的Log。
+我们可以通过这种方式来避免这个问题：如果Leader发现有任何一个Follower的Log落后于Leader要做快照的点，那么Leader就不丢弃快照之前的Log。Leader原则上是可以知道Follower的Log位置，然后Leader可以不丢弃所有Follower中最短Log之后的本地Log。
+
+这或许是一个短暂的好方法，之所以这个方法不完美的原因在于，如果一个Follower关机了一周，它也就不能确认Log条目，同时也意味着Leader不能通过快照来减少自己的内存消耗（因为那个Follower的Log长度一直没有更新）。
+
+所以，Raft选择的方法是，Leader可以丢弃Follower需要的Log。所以，我们需要某种机制让AppendEntries能处理某些Follower Log的结尾到Leader Log开始之间丢失的这一段Log。解决方法是（一个新的消息类型）InstallSnapshot RPC。
+当Follower刚刚恢复，如果它的Log短于Leader通过 AppendEntries RPC发给它的内容，那么它首先会强制Leader回退自己的Log。在某个点，Leader将不能再回退，因为它已经到了自己Log的起点。这时，Leader会将自己的快照发给Follower，之后立即通过AppendEntries将后面的Log发给Follower。
 
 
 
