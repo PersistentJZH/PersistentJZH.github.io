@@ -1,3 +1,7 @@
+http://example.com/2024/09/14/%E5%90%8E%E7%AB%AF/k8s/%E7%BB%84%E4%BB%B6/kube-proxy/kube-proxy/
+http://example.com/2024/09/14/%E5%90%8E%E7%AB%AF/k8s/service/service/
+http://example.com/2024/09/14/%E5%90%8E%E7%AB%AF/k8s/auth/%E9%89%B4%E6%9D%83/
+http://example.com/2024/09/14/%E5%90%8E%E7%AB%AF/k8s/auth/%E8%AE%A4%E8%AF%81/
 http://example.com/2024/09/03/%E5%90%8E%E7%AB%AF/k8s/%E7%BD%91%E7%BB%9C%E6%8F%92%E4%BB%B6/%E7%BD%91%E7%BB%9C%E6%8F%92%E4%BB%B6/
 http://example.com/2024/09/02/%E5%90%8E%E7%AB%AF/linux/bond/bond/
 http://example.com/2024/08/09/%E5%90%8E%E7%AB%AF/k8s/cka/cka/
