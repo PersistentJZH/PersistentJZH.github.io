@@ -1,0 +1,268 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>auth | 小屋</title><meta name="author" content="Jian"><meta name="copyright" content="Jian"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="认证以上这些组件之间的相互调用都是通过网络进行的。在进行网络通信时，通信双方需要验证对方的身份，以避免恶意第三方伪造身份窃取信息或者对系统进行攻击。为了相互验证对方的身份，通信双方中的任何一方都需要做下面两件事情：  向对方提供标明自己身份的一个证书 验证对方提供的身份证书是否合法，是否伪造的？  在 Kubernetes 中使用了数字证书来提供身份证明，我们可以把数字证书简单理解为我们在日常生活">
+<meta property="og:type" content="article">
+<meta property="og:title" content="auth">
+<meta property="og:url" content="http://example.com/2024/09/14/%E5%90%8E%E7%AB%AF/k8s/auth/%E8%AE%A4%E8%AF%81/index.html">
+<meta property="og:site_name" content="小屋">
+<meta property="og:description" content="认证以上这些组件之间的相互调用都是通过网络进行的。在进行网络通信时，通信双方需要验证对方的身份，以避免恶意第三方伪造身份窃取信息或者对系统进行攻击。为了相互验证对方的身份，通信双方中的任何一方都需要做下面两件事情：  向对方提供标明自己身份的一个证书 验证对方提供的身份证书是否合法，是否伪造的？  在 Kubernetes 中使用了数字证书来提供身份证明，我们可以把数字证书简单理解为我们在日常生活">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/img/WechatIMG77.jpg">
+<meta property="article:published_time" content="2024-09-14T03:49:58.000Z">
+<meta property="article:modified_time" content="2024-09-14T03:49:58.000Z">
+<meta property="article:author" content="Jian">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/img/WechatIMG77.jpg"><link rel="shortcut icon" href="/img/WechatIMG77.jpg"><link rel="canonical" href="http://example.com/2024/09/14/%E5%90%8E%E7%AB%AF/k8s/auth/%E8%AE%A4%E8%AF%81/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//fonts.googleapis.com" crossorigin=""/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=4.13.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Titillium+Web&amp;display=swap" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.11.1/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: true,
+  percent: {
+    toc: true,
+    rightside: true,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'auth',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2024-09-14 11:49:58'
+}</script><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+        if (t === 'dark') activateDarkMode()
+        else if (t === 'light') activateLightMode()
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><link rel="stylesheet" href="/css/font.css"><!-- hexo injector head_end start --><link rel="stylesheet" href="https://npm.elemecdn.com/hexo-butterfly-wowjs/lib/animate.min.css" media="print" onload="this.media='all'"><!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.2.0"><link rel="alternate" href="/atom.xml" title="小屋" type="application/atom+xml">
+</head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/WechatIMG77.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">25</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">10</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">22</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/workouts_page/"><i class="fa-fw fas fa-home"></i><span> 运动</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div><div class="menus_item"><a class="site-page" href="/gallery/"><i class="fa-fw fas fa-heart"></i><span> 相册</span></a></div><div class="menus_item"><a class="site-page" href="/comments/"><i class="fa-fw fas fa-heart"></i><span> 留言</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('/img/wallhaven-4dqkrj.jpg')"><nav id="nav"><span id="blog-info"><a href="/" title="小屋"><span class="site-name">小屋</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/workouts_page/"><i class="fa-fw fas fa-home"></i><span> 运动</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div><div class="menus_item"><a class="site-page" href="/gallery/"><i class="fa-fw fas fa-heart"></i><span> 相册</span></a></div><div class="menus_item"><a class="site-page" href="/comments/"><i class="fa-fw fas fa-heart"></i><span> 留言</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">auth</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2024-09-14T03:49:58.000Z" title="发表于 2024-09-14 11:49:58">2024-09-14</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2024-09-14T03:49:58.000Z" title="更新于 2024-09-14 11:49:58">2024-09-14</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">1.5k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>6分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="auth"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="认证"><a href="#认证" class="headerlink" title="认证"></a>认证</h1><p>以上这些组件之间的相互调用都是通过网络进行的。在进行网络通信时，通信双方需要验证对方的身份，以避免恶意第三方伪造身份窃取信息或者对系统进行攻击。为了相互验证对方的身份，通信双方中的任何一方都需要做下面两件事情：</p>
+<ul>
+<li>向对方提供标明自己身份的一个证书</li>
+<li>验证对方提供的身份证书是否合法，是否伪造的？</li>
+</ul>
+<p>在 Kubernetes 中使用了数字证书来提供身份证明，我们可以把数字证书简单理解为我们在日常生活中使用的“身份证”，上面标注了证书拥有者的身份信息，例如名称，所属组织机构等。为了保证证书的权威性，会采用一个通信双方都信任的 CA（证书机构，Certificate Authority）来颁发证书。这就类似于现实生活中颁发“身份证”的政府机构。数字证书中最重要的内容实际上是证书拥有者的公钥，该公钥代表了用户的身份。<br><a target="_blank" rel="noopener" href="https://www.cnblogs.com/renshengdezheli/p/17495272.html">https://www.cnblogs.com/renshengdezheli/p/17495272.html</a><br><a target="_blank" rel="noopener" href="https://cloudnative.to/blog/k8s-certificate/">https://cloudnative.to/blog/k8s-certificate/</a></p>
+<ul>
+<li>服务器端证书：服务器用于证明自身身份的数字证书，里面主要包含了服务器端的公钥以及服务器的身份信息。</li>
+<li>服务器端私钥：服务器端证书中包含的公钥所对应的私钥。公钥和私钥是成对使用的，在进行 TLS 验证时，服务器使用该私钥来向客户端证明自己是服务器端证书的拥有者。</li>
+<li>客户端证书：客户端用于证明自身身份的数字证书，里面主要包含了客户端的公钥以及客户端的身份信息。</li>
+<li>客户端私钥：客户端证书中包含的公钥所对应的私钥，同理，客户端使用该私钥来向服务器端证明自己是客户端证书的拥有者。</li>
+<li>服务器端 CA 根证书：签发服务器端证书的 CA 根证书，客户端使用该 CA 根证书来验证服务器端证书的合法性。</li>
+<li>客户端 CA 根证书：签发客户端证书的 CA 根证书，服务器端使用该 CA 根证书来验证客户端证书的合法性。</li>
+</ul>
+<h2 id="base-auth（1-19版本之后被遗弃）"><a href="#base-auth（1-19版本之后被遗弃）" class="headerlink" title="base auth（1.19版本之后被遗弃）"></a>base auth（1.19版本之后被遗弃）</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">vi /etc/kubernetes/basic_auth_file</span><br><span class="line">admin,admin,1</span><br><span class="line"></span><br><span class="line">kubectl -s=<span class="string">&quot;https://192.168.64.4:6443&quot;</span> --username=admin --password=admin get nodes</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="token"><a href="#token" class="headerlink" title="token"></a>token</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">openssl rand -hex 10</span><br><span class="line">vim /etc/kubernetes/pki/mytok.csv</span><br><span class="line">systemctl restart kubelet</span><br><span class="line">kubectl -s=&quot;https://192.168.110.130:6443&quot; --token=&#x27;1b3aa30ed8b896146f0f&#x27; get nodes</span><br></pre></td></tr></table></figure>
+
+<h2 id="admin的kubeconfig文件"><a href="#admin的kubeconfig文件" class="headerlink" title="admin的kubeconfig文件"></a>admin的kubeconfig文件</h2><p>安装好kubernetes集群之后，系统会生成一个管理员权限的kubeconfig文件：&#x2F;etc&#x2F;kubernetes&#x2F;admin.conf。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl --kubeconfig=admin.conf get nodes</span><br></pre></td></tr></table></figure>
+
+<h2 id="自定义的kubeconfig文件"><a href="#自定义的kubeconfig文件" class="headerlink" title="自定义的kubeconfig文件"></a>自定义的kubeconfig文件</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">1. 创建私钥</span><br><span class="line">openssl genrsa -out test.key 2048</span><br><span class="line">2. 利用刚生成的私钥key ，生成证书请求文件 test.csr，CN 的值 test，就是我们授权的用户</span><br><span class="line">openssl req -new -key test.key -out test.csr -subj &quot;/CN=test/O=cka2020&quot;</span><br><span class="line">3. 对证书请求文件test.csr进行 base64 编码。</span><br><span class="line">cat test.csr | base64 | tr -d &quot;\n&quot;</span><br><span class="line">4. 编写申请证书请求文件的 yaml 文件</span><br><span class="line">[root@k8scloude1 safe]# cat csr.yaml </span><br><span class="line">apiVersion: certificates.k8s.io/v1beta1 </span><br><span class="line">kind: CertificateSigningRequest </span><br><span class="line">metadata: name: test spec: groups: - system:authenticated #signerName: kubernetes.io/legacy-aa #注意这行是被注释掉的 request: LS0tLS1CRUdJTiBDRVJUSUZJQ0FURSBSRVFVRVNULS0tLS0KTUlJQ1pqQ0NBVTRDQVFBd0lURU5NQXNHQTFVRUF3d0VkR1Z6ZERFUU1BNEdBMVVFQ2d3SFkydGhNakF5TURDQwpBU0l3RFFZSktvWklodmNOQVFFQkJRQURnZ0VQQURDQ0FRb0NnZ0VCQUxJTWtZTGN5NklWM3FSMmRJSm8vUnRRCnZ1amYrYjRMUWp2YjlSeGhaTjZTdEcyUFlMWHhvSi9FRUlVYkJMb1dpUFg0NVhvdDNNamNLRmtaaUoyWmY1L3EKeHhPRkF2dFliM3NCNVI0UCt0V2xMeExialBibS9NNE56QXl0eUJvOWl4cFh0ODNFRFJZaElac2VDR2NVTlVuMQpkMUl4NW0rRkdTU3RTZmU0MDdPM3IrTTRsMVF1U3JWNCtIYmFST0l3cW4rTmpzbGVEdmVzV2FPVWx2ZkJqR0tmCjVxejk1bVZGMGp4NUxYNzVwWHFvTWljWnU3c0dLMFFWV0ZFOUR4ZXFCMlgrb2pPc2dYYVRVNUtzSHJESlcxb3gKRlJIVm10NEx5Q0dUd3dDZzNGWFVJWnNCM1FRb3lNLytKbTNkWVg1bGhxaE9sekYxdU4vOGdzTG1Rci9LeXRFQwpBd0VBQWFBQU1BMEdDU3FHU0liM0RRRUJDd1VBQTRJQkFRQm9HWlE5cWo2QlluTmtKM3lubG8xdjR0MStTa0U4CmUxOXdiL3IyNnlRRHhpWWoreHU4V042TUZBY3hldmtYTWQzUTA3NmpBa2ZnRTRrV2xYV09YQVd3SmNIdGI2RzgKaVZMMmxKRVd0WWhDcVVBRmlwZzREN29YSHBPTEUwNElwOHVyMVFheHdQODFhQ2RLRDNFSVVNbGJuR3BpcXpmLwp3cFJZbklBeWpoVzhraldmSUNEeHZrM2VIWUFhQUdGM0JxcXEyaEQyQ2lQVkVwS2dXa3FrVUF0bzF6K2JDdjZzCk0zVDgyR2IrbGFrelVYNjRUSU9pUHNNbXpQTWJJbUxlN3pkZTM3Ry9ZVXh6MTY1dGJQUXRkTFFmQzhGS3lnY1UKOW5kR3k2Q3piUFNFanp0cjMvcXdpdWpEK09IYVpocE9jdjBkSmdRc3NpUlQxQVU0S3NvUFBkSkUKLS0tLS1FTkQgQ0VSVElGSUNBVEUgUkVRVUVTVC0tLS0tCg== usages: - client auth</span><br></pre></td></tr></table></figure>
+
+
+
+
+<h1 id="kubectl配置文件"><a href="#kubectl配置文件" class="headerlink" title="kubectl配置文件"></a>kubectl配置文件</h1><p><a target="_blank" rel="noopener" href="https://www.hewanyao.com/128.html">https://www.hewanyao.com/128.html</a></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">ubuntu@master:~/.kube$ cat config</span><br><span class="line">apiVersion: v1</span><br><span class="line">clusters:</span><br><span class="line">- cluster:</span><br><span class="line">    certificate-authority-data: LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSUJkekNDQVIyZ0F3SUJBZ0lCQURBS0JnZ3Foa2pPUFFRREFqQWpNU0V3SHdZRFZRUUREQmhyTTNNdGMyVnkKZG1WeUxXTmhRREUyT0RVMU9EYzJNakF3SGhjTk1qTXdOakF4TURJME56QXdXaGNOTXpNd05USTVNREkwTnpBdwpXakFqTVNFd0h3WURWUVFEREJock0zTXRjMlZ5ZG1WeUxXTmhRREUyT0RVMU9EYzJNakF3V1RBVEJnY3Foa2pPClBRSUJCZ2dxaGtqT1BRTUJCd05DQUFRN2NvWTdrc2dEVWJpZjlzT0NIRy9uRmxMcXhHU2QzTm9oeWhzQXpYUE8KRGpMeVNzVjZWeHdLWE80czJJTUM1ekxadFF3L3pvcmV1a3hCOHlSUUE4cmlvMEl3UURBT0JnTlZIUThCQWY4RQpCQU1DQXFRd0R3WURWUjBUQVFIL0JBVXdBd0VCL3pBZEJnTlZIUTRFRmdRVUd0Uk53NzZsNU02UWlZb21kMWsrCnh6azBMZWd3Q2dZSUtvWkl6ajBFQXdJRFNBQXdSUUlnTE9CYWE1eVpHaitSRWhET3loM0tnOTUzaW9mVHNnVm4KUEVXWmVrbjI0VlVDSVFDdGxGQlhJc0xlWWZLTTY5eTdTM2RVa3pQR2tMNFZ2czNpcEVBb2ZEN0ZZUT09Ci0tLS0tRU5EIENFUlRJRklDQVRFLS0tLS0K</span><br><span class="line">    server: https://127.0.0.1:6443</span><br><span class="line">  name: default</span><br><span class="line">contexts:</span><br><span class="line">- context:</span><br><span class="line">    cluster: default</span><br><span class="line">    user: default</span><br><span class="line">  name: default</span><br><span class="line">current-context: default</span><br><span class="line">kind: Config</span><br><span class="line">preferences: &#123;&#125;</span><br><span class="line">users:</span><br><span class="line">- name: default</span><br><span class="line">  user:</span><br><span class="line">    client-certificate-data: LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSUJrVENDQVRlZ0F3SUJBZ0lJYkRWVGtHMWV4cU13Q2dZSUtvWkl6ajBFQXdJd0l6RWhNQjhHQTFVRUF3d1kKYXpOekxXTnNhV1Z1ZEMxallVQXhOamcxTlRnM05qSXdNQjRYRFRJek1EWXdNVEF5TkRjd01Gb1hEVEkwTURVegpNVEF5TkRjd01Gb3dNREVYTUJVR0ExVUVDaE1PYzNsemRHVnRPbTFoYzNSbGNuTXhGVEFUQmdOVkJBTVRESE41CmMzUmxiVHBoWkcxcGJqQlpNQk1HQnlxR1NNNDlBZ0VHQ0NxR1NNNDlBd0VIQTBJQUJLWTBTbldXL0pIQnVoQnUKcDcwS2FKUndEZ1hDUHRySnpCNXlRWFV0RUlZbXVNSDFHWFlLNkdnWjFNdVlyaHlxdmpFcnA4bGNMR2o5Q29yVgpRT05WbTNlalNEQkdNQTRHQTFVZER3RUIvd1FFQXdJRm9EQVRCZ05WSFNVRUREQUtCZ2dyQmdFRkJRY0RBakFmCkJnTlZIU01FR0RBV2dCU0VFRmNaQWF4OFhvcnlYZ2dxZVlPemMvMXlDekFLQmdncWhrak9QUVFEQWdOSUFEQkYKQWlBOEdKaTE2MG0wMzVaZ2YzMm5YN2hlRGkrRklyNERmNG5Qa3BvYVRXaURjQUloQU8weSt3Tk92ZUhxNWh2TwoyaW13ejBxN0xhNWtLUEdyTnJYWHNEN2p3OUQyCi0tLS0tRU5EIENFUlRJRklDQVRFLS0tLS0KLS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSUJkakNDQVIyZ0F3SUJBZ0lCQURBS0JnZ3Foa2pPUFFRREFqQWpNU0V3SHdZRFZRUUREQmhyTTNNdFkyeHAKWlc1MExXTmhRREUyT0RVMU9EYzJNakF3SGhjTk1qTXdOakF4TURJME56QXdXaGNOTXpNd05USTVNREkwTnpBdwpXakFqTVNFd0h3WURWUVFEREJock0zTXRZMnhwWlc1MExXTmhRREUyT0RVMU9EYzJNakF3V1RBVEJnY3Foa2pPClBRSUJCZ2dxaGtqT1BRTUJCd05DQUFRMkRhYmRVY25rMm5yc2JBUFNkNWkzV09zbXQ3MDZZN2dLenVUSUlLb0QKU3kvVkVWVTU5cWw1QnRGL0pDOU9TNUU4U3JscEVwRW9YWCsyNzNDSnlvMUVvMEl3UURBT0JnTlZIUThCQWY4RQpCQU1DQXFRd0R3WURWUjBUQVFIL0JBVXdBd0VCL3pBZEJnTlZIUTRFRmdRVWhCQlhHUUdzZkY2SzhsNElLbm1ECnMzUDljZ3N3Q2dZSUtvWkl6ajBFQXdJRFJ3QXdSQUlnQUk3bitRWUoyRHN3eWthWWVTVTA2bnlnZ3JQNDJvN0YKVENRVCsxTXJEOTRDSUVxUHNXdU1hUktYSTFvd3g5STFyd0huNy85YjFFSlFnalQxbStRWXc1QmMKLS0tLS1FTkQgQ0VSVElGSUNBVEUtLS0tLQo=</span><br><span class="line">    client-key-data: LS0tLS1CRUdJTiBFQyBQUklWQVRFIEtFWS0tLS0tCk1IY0NBUUVFSUN0OGZaR3htdzA2YWxpZkM5ck1YT0JBYXdrWmd2c2p6Q2FYcC90WWYzU3JvQW9HQ0NxR1NNNDkKQXdFSG9VUURRZ0FFcGpSS2RaYjhrY0c2RUc2bnZRcG9sSEFPQmNJKzJzbk1IbkpCZFMwUWhpYTR3ZlVaZGdybwphQm5VeTVpdUhLcStNU3VueVZ3c2FQMEtpdFZBNDFXYmR3PT0KLS0tLS1FTkQgRUMgUFJJVkFURSBLRVktLS0tLQo=</span><br></pre></td></tr></table></figure>
+
+
+<h1 id="apiserver-配置文件"><a href="#apiserver-配置文件" class="headerlink" title="apiserver 配置文件"></a>apiserver 配置文件</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br></pre></td><td class="code"><pre><span class="line">root@sg-equinix-sg5-10-74-84-12:~/.kube<span class="comment"># cat /etc/kubernetes/manifests/kube-apiserver.yaml</span></span><br><span class="line">apiVersion: v1</span><br><span class="line">kind: Pod</span><br><span class="line">metadata:</span><br><span class="line">  annotations:</span><br><span class="line">    kubeadm.kubernetes.io/kube-apiserver.advertise-address.endpoint: 10.74.84.12:6443</span><br><span class="line">  creationTimestamp: null</span><br><span class="line">  labels:</span><br><span class="line">    component: kube-apiserver</span><br><span class="line">    tier: control-plane</span><br><span class="line">  name: kube-apiserver</span><br><span class="line">  namespace: kube-system</span><br><span class="line">spec:</span><br><span class="line">  dnsPolicy: <span class="string">&quot;None&quot;</span></span><br><span class="line">  dnsConfig:</span><br><span class="line">    nameservers:</span><br><span class="line">      - 10.99.53.96</span><br><span class="line">    searches:</span><br><span class="line">      - kube-system.svc.cluster.local</span><br><span class="line">      - svc.cluster.local</span><br><span class="line">      - cluster.local</span><br><span class="line">    options:</span><br><span class="line">      - name: ndots</span><br><span class="line">        value: <span class="string">&quot;5&quot;</span></span><br><span class="line">  containers:</span><br><span class="line">  - <span class="built_in">command</span>:</span><br><span class="line">    - kube-apiserver</span><br><span class="line">    - --advertise-address=10.74.84.12</span><br><span class="line">    - --allow-privileged=<span class="literal">true</span></span><br><span class="line">    - --authorization-mode=Node,RBAC</span><br><span class="line">    - --client-ca-file=/etc/kubernetes/pki/ca.crt <span class="comment"># 用于验证访问 kube-apiserver 的客户端的证书的 CA 根证书</span></span><br><span class="line">    - --enable-admission-plugins=NodeRestriction</span><br><span class="line">    - --enable-bootstrap-token-auth=<span class="literal">true</span></span><br><span class="line">    - --etcd-cafile=/etc/kubernetes/pki/etcd/ca.crt <span class="comment"># 用于验证 etcd 服务器证书的 CA 根证书</span></span><br><span class="line">    - --etcd-certfile=/etc/kubernetes/pki/apiserver-etcd-client.crt <span class="comment"># 用于访问 etcd 的客户端证书</span></span><br><span class="line">    - --etcd-keyfile=/etc/kubernetes/pki/apiserver-etcd-client.key <span class="comment"># 用于访问 etcd 的客户端证书的私钥</span></span><br><span class="line">    - --etcd-servers=https://127.0.0.1:2379 <span class="comment">#</span></span><br><span class="line">    - --kubelet-client-certificate=/etc/kubernetes/pki/apiserver-kubelet-client.crt <span class="comment">#</span></span><br><span class="line">    - --kubelet-client-key=/etc/kubernetes/pki/apiserver-kubelet-client.key <span class="comment">#</span></span><br><span class="line">    - --kubelet-preferred-address-types=Hostname,InternalIP,ExternalIP<span class="comment">#</span></span><br><span class="line">    - --proxy-client-cert-file=/etc/kubernetes/pki/front-proxy-client.crt</span><br><span class="line">    - --proxy-client-key-file=/etc/kubernetes/pki/front-proxy-client.key</span><br><span class="line">    - --requestheader-allowed-names=front-proxy-client</span><br><span class="line">    - --requestheader-client-ca-file=/etc/kubernetes/pki/front-proxy-ca.crt</span><br><span class="line">    - --requestheader-extra-headers-prefix=X-Remote-Extra-</span><br><span class="line">    - --requestheader-group-headers=X-Remote-Group</span><br><span class="line">    - --requestheader-username-headers=X-Remote-User</span><br><span class="line">    - --secure-port=6443</span><br><span class="line">    - --service-account-issuer=https://kubernetes.default.svc.cluster.local</span><br><span class="line">    - --service-account-key-file=/etc/kubernetes/pki/sa.pub</span><br><span class="line">    - --service-account-signing-key-file=/etc/kubernetes/pki/sa.key</span><br><span class="line">    - --service-cluster-ip-range=10.96.0.0/12</span><br><span class="line">    - --tls-cert-file=/etc/kubernetes/pki/apiserver.crt</span><br><span class="line">    - --tls-private-key-file=/etc/kubernetes/pki/apiserver.key</span><br><span class="line">    - --tls-cipher-suites=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256,TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384,TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305,TLS_RSA_WITH_AES_128_GCM_SHA256,TLS_RSA_WITH_AES_256_GCM_SHA384</span><br><span class="line">    image: k8s.gcr.io/kube-apiserver:v1.24.2</span><br><span class="line">    imagePullPolicy: IfNotPresent</span><br><span class="line">    livenessProbe:</span><br><span class="line">      failureThreshold: 8</span><br><span class="line">      httpGet:</span><br><span class="line">        host: 10.74.84.12</span><br><span class="line">        path: /livez</span><br><span class="line">        port: 6443</span><br><span class="line">        scheme: HTTPS</span><br><span class="line">      initialDelaySeconds: 10</span><br><span class="line">      periodSeconds: 10</span><br><span class="line">      timeoutSeconds: 15</span><br><span class="line">    name: kube-apiserver</span><br><span class="line">    readinessProbe:</span><br><span class="line">      failureThreshold: 3</span><br><span class="line">      httpGet:</span><br><span class="line">        host: 10.74.84.12</span><br><span class="line">        path: /readyz</span><br><span class="line">        port: 6443</span><br><span class="line">        scheme: HTTPS</span><br><span class="line">      periodSeconds: 1</span><br><span class="line">      timeoutSeconds: 15</span><br><span class="line">    resources:</span><br><span class="line">      requests:</span><br><span class="line">        cpu: 250m</span><br><span class="line">    startupProbe:</span><br><span class="line">      failureThreshold: 24</span><br><span class="line">      httpGet:</span><br><span class="line">        host: 10.74.84.12</span><br><span class="line">        path: /livez</span><br><span class="line">        port: 6443</span><br><span class="line">        scheme: HTTPS</span><br><span class="line">      initialDelaySeconds: 10</span><br><span class="line">      periodSeconds: 10</span><br><span class="line">      timeoutSeconds: 15</span><br><span class="line">    volumeMounts:</span><br><span class="line">    - mountPath: /etc/ssl/certs</span><br><span class="line">      name: ca-certs</span><br><span class="line">      readOnly: <span class="literal">true</span></span><br><span class="line">    - mountPath: /etc/ca-certificates</span><br><span class="line">      name: etc-ca-certificates</span><br><span class="line">      readOnly: <span class="literal">true</span></span><br><span class="line">    - mountPath: /etc/pki</span><br><span class="line">      name: etc-pki</span><br><span class="line">      readOnly: <span class="literal">true</span></span><br><span class="line">    - mountPath: /etc/kubernetes/pki</span><br><span class="line">      name: k8s-certs</span><br><span class="line">      readOnly: <span class="literal">true</span></span><br><span class="line">    - mountPath: /usr/local/share/ca-certificates</span><br><span class="line">      name: usr-local-share-ca-certificates</span><br><span class="line">      readOnly: <span class="literal">true</span></span><br><span class="line">    - mountPath: /usr/share/ca-certificates</span><br><span class="line">      name: usr-share-ca-certificates</span><br><span class="line">      readOnly: <span class="literal">true</span></span><br><span class="line">  hostNetwork: <span class="literal">true</span></span><br><span class="line">  priorityClassName: system-node-critical</span><br><span class="line">  securityContext:</span><br><span class="line">    seccompProfile:</span><br><span class="line">      <span class="built_in">type</span>: RuntimeDefault</span><br><span class="line">  volumes:</span><br><span class="line">  - hostPath:</span><br><span class="line">      path: /etc/ssl/certs</span><br><span class="line">      <span class="built_in">type</span>: DirectoryOrCreate</span><br><span class="line">    name: ca-certs</span><br><span class="line">  - hostPath:</span><br><span class="line">      path: /etc/ca-certificates</span><br><span class="line">      <span class="built_in">type</span>: DirectoryOrCreate</span><br><span class="line">    name: etc-ca-certificates</span><br><span class="line">  - hostPath:</span><br><span class="line">      path: /etc/pki</span><br><span class="line">      <span class="built_in">type</span>: DirectoryOrCreate</span><br><span class="line">    name: etc-pki</span><br><span class="line">  - hostPath:</span><br><span class="line">      path: /etc/kubernetes/pki</span><br><span class="line">      <span class="built_in">type</span>: DirectoryOrCreate</span><br><span class="line">    name: k8s-certs</span><br><span class="line">  - hostPath:</span><br><span class="line">      path: /usr/local/share/ca-certificates</span><br><span class="line">      <span class="built_in">type</span>: DirectoryOrCreate</span><br><span class="line">    name: usr-local-share-ca-certificates</span><br><span class="line">  - hostPath:</span><br><span class="line">      path: /usr/share/ca-certificates</span><br><span class="line">      <span class="built_in">type</span>: DirectoryOrCreate</span><br><span class="line">    name: usr-share-ca-certificates</span><br><span class="line">status: &#123;&#125;</span><br></pre></td></tr></table></figure>
+</article><div class="tag_share"><div class="post-meta__tag-list"></div><div class="post_share"></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2024/09/14/%E5%90%8E%E7%AB%AF/k8s/auth/%E9%89%B4%E6%9D%83/" title="鉴权"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">鉴权</div></div></a></div><div class="next-post pull-right"><a href="/2024/09/03/%E5%90%8E%E7%AB%AF/k8s/%E7%BD%91%E7%BB%9C%E6%8F%92%E4%BB%B6/%E7%BD%91%E7%BB%9C%E6%8F%92%E4%BB%B6/" title="网络插件"><img class="cover" src="/2024/09/03/%E5%90%8E%E7%AB%AF/k8s/%E7%BD%91%E7%BB%9C%E6%8F%92%E4%BB%B6/%E7%BD%91%E7%BB%9C%E6%8F%92%E4%BB%B6/%E7%BD%91%E7%BB%9C%E6%8F%92%E4%BB%B6-20240903164402523.webp" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">网络插件</div></div></a></div></nav><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/img/WechatIMG77.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Jian</div><div class="author-info__description">欢迎来到小屋</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">25</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">10</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">22</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/PersistentJZH"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content is-expand"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%AE%A4%E8%AF%81"><span class="toc-number">1.</span> <span class="toc-text">认证</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#base-auth%EF%BC%881-19%E7%89%88%E6%9C%AC%E4%B9%8B%E5%90%8E%E8%A2%AB%E9%81%97%E5%BC%83%EF%BC%89"><span class="toc-number">1.1.</span> <span class="toc-text">base auth（1.19版本之后被遗弃）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#token"><span class="toc-number">1.2.</span> <span class="toc-text">token</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#admin%E7%9A%84kubeconfig%E6%96%87%E4%BB%B6"><span class="toc-number">1.3.</span> <span class="toc-text">admin的kubeconfig文件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%87%AA%E5%AE%9A%E4%B9%89%E7%9A%84kubeconfig%E6%96%87%E4%BB%B6"><span class="toc-number">1.4.</span> <span class="toc-text">自定义的kubeconfig文件</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#kubectl%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6"><span class="toc-number">2.</span> <span class="toc-text">kubectl配置文件</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#apiserver-%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6"><span class="toc-number">3.</span> <span class="toc-text">apiserver 配置文件</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/09/14/%E5%90%8E%E7%AB%AF/k8s/%E7%BB%84%E4%BB%B6/kube-proxy/kube-proxy/" title="kube-proxy">kube-proxy</a><time datetime="2024-09-14T10:41:13.000Z" title="发表于 2024-09-14 18:41:13">2024-09-14</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/09/14/%E5%90%8E%E7%AB%AF/k8s/service/service/" title="service">service</a><time datetime="2024-09-14T10:39:11.000Z" title="发表于 2024-09-14 18:39:11">2024-09-14</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/09/14/%E5%90%8E%E7%AB%AF/k8s/auth/%E9%89%B4%E6%9D%83/" title="鉴权">鉴权</a><time datetime="2024-09-14T03:53:30.000Z" title="发表于 2024-09-14 11:53:30">2024-09-14</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/09/14/%E5%90%8E%E7%AB%AF/k8s/auth/%E8%AE%A4%E8%AF%81/" title="auth">auth</a><time datetime="2024-09-14T03:49:58.000Z" title="发表于 2024-09-14 11:49:58">2024-09-14</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/09/03/%E5%90%8E%E7%AB%AF/k8s/%E7%BD%91%E7%BB%9C%E6%8F%92%E4%BB%B6/%E7%BD%91%E7%BB%9C%E6%8F%92%E4%BB%B6/" title="网络插件"><img src="/2024/09/03/%E5%90%8E%E7%AB%AF/k8s/%E7%BD%91%E7%BB%9C%E6%8F%92%E4%BB%B6/%E7%BD%91%E7%BB%9C%E6%8F%92%E4%BB%B6/%E7%BD%91%E7%BB%9C%E6%8F%92%E4%BB%B6-20240903164402523.webp" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="网络插件"/></a><div class="content"><a class="title" href="/2024/09/03/%E5%90%8E%E7%AB%AF/k8s/%E7%BD%91%E7%BB%9C%E6%8F%92%E4%BB%B6/%E7%BD%91%E7%BB%9C%E6%8F%92%E4%BB%B6/" title="网络插件">网络插件</a><time datetime="2024-09-03T08:44:01.000Z" title="发表于 2024-09-03 16:44:01">2024-09-03</time></div></div></div></div></div></div></main><footer id="footer" style="background-image: url('/img/wallhaven-4dqkrj.jpg')"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2024 By Jian</div><div class="footer_custom_text">我们终其一生追寻的东西，或许现在就已经拥有</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=4.13.0"></script><script src="/js/main.js?v=4.13.0"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.umd.min.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page@5.2.0/instantpage.min.js" type="module"></script><div class="js-pjax"><script>(() => {
+  const $mermaid = document.querySelectorAll('#article-container .mermaid-wrap')
+  if ($mermaid.length === 0) return
+  const runMermaid = () => {
+    window.loadMermaid = true
+    const theme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'default'
+
+    Array.from($mermaid).forEach((item, index) => {
+      const mermaidSrc = item.firstElementChild
+      const mermaidThemeConfig = '%%{init:{ \'theme\':\'' + theme + '\'}}%%\n'
+      const mermaidID = 'mermaid-' + index
+      const mermaidDefinition = mermaidThemeConfig + mermaidSrc.textContent
+
+      const renderFn = mermaid.render(mermaidID, mermaidDefinition)
+
+      const renderV10 = () => {
+        renderFn.then(({svg}) => {
+          mermaidSrc.insertAdjacentHTML('afterend', svg)
+        })
+      }
+
+      const renderV9 = svg => {
+        mermaidSrc.insertAdjacentHTML('afterend', svg)
+      }
+
+      typeof renderFn === 'string' ? renderV9(renderFn) : renderV10()
+    })
+  }
+
+  const loadMermaid = () => {
+    window.loadMermaid ? runMermaid() : getScript('https://cdn.jsdelivr.net/npm/mermaid@10.8.0/dist/mermaid.min.js').then(runMermaid)
+  }
+
+  btf.addGlobalFn('themeChange', runMermaid, 'mermaid')
+
+  window.pjax ? loadMermaid() : document.addEventListener('DOMContentLoaded', loadMermaid)
+})()</script><script>(() => {
+  const initValine = () => {
+    const valine = new Valine(Object.assign({
+      el: '#vcomment',
+      appId: 'HBquYBJmeQdyw7QvMX1rwES4-gzGzoHsz',
+      appKey: 'NI3evVT8PzKhfKwDD5GBwQvt',
+      avatar: 'monsterid',
+      serverURLs: '',
+      emojiMaps: "",
+      path: window.location.pathname,
+      visitor: false
+    }, null))
+  }
+
+  const loadValine = async () => {
+    if (typeof Valine === 'function') initValine()
+    else {
+      await getScript('https://cdn.jsdelivr.net/npm/valine@1.5.1/dist/Valine.min.js')
+      initValine()
+    }
+  }
+
+  if ('Valine' === 'Valine' || !false) {
+    if (false) btf.loadComment(document.getElementById('vcomment'),loadValine)
+    else setTimeout(loadValine, 0)
+  } else {
+    window.loadOtherComment = loadValine
+  }
+})()</script></div><canvas id="universe"></canvas><script defer="defer" id="ribbon" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/dist/canvas-ribbon.min.js" size="150" alpha="0.6" zIndex="-1" mobile="false" data-click="true"></script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer@1.10.1/dist/APlayer.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/aplayer@1.10.1/dist/APlayer.min.js"></script><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/metingjs/dist/Meting.min.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div><!-- hexo injector body_end start --><div class="js-pjax"><script async="async">var arr = document.getElementsByClassName('recent-post-item');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__zoomIn');
+    arr[i].setAttribute('data-wow-duration', '1s');
+    arr[i].setAttribute('data-wow-delay', '50ms');
+    arr[i].setAttribute('data-wow-offset', '100');
+    arr[i].setAttribute('data-wow-iteration', '1');
+  }</script><script async="async">var arr = document.getElementsByClassName('card-widget');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__zoomIn');
+    arr[i].setAttribute('data-wow-duration', '');
+    arr[i].setAttribute('data-wow-delay', '');
+    arr[i].setAttribute('data-wow-offset', '');
+    arr[i].setAttribute('data-wow-iteration', '');
+  }</script></div><script defer src="https://npm.elemecdn.com/hexo-butterfly-wowjs/lib/wow.min.js"></script><script defer src="https://npm.elemecdn.com/hexo-butterfly-wowjs/lib/wow_init.js"></script><!-- hexo injector body_end end --><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"log":false,"model":{"jsonPath":"/live2dw/assets/shizuku.model.json"},"display":{"position":"left","width":150,"height":300},"mobile":{"show":false},"react":{"opacity":0.7}});</script></body></html>
