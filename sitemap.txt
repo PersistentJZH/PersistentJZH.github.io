@@ -1,3 +1,6 @@
+http://example.com/2024/10/12/%E5%90%8E%E7%AB%AF/lua/lua/
+http://example.com/2024/09/27/%E5%90%8E%E7%AB%AF/k8s/ingress/ingress/
+http://example.com/2024/09/26/%E5%90%8E%E7%AB%AF/k8s/%E7%81%B0%E5%BA%A6%E5%8F%91%E5%B8%83/%E7%81%B0%E5%BA%A6%E5%8F%91%E5%B8%83/
 http://example.com/2024/09/14/%E5%90%8E%E7%AB%AF/k8s/%E7%BB%84%E4%BB%B6/kube-proxy/kube-proxy/
 http://example.com/2024/09/14/%E5%90%8E%E7%AB%AF/k8s/service/service/
 http://example.com/2024/09/14/%E5%90%8E%E7%AB%AF/k8s/auth/%E9%89%B4%E6%9D%83/
@@ -61,3 +64,10 @@ http://example.com/categories/%E5%90%8E%E7%AB%AF/%E5%88%86%E5%B8%83%E5%BC%8F/mit
 http://example.com/categories/%E5%90%8E%E7%AB%AF/linux/%E7%BD%91%E7%BB%9C/netfilter/
 http://example.com/categories/%E5%90%8E%E7%AB%AF/k8s/%E7%BD%91%E7%BB%9C%E6%8F%92%E4%BB%B6/
 http://example.com/categories/%E5%90%8E%E7%AB%AF/linux/bond/
+http://example.com/categories/%E5%90%8E%E7%AB%AF/k8s/auth/
+http://example.com/categories/%E5%90%8E%E7%AB%AF/k8s/service/
+http://example.com/categories/%E5%90%8E%E7%AB%AF/k8s/%E7%BB%84%E4%BB%B6/
+http://example.com/categories/%E5%90%8E%E7%AB%AF/k8s/%E7%BB%84%E4%BB%B6/kube-proxy/
+http://example.com/categories/%E5%90%8E%E7%AB%AF/k8s/ingress/
+http://example.com/categories/%E5%90%8E%E7%AB%AF/lua/
+http://example.com/categories/%E5%90%8E%E7%AB%AF/k8s/%E7%81%B0%E5%BA%A6%E5%8F%91%E5%B8%83/
