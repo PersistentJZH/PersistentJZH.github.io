@@ -82,3 +82,4 @@ http://example.com/categories/%E5%90%8E%E7%AB%AF/k8s/openyurt/
 http://example.com/categories/%E5%90%8E%E7%AB%AF/k8s/openkruise/
 http://example.com/categories/web3/%E5%8C%BA%E5%9D%97%E9%93%BE/
 http://example.com/categories/%E5%90%8E%E7%AB%AF/k8s/controller/
+http://example.com/categories/%E5%90%8E%E7%AB%AF/k8s/%E5%8E%9F%E5%9C%B0%E5%8D%87%E7%BA%A7/
