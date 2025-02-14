@@ -1,0 +1,18 @@
+/* 修改文章正文的字体 */
+.post-content {
+    font-family: "Roboto", serif;
+    font-optical-sizing: auto;
+    font-size: 17px;
+}
+
+/* 修改文章标题的字体 */
+.post-title {
+    font-family: "Ma Shan Zheng", serif;
+    font-weight: 700; /* 使用 Montserrat 的 Bold 字重 */
+}
+
+/* 修改全局字体 */
+body {
+    font-family: "Roboto", serif;
+    font-optical-sizing: auto;
+}
