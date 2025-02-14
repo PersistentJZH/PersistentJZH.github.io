@@ -35,3 +35,28 @@ p code, li code {
     border-radius: 4px;
 }
 
+
+
+/* 修改主要按钮的背景颜色 */
+.button--primary {
+    background-color: #ff5722; /* 修改为你想要的颜色 */
+    border-color: #ff5722; /* 修改为你想要的颜色 */
+}
+
+/* 修改主要按钮的悬停效果 */
+.button--primary:hover {
+    background-color: #e64a19; /* 修改为你想要的颜色 */
+    border-color: #e64a19; /* 修改为你想要的颜色 */
+}
+
+/* 修改次要按钮的背景颜色 */
+.button--secondary {
+    background-color: #4caf50; /* 修改为你想要的颜色 */
+    border-color: #4caf50; /* 修改为你想要的颜色 */
+}
+
+/* 修改次要按钮的悬停效果 */
+.button--secondary:hover {
+    background-color: #388e3c; /* 修改为你想要的颜色 */
+    border-color: #388e3c; /* 修改为你想要的颜色 */
+}
