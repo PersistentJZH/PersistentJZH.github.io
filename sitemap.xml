@@ -29,15 +29,6 @@
   </url>
   
   <url>
-    <loc>http://example.com/gallery-wallpaper/index.html</loc>
-    
-    <lastmod>2025-02-25</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>http://example.com/2025/02/24/%E5%90%8E%E7%AB%AF/k8s/%E5%AE%B9%E5%99%A8/%E5%AE%B9%E5%99%A8%E8%BF%9B%E7%A8%8B%E7%9A%84%E5%85%B3%E7%B3%BB/</loc>
     
     <lastmod>2025-02-24</lastmod>
@@ -365,15 +356,6 @@
     <loc>http://example.com/categories/index.html</loc>
     
     <lastmod>2024-05-10</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>http://example.com/gallery-wallpaper2/index.html</loc>
-    
-    <lastmod>2024-05-05</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
