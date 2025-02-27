@@ -33,6 +33,12 @@
     
     
     
+    <category term="后端" scheme="http://example.com/categories/%E5%90%8E%E7%AB%AF/"/>
+    
+    <category term="k8s" scheme="http://example.com/categories/%E5%90%8E%E7%AB%AF/k8s/"/>
+    
+    <category term="k8s组件" scheme="http://example.com/categories/%E5%90%8E%E7%AB%AF/k8s/k8s%E7%BB%84%E4%BB%B6/"/>
+    
     
   </entry>
   
@@ -57,7 +63,7 @@
     
     <category term="k8s" scheme="http://example.com/categories/%E5%90%8E%E7%AB%AF/k8s/"/>
     
-    <category term="容器" scheme="http://example.com/categories/%E5%90%8E%E7%AB%AF/k8s/%E5%AE%B9%E5%99%A8/"/>
+    <category term="k8s组件" scheme="http://example.com/categories/%E5%90%8E%E7%AB%AF/k8s/k8s%E7%BB%84%E4%BB%B6/"/>
     
     
   </entry>
