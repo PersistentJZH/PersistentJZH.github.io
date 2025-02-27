@@ -6,7 +6,7 @@
   <link href="http://example.com/atom.xml" rel="self"/>
   
   <link href="http://example.com/"/>
-  <updated>2025-02-24T11:13:03.000Z</updated>
+  <updated>2025-02-27T02:48:46.000Z</updated>
   <id>http://example.com/</id>
   
   <author>
@@ -17,9 +17,29 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>core dns</title>
+    <link href="http://example.com/2025/02/27/%E5%90%8E%E7%AB%AF/k8s/k8s%E7%BB%84%E4%BB%B6/core%20dns/"/>
+    <id>http://example.com/2025/02/27/%E5%90%8E%E7%AB%AF/k8s/k8s%E7%BB%84%E4%BB%B6/core%20dns/</id>
+    <published>2025-02-27T02:48:46.000Z</published>
+    <updated>2025-02-27T02:48:46.000Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="core-dns的工作原理是什么"><a href="#core-dns的工作原理是什么" class="headerlink" title="core dns的工作原理是什么"></a>core dns的工作原理是什么</h1><p>Kubernete（k8s）中的DNS服务主要用于集群内部的服务发现，其工作原理如下(<strong>以pod的形式运行在集群中，通过svc的cluster ip提供服务</strong>)：</p><h3 id="1-CoreDNS"><a href="#1-CoreDNS" class="headerlink" title="1. CoreDNS"></a>1. <strong>CoreDNS</strong></h3><p>Kubernetes默认使用CoreDNS作为DNS服务器，替代了早期的kube-dns。CoreDNS通过插件机制提供灵活的DNS功能。</p><h3 id="2-DNS服务发现"><a href="#2-DNS服务发现" class="headerlink" title="2. DNS服务发现"></a>2. <strong>DNS服务发现</strong></h3><ul><li><strong>服务DNS名称</strong>：每个Service会被分配一个DNS名称，格式为<code>&lt;service-name&gt;.&lt;namespace&gt;.svc.cluster.local</code>。例如，<code>my-service.default.svc.cluster.local</code>。</li><li><strong>Pod DNS名称</strong>：Pod也有DNS名称，格式为<code>&lt;pod-ip&gt;.&lt;namespace&gt;.pod.cluster.local</code>。</li></ul><h3 id="3-DNS解析流程"><a href="#3-DNS解析流程" class="headerlink" title="3. DNS解析流程"></a>3. <strong>DNS解析流程</strong></h3><ol><li><strong>查询请求</strong>：Pod内的应用发起DNS查询，如<code>my-service.default.svc.cluster.local</code>。</li><li><strong>本地解析</strong>：Pod首先检查本地DNS缓存，若未命中则转发到CoreDNS。</li><li><strong>CoreDNS处理</strong>：CoreDNS根据配置解析请求，返回对应的Cluster IP或Pod IP。</li><li><strong>返回结果</strong>：解析结果返回给Pod，应用使用该IP进行通信。</li></ol><h3 id="4-CoreDNS配置"><a href="#4-CoreDNS配置" class="headerlink" title="4. CoreDNS配置"></a>4. <strong>CoreDNS配置</strong></h3><p>CoreDNS通过<code>Corefile</code>配置文件定义解析规则，常见配置如下：</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">.:53 &#123;</span><br><span class="line">    errors</span><br><span class="line">    health</span><br><span class="line">    kubernetes cluster.local in-addr.arpa ip6.arpa &#123;</span><br><span class="line">        pods insecure</span><br><span class="line">        upstream</span><br><span class="line">        fallthrough in-addr.arpa ip6.arpa</span><br><span class="line">    &#125;</span><br><span class="line">    prometheus :9153</span><br><span class="line">    forward . /etc/resolv.conf</span><br><span class="line">    cache 30</span><br><span class="line">    loop</span><br><span class="line">    reload</span><br><span class="line">    loadbalance</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><ul><li><strong><code>kubernetes</code>插件</strong>：用于解析Kubernetes内部的Service和Pod。</li><li><strong><code>forward</code>插件</strong>：将外部域名查询转发到上游DNS服务器。</li></ul><h3 id="5-DNS策略"><a href="#5-DNS策略" class="headerlink" title="5. DNS策略"></a>5. <strong>DNS策略</strong></h3><p>Kubernetes支持多种DNS策略，通过<code>dnsPolicy</code>字段配置：</p><ul><li>**<code>ClusterFirst</code>**：默认策略，优先使用集群DNS。</li><li>**<code>Default</code>**：使用节点上的DNS配置。</li><li>**<code>None</code>**：自定义DNS配置。</li></ul><h3 id="6-DNS缓存"><a href="#6-DNS缓存" class="headerlink" title="6. DNS缓存"></a>6. <strong>DNS缓存</strong></h3><p>为提高性能，CoreDNS和Pod都会缓存DNS查询结果，缓存时间由TTL控制。</p><h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>Kubernetes DNS通过CoreDNS实现服务发现，CoreDNS解析Service和Pod的DNS名称，返回对应的IP地址，支持灵活的配置和多种DNS策略，确保集群内部的服务通信顺畅。</p><h1 id="什么情况下需要core-dns"><a href="#什么情况下需要core-dns" class="headerlink" title="什么情况下需要core dns"></a>什么情况下需要core dns</h1><p>CoreDNS 是一个灵活且可扩展的 DNS 服务器，广泛应用于 Kubernetes 和其他场景中。以下是一些典型的使用场景：</p><hr><h3 id="1-Kubernetes-集群内部的服务发现"><a href="#1-Kubernetes-集群内部的服务发现" class="headerlink" title="1. Kubernetes 集群内部的服务发现"></a>1. <strong>Kubernetes 集群内部的服务发现</strong></h3><ul><li><strong>场景</strong>：在 Kubernetes 中，Pod 需要通过服务名称（如 <code>my-service.default.svc.cluster.local</code>）来访问其他服务。</li><li><strong>使用 CoreDNS</strong>：CoreDNS 是 Kubernetes 默认的 DNS 服务，负责解析集群内部的 Service 和 Pod 的 DNS 名称。</li><li><strong>优势</strong>：CoreDNS 支持 Kubernetes 的动态服务发现，能够自动更新 DNS 记录，适应 Pod 和 Service 的变化。</li></ul><hr><h3 id="2-外部域名解析"><a href="#2-外部域名解析" class="headerlink" title="2. 外部域名解析"></a>2. <strong>外部域名解析</strong></h3><ul><li><strong>场景</strong>：集群内的应用需要访问外部域名（如 <code>example.com</code>）。</li><li><strong>使用 CoreDNS</strong>：CoreDNS 可以通过 <code>forward</code> 插件将外部域名查询请求转发到上游 DNS 服务器（如 Google DNS 或本地 DNS 服务器）。</li><li><strong>优势</strong>：CoreDNS 可以灵活配置上游 DNS 服务器，并支持缓存以提高性能。</li></ul><hr><h3 id="3-自定义-DNS-解析规则"><a href="#3-自定义-DNS-解析规则" class="headerlink" title="3. 自定义 DNS 解析规则"></a>3. <strong>自定义 DNS 解析规则</strong></h3><ul><li><strong>场景</strong>：需要为特定域名配置自定义的解析规则，例如将某个域名解析到特定的 IP 地址。</li><li><strong>使用 CoreDNS</strong>：通过 CoreDNS 的 <code>rewrite</code> 插件或 <code>hosts</code> 插件，可以实现自定义的 DNS 解析逻辑。</li><li><strong>优势</strong>：CoreDNS 的插件机制非常灵活，可以满足复杂的 DNS 需求。</li></ul><hr><h3 id="4-多集群或多环境的-DNS-统一管理"><a href="#4-多集群或多环境的-DNS-统一管理" class="headerlink" title="4. 多集群或多环境的 DNS 统一管理"></a>4. <strong>多集群或多环境的 DNS 统一管理</strong></h3><ul><li><strong>场景</strong>：在多个 Kubernetes 集群或多个环境中，需要统一的 DNS 解析策略。</li><li><strong>使用 CoreDNS</strong>：CoreDNS 可以作为中心化的 DNS 服务器，为多个集群或环境提供一致的 DNS 解析服务。</li><li><strong>优势</strong>：CoreDNS 支持分布式部署和高可用性，能够满足大规模场景的需求。</li></ul><hr><h3 id="5-DNS-缓存和性能优化"><a href="#5-DNS-缓存和性能优化" class="headerlink" title="5. DNS 缓存和性能优化"></a>5. <strong>DNS 缓存和性能优化</strong></h3><ul><li><strong>场景</strong>：在高并发场景下，DNS 查询可能成为性能瓶颈。</li><li><strong>使用 CoreDNS</strong>：CoreDNS 支持缓存功能，可以通过 <code>cache</code> 插件缓存 DNS 查询结果，减少对外部 DNS 服务器的依赖。</li><li><strong>优势</strong>：缓存可以显著提高 DNS 解析的性能，并降低网络延迟。</li></ul><hr><h3 id="6-DNS-负载均衡"><a href="#6-DNS-负载均衡" class="headerlink" title="6. DNS 负载均衡"></a>6. <strong>DNS 负载均衡</strong></h3><ul><li><strong>场景</strong>：需要将 DNS 查询请求分发到多个后端服务，以实现负载均衡。</li><li><strong>使用 CoreDNS</strong>：CoreDNS 的 <code>loadbalance</code> 插件支持基于 DNS 的负载均衡。</li><li><strong>优势</strong>：通过 DNS 负载均衡，可以将流量均匀分配到多个后端服务，提高系统的可用性和性能。</li></ul><hr><h3 id="7-DNS-监控和日志记录"><a href="#7-DNS-监控和日志记录" class="headerlink" title="7. DNS 监控和日志记录"></a>7. <strong>DNS 监控和日志记录</strong></h3><ul><li><strong>场景</strong>：需要监控 DNS 查询的流量或记录 DNS 查询日志。</li><li><strong>使用 CoreDNS</strong>：CoreDNS 支持 <code>prometheus</code> 插件和 <code>log</code> 插件，可以实时监控 DNS 查询并记录日志。</li><li><strong>优势</strong>：通过监控和日志记录，可以更好地了解 DNS 查询的行为，便于故障排查和性能优化。</li></ul><hr><h3 id="8-替代传统-DNS-服务器"><a href="#8-替代传统-DNS-服务器" class="headerlink" title="8. 替代传统 DNS 服务器"></a>8. <strong>替代传统 DNS 服务器</strong></h3><ul><li><strong>场景</strong>：需要替换传统的 DNS 服务器（如 BIND），以利用 CoreDNS 的灵活性和扩展性。</li><li><strong>使用 CoreDNS</strong>：CoreDNS 可以作为通用的 DNS 服务器，支持传统的 DNS 解析功能。</li><li><strong>优势</strong>：CoreDNS 的配置简单，插件机制强大，能够满足各种复杂的 DNS 需求。</li></ul><hr><h3 id="9-边缘计算和-IoT-场景"><a href="#9-边缘计算和-IoT-场景" class="headerlink" title="9. 边缘计算和 IoT 场景"></a>9. <strong>边缘计算和 IoT 场景</strong></h3><ul><li><strong>场景</strong>：在边缘计算或 IoT 场景中，需要轻量级的 DNS 服务器。</li><li><strong>使用 CoreDNS</strong>：CoreDNS 是一个轻量级的 DNS 服务器，适合资源受限的环境。</li><li><strong>优势</strong>：CoreDNS 的二进制文件体积小，启动速度快，适合部署在边缘设备上。</li></ul><hr><h3 id="10-开发和测试环境"><a href="#10-开发和测试环境" class="headerlink" title="10. 开发和测试环境"></a>10. <strong>开发和测试环境</strong></h3><ul><li><strong>场景</strong>：在开发和测试环境中，需要快速搭建 DNS 服务。</li><li><strong>使用 CoreDNS</strong>：CoreDNS 的配置简单，可以快速部署和启动。</li><li><strong>优势</strong>：CoreDNS 支持动态加载配置，便于在开发和测试环境中快速迭代。</li></ul><hr><h3 id="总结-1"><a href="#总结-1" class="headerlink" title="总结"></a>总结</h3><p>CoreDNS 的使用场景非常广泛，包括但不限于：</p><ul><li>Kubernetes 集群内部的服务发现</li><li>外部域名解析</li><li>自定义 DNS 解析规则</li><li>多集群 DNS 统一管理</li><li>DNS 缓存和性能优化</li><li>DNS 负载均衡</li><li>DNS 监控和日志记录</li><li>替代传统 DNS 服务器</li><li>边缘计算和 IoT 场景</li><li>开发和测试环境</li></ul><p>CoreDNS 的灵活性和插件机制使其能够适应各种复杂的 DNS 需求，是现代分布式系统中不可或缺的组件。</p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h1 id=&quot;core-dns的工作原理是什么&quot;&gt;&lt;a href=&quot;#core-dns的工作原理是什么&quot; class=&quot;headerlink&quot; title=&quot;core dns的工作原理是什么&quot;&gt;&lt;/a&gt;core dns的工作原理是什么&lt;/h1&gt;&lt;p&gt;Kubernete（k8s）</summary>
+      
+    
+    
+    
+    
+  </entry>
+  
+  <entry>
     <title>容器进程的关系</title>
-    <link href="http://example.com/2025/02/24/%E5%90%8E%E7%AB%AF/k8s/%E5%AE%B9%E5%99%A8/%E5%AE%B9%E5%99%A8%E8%BF%9B%E7%A8%8B%E7%9A%84%E5%85%B3%E7%B3%BB/"/>
-    <id>http://example.com/2025/02/24/%E5%90%8E%E7%AB%AF/k8s/%E5%AE%B9%E5%99%A8/%E5%AE%B9%E5%99%A8%E8%BF%9B%E7%A8%8B%E7%9A%84%E5%85%B3%E7%B3%BB/</id>
+    <link href="http://example.com/2025/02/24/%E5%90%8E%E7%AB%AF/k8s/k8s%E7%BB%84%E4%BB%B6/%E5%AE%B9%E5%99%A8%E8%BF%9B%E7%A8%8B%E7%9A%84%E5%85%B3%E7%B3%BB/"/>
+    <id>http://example.com/2025/02/24/%E5%90%8E%E7%AB%AF/k8s/k8s%E7%BB%84%E4%BB%B6/%E5%AE%B9%E5%99%A8%E8%BF%9B%E7%A8%8B%E7%9A%84%E5%85%B3%E7%B3%BB/</id>
     <published>2025-02-24T11:13:03.000Z</published>
     <updated>2025-02-24T11:13:03.000Z</updated>
     
@@ -512,35 +532,6 @@
     <category term="网络" scheme="http://example.com/categories/%E5%90%8E%E7%AB%AF/linux/%E7%BD%91%E7%BB%9C/"/>
     
     <category term="容器网络" scheme="http://example.com/categories/%E5%90%8E%E7%AB%AF/linux/%E7%BD%91%E7%BB%9C/%E5%AE%B9%E5%99%A8%E7%BD%91%E7%BB%9C/"/>
-    
-    
-  </entry>
-  
-  <entry>
-    <title>netfilter</title>
-    <link href="http://example.com/2024/08/07/%E5%90%8E%E7%AB%AF/linux/%E7%BD%91%E7%BB%9C/netfilter/netfilter/"/>
-    <id>http://example.com/2024/08/07/%E5%90%8E%E7%AB%AF/linux/%E7%BD%91%E7%BB%9C/netfilter/netfilter/</id>
-    <published>2024-08-07T09:36:40.000Z</published>
-    <updated>2024-08-07T09:36:40.000Z</updated>
-    
-    <content type="html"><![CDATA[<p><img src="/2024/08/07/%E5%90%8E%E7%AB%AF/linux/%E7%BD%91%E7%BB%9C/netfilter/netfilter/netfilter-20240807173642268.webp"></p><p><img src="/2024/08/07/%E5%90%8E%E7%AB%AF/linux/%E7%BD%91%E7%BB%9C/netfilter/netfilter/netfilter-20240807174135807.webp"></p>]]></content>
-    
-    
-      
-      
-    <summary type="html">&lt;p&gt;&lt;img src=&quot;/2024/08/07/%E5%90%8E%E7%AB%AF/linux/%E7%BD%91%E7%BB%9C/netfilter/netfilter/netfilter-20240807173642268.webp&quot;&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src=</summary>
-      
-    
-    
-    
-    <category term="后端" scheme="http://example.com/categories/%E5%90%8E%E7%AB%AF/"/>
-    
-    <category term="linux" scheme="http://example.com/categories/%E5%90%8E%E7%AB%AF/linux/"/>
-    
-    <category term="网络" scheme="http://example.com/categories/%E5%90%8E%E7%AB%AF/linux/%E7%BD%91%E7%BB%9C/"/>
-    
-    <category term="netfilter" scheme="http://example.com/categories/%E5%90%8E%E7%AB%AF/linux/%E7%BD%91%E7%BB%9C/netfilter/"/>
     
     
   </entry>
