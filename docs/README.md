@@ -10,7 +10,7 @@ config:
     hero:
       name: Jian ZhiHao
       tagline: VuePress Next Theme
-      text: 建设中...没事随便玩玩🫣🫣🫣
+      text: hahaha very funny
       actions:
         -
           theme: brand
