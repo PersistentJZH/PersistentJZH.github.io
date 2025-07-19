@@ -41,8 +41,8 @@ export default defineThemeConfig({
 
   /* 站点页脚 */
    footer: {
-     message: '🐈🐈🐈',
-     copyright: '',
+     message: '',
+    copyright: "make the days count",
    },
 
   /* 过渡动画 @see https://theme-plume.vuejs.press/config/basic/#transition */

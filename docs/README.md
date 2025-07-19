@@ -14,10 +14,10 @@ config:
       actions:
         -
           theme: brand
-          text: 博客
+          text: 博客 →
           link: /blog/
-        -
-          theme: alt
-          text: Github →
-          link: https://github.com/PersistentJZH
+        # -
+        #   theme: alt
+        #   text: Github
+        #   link: https://github.com/PersistentJZH
 ---
