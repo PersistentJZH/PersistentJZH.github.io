@@ -42,7 +42,7 @@ export default defineThemeConfig({
   /* 站点页脚 */
    footer: {
      message: '',
-    copyright: "make the days count",
+    copyright: "Make The Days Count",
    },
 
   /* 过渡动画 @see https://theme-plume.vuejs.press/config/basic/#transition */

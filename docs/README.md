@@ -6,7 +6,7 @@ config:
     type: hero
     full: true
     background: tint-plate
-    tintPlate: 210
+    tintPlate: 190
     hero:
       name: Jian ZhiHao
       tagline: VuePress Next Theme
@@ -21,3 +21,5 @@ config:
           text: Github →
           link: https://github.com/PersistentJZH
 ---
+
+
