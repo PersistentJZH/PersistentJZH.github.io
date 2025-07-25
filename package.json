@@ -23,6 +23,7 @@
     "vuepress-theme-plume": "^1.0.0-rc.157"
   },
   "dependencies": {
+    "@vuepress/shiki-twoslash": "^2.0.0-rc.112",
     "swiper": "^11.2.10"
   }
 }
