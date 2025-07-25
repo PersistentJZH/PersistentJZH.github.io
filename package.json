@@ -15,7 +15,9 @@
     "vp-update": "npx vp-update"
   },
   "devDependencies": {
+    "@types/express": "^5.0.3",
     "@vuepress/bundler-vite": "2.0.0-rc.24",
+    "express": "^5.1.0",
     "http-server": "^14.1.1",
     "typescript": "^5.8.3",
     "vue": "^3.5.17",
