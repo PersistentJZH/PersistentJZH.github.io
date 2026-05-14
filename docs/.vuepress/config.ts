@@ -18,12 +18,12 @@ export default defineUserConfig({
   lang: 'zh-CN',
   locales: {
     '/': {
-      title: 'ZH Blog',
+      title: 'zhihaoの博客',
       lang: 'zh-CN',
       description: '',
     },
     '/en/': {
-      title: 'ZH Blog',
+      title: 'zhihaoのblog',
       lang: 'en-US',
       description: '',
     },
@@ -31,7 +31,7 @@ export default defineUserConfig({
 
   head: [
     // 配置站点图标
-    ['link', { rel: 'icon', type: 'image/png', href: '/images/avatar.png' }],
+    ['link', { rel: 'icon', type: 'image/png', href: '/new_avatar.png' }],
   ],
 
   bundler: viteBundler(),

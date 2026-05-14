@@ -9,17 +9,21 @@ config:
     tintPlate: 190
     hero:
       name: Jian ZhiHao
-      tagline: VuePress Next Theme
-      text: hahaha very funny
+      tagline: 技术博客与研究笔记
+      text: 
+
+
       actions:
         -
           theme: brand
           text: 博客 
           link: /blog/
         -
+          theme: brand
+          text: 笔记
+          link: /notes/
+        -
           theme: alt
           text: Github →
           link: https://github.com/PersistentJZH
 ---
-
-

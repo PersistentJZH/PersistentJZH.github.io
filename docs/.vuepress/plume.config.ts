@@ -18,15 +18,15 @@ import { enNotes, zhNotes } from './notes'
  * @see https://theme-plume.vuejs.press/config/basic/
  */
 export default defineThemeConfig({
-  logo: '/avatar.png',
+  logo: '/new_avatar.png',
 
   appearance: true,  // 配置 深色模式
 
   social: [
     { icon: 'github', link: 'https://github.com/PersistentJZH' },
   ],
-  // navbarSocialInclude: ['github'], // 允许显示在导航栏的 social 社交链接
-  // aside: true, // 页内侧边栏， 默认显示在右侧
+  navbarSocialInclude: ['github'], // 允许显示在导航栏的 social 社交链接
+   aside: true, // 页内侧边栏， 默认显示在右侧
   // outline: [2, 3], // 页内大纲， 默认显示 h2, h3
 
   /**
@@ -46,11 +46,11 @@ export default defineThemeConfig({
    },
 
   /* 过渡动画 @see https://theme-plume.vuejs.press/config/basic/#transition */
-  // transition: {
-  //   page: true,        // 启用 页面间跳转过渡动画
-  //   postList: true,    // 启用 博客文章列表过渡动画
-  //   appearance: 'fade',  // 启用 深色模式切换过渡动画, 或配置过渡动画类型
-  // },
+  transition: {
+    page: true,        // 启用 页面间跳转过渡动画
+    postList: true,    // 启用 博客文章列表过渡动画
+    appearance: 'fade',  // 启用 深色模式切换过渡动画, 或配置过渡动画类型
+  },
 
   locales: {
     '/': {
@@ -58,11 +58,11 @@ export default defineThemeConfig({
        * @see https://theme-plume.vuejs.press/config/basic/#profile
        */
       profile: {
-        avatar: '/avatar.png',
-        name: 'My Vuepress Site',
+        avatar: '/new_avatar.png',
+        name: 'zhihao',
         description: '',
         // circle: true,
-        // location: '',
+        location: 'Shenzhen, China',
         // organization: '',
       },
 
@@ -85,7 +85,7 @@ export default defineThemeConfig({
        * @see https://theme-plume.vuejs.press/config/basic/#profile
        */
       profile: {
-        avatar: '/avatar.png',
+        avatar: '/new_avatar.png',
         name: 'zhihao blog',
         description: '',
         // circle: true,

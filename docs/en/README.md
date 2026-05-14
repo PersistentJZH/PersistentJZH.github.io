@@ -7,14 +7,18 @@ config:
     full: true
     background: tint-plate
     hero:
-      name: Theme Plume
-      tagline: VuePress Next Theme
+      name: Jian ZhiHao
+      tagline: Blog, Notes, and Field Records
       text: A simple, feature-rich, document & blog
       actions:
         -
           theme: brand
           text: Blog
           link: /en/blog/
+        -
+          theme: brand
+          text: Notes
+          link: /en/notes/
         -
           theme: alt
           text: Github →

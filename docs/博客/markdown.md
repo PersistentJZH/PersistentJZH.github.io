@@ -82,7 +82,7 @@ H~2~O
 
 [外部链接](https://github.com/pengzhanbo)
 
-![plume](/avatar.png)
+![plume](/new_avatar.png)
 
 **Badge：**
 
