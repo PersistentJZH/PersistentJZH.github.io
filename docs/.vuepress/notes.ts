@@ -36,7 +36,7 @@ const zhDemoNote = defineNoteConfig({
 })
 
 const zhK8sNote = defineNoteConfig({
-  dir: 'k8s',
+  dir: 'kubernetes',
   // `dir` 所指向的目录中的所有 markdown 文件，其 permalink 需要以 `link` 配置作为前缀
   // 如果 前缀不一致，则无法生成侧边栏。
   // 所以请确保  markdown 文件的 permalink 都以 `link` 开头
@@ -44,6 +44,12 @@ const zhK8sNote = defineNoteConfig({
   // 手动配置侧边栏结构
   // sidebar: ['', 'foo', 'bar'],
   // 根据文件结构自动生成侧边栏
+  sidebar: 'auto',
+})
+
+const zhAIInfraNote = defineNoteConfig({
+  dir: 'ai-infra',
+  link: '/ai-infra',
   sidebar: 'auto',
 })
 
@@ -67,7 +73,7 @@ const zhTravelNote = defineNoteConfig({
 export const zhNotes = defineNotesConfig({
   dir: 'notes',
   link: '/',
-  notes: [zhDemoNote, zhK8sNote, zhTravelNote],
+  notes: [zhDemoNote, zhK8sNote, zhAIInfraNote, zhTravelNote],
 })
 
 /* =================== locale: en-US ======================= */
@@ -94,4 +100,3 @@ export const enNotes = defineNotesConfig({
   link: '/en/',
   notes: [enDemoNote],
 })
-

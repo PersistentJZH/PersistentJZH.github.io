@@ -15,12 +15,12 @@ export const zhNavbar = defineNavbarConfig([
   {
     text: '📚技术笔记',
     items: [
-      { text: '全部笔记', link: '/notes/README.md' },
-      { text: 'K8s', link: '/notes/k8s/README.md' },
-      { text: 'AI', link: '/notes/ai/README.md' },
+      { text: '全部笔记', link: '/notes/' },
+      { text: 'Kubernetes', link: '/k8s/' },
+      { text: 'AI Infra', link: '/ai-infra/' },
     ]
   },
-  { text: '🏖️旅行时光', link: '/notes/travel/README.md' },
+  { text: '🏖️旅行时光', link: '/travel/' },
 ])
 
 export const enNavbar = defineNavbarConfig([
@@ -29,10 +29,10 @@ export const enNavbar = defineNavbarConfig([
   {
     text: 'Notes',
     items: [
-      { text: 'All Notes', link: '/en/notes/README.md' },
-      { text: 'K8s', link: '/en/notes/k8s/README.md' },
-      { text: 'AI', link: '/en/notes/ai/README.md' },
+      { text: 'All Notes', link: '/en/notes/' },
+      { text: 'Kubernetes', link: '/en/notes/k8s/' },
+      { text: 'AI', link: '/en/notes/ai/' },
     ]
   },
-  { text: 'Travel', link: '/en/notes/travel/README.md' },
+  { text: 'Travel', link: '/en/notes/travel/' },
 ])
