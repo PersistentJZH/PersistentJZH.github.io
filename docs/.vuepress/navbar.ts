@@ -35,6 +35,7 @@ export const zhNavbar = defineNavbarConfig([
       { text: 'Kubernetes', link: '/k8s/', icon: icons.kubernetes },
       { text: 'AI Infra', link: '/ai-infra/', icon: icons.ai },
       { text: 'Languages', link: '/program-language/', icon: icons.languages },
+      { text: '经济', link: '/economics/', icon: icons.travel },
     ]
   },
   { text: '旅行时光', link: '/travel/', icon: icons.travel },

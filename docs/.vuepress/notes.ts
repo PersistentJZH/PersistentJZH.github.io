@@ -60,6 +60,13 @@ const zhProgramLanguageNote = defineNoteConfig({
   sidebar: 'auto',
 })
 
+const zhEconomicsNote = defineNoteConfig({
+  dir: 'economics',
+  link: '/economics',
+  text: '经济',
+  sidebar: 'auto',
+})
+
 const zhTravelNote = defineNoteConfig({
   dir: 'travel',
   // `dir` 所指向的目录中的所有 markdown 文件，其 permalink 需要以 `link` 配置作为前缀
@@ -80,7 +87,7 @@ const zhTravelNote = defineNoteConfig({
 export const zhNotes = defineNotesConfig({
   dir: 'notes',
   link: '/',
-  notes: [zhDemoNote, zhK8sNote, zhAIInfraNote, zhProgramLanguageNote, zhTravelNote],
+  notes: [zhDemoNote, zhK8sNote, zhAIInfraNote, zhProgramLanguageNote, zhEconomicsNote, zhTravelNote],
 })
 
 /* =================== locale: en-US ======================= */
