@@ -19,6 +19,7 @@ const icons = {
   ai: lineIcon('<rect x="6" y="6" width="12" height="12" rx="2"/><path d="M9 2v4"/><path d="M15 2v4"/><path d="M9 18v4"/><path d="M15 18v4"/><path d="M2 9h4"/><path d="M2 15h4"/><path d="M18 9h4"/><path d="M18 15h4"/><path d="M10 12h4"/>'),
   languages: lineIcon('<path d="m8 9-4 3 4 3"/><path d="m16 9 4 3-4 3"/><path d="m14 5-4 14"/>'),
   travel: lineIcon('<path d="M9 18 3 21V6l6-3 6 3 6-3v15l-6 3-6-3Z"/><path d="M9 3v15"/><path d="M15 6v15"/>'),
+  linux: lineIcon('<path d="M12 2C7.6 2 4 5.6 4 10v3c0 4.4 3.6 8 8 8s8-3.6 8-8v-3c0-4.4-3.6-8-8-8z"/><path d="M12 5.5c-3 0-5.5 2.2-5.5 5v1.5c0 2.8 2.5 5 5.5 5s5.5-2.2 5.5-5v-1.5c0-2.8-2.5-5-5.5-5z"/><path d="M4.5 12c-2 1-3 3-2 5"/><path d="M19.5 12c2 1 3 3 2 5"/><path d="M7 20.5h3.5"/><path d="M13.5 20.5H17"/><path d="M10 9l1.5 2 1.5-2"/><path d="M9.5 7.5v1M14.5 7.5v1"/>'),
 }
 
 export const zhNavbar = defineNavbarConfig([
@@ -34,6 +35,7 @@ export const zhNavbar = defineNavbarConfig([
       { text: '全部笔记', link: '/notes/', icon: icons.allNotes },
       { text: 'Kubernetes', link: '/k8s/', icon: icons.kubernetes },
       { text: 'AI Infra', link: '/ai-infra/', icon: icons.ai },
+      { text: 'Linux', link: '/linux/', icon: icons.linux },
       { text: 'Languages', link: '/program-language/', icon: icons.languages },
     ]
   },
