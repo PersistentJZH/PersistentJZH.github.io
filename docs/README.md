@@ -16,11 +16,11 @@ config:
       actions:
         -
           theme: brand
-          text: 博客 
+          text: 技术博客 
           link: /blog/
         -
           theme: brand
-          text: 笔记
+          text: 研究笔记
           link: /notes/
         -
           theme: alt
