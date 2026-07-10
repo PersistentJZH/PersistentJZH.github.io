@@ -243,6 +243,13 @@ echo "from upper" > /tmp/overlay-demo/upper/file.txt
 echo "only in lower, should still visible" > /tmp/overlay-demo/lower/only-lower.txt
 # 预期：merged 里也能看到这个文件，因为 lower 层的文件会"透"上来
 
+# 确认文件类型：都是普通文件（-），没有符号链接
+ls -la /tmp/overlay-demo/lower/
+# -rw-r--r-- ... file.txt
+# -rw-r--r-- ... only-lower.txt
+ls -la /tmp/overlay-demo/upper/
+# -rw-r--r-- ... file.txt     ← 与 lower 层同名但内容不同
+
 # 第 3 步：执行 mount（需要 root 权限）
 mount -t overlay overlay \
   -o lowerdir=/tmp/overlay-demo/lower,upperdir=/tmp/overlay-demo/upper,workdir=/tmp/overlay-demo/work \
@@ -262,6 +269,12 @@ cat /tmp/overlay-demo/merged/only-lower.txt
 # 输出: only in lower, should still visible
 #        ↑ upper 层没有这个文件，所以 lower 层的文件"透传"上来 — 这就是"联合"（Union）
 
+# 合并视图中的文件类型：都是普通文件，不是符号链接
+# OverlayFS 在内核层透明合并，用户态看不出任何区别
+ls -la /tmp/overlay-demo/merged/
+# -rw-r--r-- ... file.txt
+# -rw-r--r-- ... only-lower.txt
+
 # 第 5 步：验证"写入只会到 upper 层"
 echo "created at runtime" > /tmp/overlay-demo/merged/new-file.txt
 # 这个新文件实际存在哪里？
@@ -269,6 +282,11 @@ echo "created at runtime" > /tmp/overlay-demo/merged/new-file.txt
 cat /tmp/overlay-demo/upper/new-file.txt
 # 输出: created at runtime  ← 在 upper 层！
 # /tmp/overlay-demo/lower/ 下没有 new-file.txt —— lower 层纹丝未动
+
+# 文件类型：upper 层的新文件是普通文件，merged 中看到的也是同一个普通文件
+ls -la /tmp/overlay-demo/upper/new-file.txt /tmp/overlay-demo/merged/new-file.txt
+# -rw-r--r-- ... upper/new-file.txt
+# -rw-r--r-- ... merged/new-file.txt   ← 同一个文件，不同路径
 
 # 第 6 步：验证"修改 lower 层已有文件会触发 copy-up"
 echo "appended in upper" >> /tmp/overlay-demo/merged/only-lower.txt
@@ -283,6 +301,11 @@ cat /tmp/overlay-demo/lower/only-lower.txt
 # 输出: only in lower, should still visible
 #       ↑ lower 层原文件完全没变！这就是 Copy-on-Write
 
+# 文件类型对比：copy-up 后 upper 层的文件仍是普通文件（-），与 lower 层原文件类型一致
+ls -la /tmp/overlay-demo/lower/only-lower.txt /tmp/overlay-demo/upper/only-lower.txt
+# -rw-r--r-- ... lower/only-lower.txt   ← 原始（未变）
+# -rw-r--r-- ... upper/only-lower.txt   ← copy-up 副本（已修改），仍是普通文件
+
 # 第 7 步：验证"删除"的本质是创建一个 whiteout 标记
 rm /tmp/overlay-demo/merged/only-lower.txt
 # "删除"了这个文件
@@ -290,14 +313,31 @@ rm /tmp/overlay-demo/merged/only-lower.txt
 ls /tmp/overlay-demo/merged/only-lower.txt
 # ls: cannot access ...: No such file or directory  ← merged 里确实看不到了
 
+# 关键！查看 upper 层中该文件的类型变化：
 ls -la /tmp/overlay-demo/upper/only-lower.txt
-# -rw-r--r-- 1 root root ... /tmp/overlay-demo/upper/only-lower.txt  ← upper 层还在！
+# c--------- 1 root root 0, 0 ... /tmp/overlay-demo/upper/only-lower.txt
+# ↑ 文件类型从 -（普通文件）变成了 c（字符设备）！主次设备号 0:0
+# 这就是 whiteout 文件——OverlayFS 用这个特殊文件来"盖住" lower 层的同名文件
 
-# 实际上 OverlayFS 的"删除"是在 upper 层创建一个 whiteout 文件：
-# 字符设备文件，主次设备号都是 0（c 0:0），表示"这个文件已被删除，忽略 lower 层的同名文件"
-# 用 ls 看不到是因为 OverlayFS 把它过滤掉了
+# 再用 stat 确认文件类型：
+stat /tmp/overlay-demo/upper/only-lower.txt
+#   File: /tmp/overlay-demo/upper/only-lower.txt
+#   Size: 0          Blocks: 0     IO Block: 4096   character special file
+# Device: 0,0   Inode: ...   Links: 1   Device type: 0,0
+#                                                       ↑ 字符设备 0:0 = whiteout
+
+# whiteout 机制总结：
+# - lower 层是只读的，无法真正删除文件，所以 OverlayFS 用"盖住"的方式模拟删除
+# - whiteout 是一个字符设备文件（c 0:0），放在 upper 层
+# - OverlayFS 构建 merged 视图时：看到 upper 中有 whiteout → 跳过 lower 同名文件 → 用户视角"文件被删了"
+# - merged 中 ls 看不到 whiteout 本身，因为 OverlayFS 把它从目录列表中过滤掉了
+#   但直接读 upper 层就能看到（绕过了 OverlayFS 的过滤）
 
 # 第 8 步：清理实验
+# 注意：必须先 umount 再 rm！如果直接 rm -rf overlay-demo 会报错：
+#   rm: cannot remove 'overlay-demo/merged': Device or resource busy
+# 因为 merged 是一个活跃的挂载点（mount point），内核持有对该目录的引用，
+# 在 umount 之前无法删除——这和"文件正在被进程打开时无法删除"是同一个道理
 umount /tmp/overlay-demo/merged
 rm -rf /tmp/overlay-demo
 ```
