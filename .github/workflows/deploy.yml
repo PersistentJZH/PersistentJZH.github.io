@@ -27,9 +27,9 @@ jobs:
           node-version: 22
 
       # 安装依赖
-      # Install dependencies
+      # 使用 npm install 而非 npm ci，避免跨平台 lockfile 丢失 Linux 原生可选依赖
       - name: Install Dependencies
-        run: npm ci
+        run: npm install --legacy-peer-deps
 
 
 

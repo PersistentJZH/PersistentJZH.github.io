@@ -30,6 +30,8 @@ export default defineUserConfig({
   },
 
   head: [
+    // 固定移动端视口，禁止缩放
+    ['meta', { name: 'viewport', content: 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no' }],
     // 配置站点图标
     ['link', { rel: 'icon', type: 'image/png', href: '/new_avatar.png' }],
   ],
@@ -50,7 +52,7 @@ export default defineUserConfig({
     // editLink: true,
     // lastUpdated: true,
     // contributors: true,
-    changelog: true,
+    changelog: false,
 
     /**
      * 博客

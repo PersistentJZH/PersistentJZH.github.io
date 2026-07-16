@@ -49,6 +49,50 @@
   */
 }
 
+/* ===== 移动端适配：固定内容宽度 ===== */
+
+/* 主内容区固定最大宽度，桌面和移动端保持一致 */
+.vp-doc {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+/* 移动端去掉多余的内边距，充分利用屏幕宽度 */
+@media (max-width: 768px) {
+  .vp-page {
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+
+  .vp-doc {
+    padding: 0;
+  }
+
+  /* 导航栏移动端适配 */
+  .vp-navbar {
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+
+  /* 代码块不溢出 */
+  .vp-doc div[class*="language-"] {
+    margin: 0 -12px;
+    border-radius: 0;
+  }
+
+  /* 图片不超出屏幕 */
+  .vp-doc img {
+    max-width: 100%;
+    height: auto;
+  }
+
+  /* 表格可水平滚动 */
+  .vp-doc table {
+    display: block;
+    overflow-x: auto;
+  }
+}
+
 .vp-home-hero .action .vp-button:nth-of-type(2) {
   color: #fff;
   background-color: #0f9f76;
