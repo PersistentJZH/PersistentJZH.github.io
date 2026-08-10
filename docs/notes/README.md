@@ -13,3 +13,4 @@ readingTime: false
 - [⛵️ Kubernetes](/k8s/)
 - [🤖 AI Infra](/ai-infra/)
 - [💻 Languages](/program-language/)
+- [📖 Fundamentals](/basic-knowledge/)

@@ -67,6 +67,13 @@ const zhLinuxNote = defineNoteConfig({
   sidebar: 'auto',
 })
 
+const zhBasicKnowledgeNote = defineNoteConfig({
+  dir: 'basic-knowledge',
+  link: '/basic-knowledge',
+  text: '基础知识',
+  sidebar: 'auto',
+})
+
 const zhTravelNote = defineNoteConfig({
   dir: 'travel',
   link: '/travel',
@@ -81,7 +88,7 @@ const zhTravelNote = defineNoteConfig({
 export const zhNotes = defineNotesConfig({
   dir: 'notes',
   link: '/',
-  notes: [zhDemoNote, zhK8sNote, zhAIInfraNote, zhProgramLanguageNote, zhLinuxNote, zhTravelNote],
+  notes: [zhDemoNote, zhK8sNote, zhAIInfraNote, zhProgramLanguageNote, zhLinuxNote, zhBasicKnowledgeNote, zhTravelNote],
 })
 
 /* =================== locale: en-US ======================= */
