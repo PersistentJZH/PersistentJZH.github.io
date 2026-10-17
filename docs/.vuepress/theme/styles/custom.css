@@ -122,3 +122,21 @@
   background-color: #11976d;
   border-color: transparent;
 }
+
+/* ===== 旅行地图页：让导航栏与地图顶部渐变自然衔接 ===== */
+html:has(.atlas) .vp-navbar .divider,
+html:has(.atlas) .vp-navbar .divider-line {
+  background-color: transparent !important;
+}
+
+/* 旅行地图页：页面底部不再显示站点 footer */
+html:has(.atlas) .vp-footer {
+  display: none;
+}
+
+/* 旅行地图页：浅色下导航栏使用与地图顶部一致的纸白色，避免白色分割 */
+/* 旅行地图页：导航栏透明，地图从页面顶部一直延伸到导航栏下方 */
+html:has(.atlas) .vp-nav,
+html:has(.atlas) .vp-navbar {
+  background: transparent !important;
+}
