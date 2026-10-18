@@ -1478,15 +1478,15 @@ watch(lightboxIndex, async (index) => {
   --atlas-elev: rgba(28, 34, 37, 0.18);
   --atlas-picker-scrim: rgba(28, 34, 37, 0.28);
   --atlas-canvas:
-    radial-gradient(48% 54% at 64% 46%, rgba(82, 120, 114, 0.07) 0%, rgba(239, 245, 243, 0) 66%),
-    radial-gradient(34% 38% at 82% 18%, rgba(168, 122, 70, 0.03) 0%, rgba(239, 245, 243, 0) 70%),
-    linear-gradient(180deg, #eff5f3 0%, #edf3f0 52%, #e8efeb 100%);
+    radial-gradient(48% 54% at 64% 46%, rgba(82, 120, 114, 0.08) 0%, rgba(234, 242, 239, 0) 66%),
+    radial-gradient(34% 38% at 82% 18%, rgba(168, 122, 70, 0.03) 0%, rgba(234, 242, 239, 0) 70%),
+    linear-gradient(180deg, #eaf2ef 0%, #e7efec 52%, #e2eae6 100%);
   --atlas-vignette:
     linear-gradient(90deg, rgba(251, 250, 246, 0.94) 0%, rgba(251, 250, 246, 0.78) 14%, rgba(251, 250, 246, 0.34) 27%, rgba(251, 250, 246, 0.06) 39%, rgba(251, 250, 246, 0) 48%),
     linear-gradient(0deg, rgba(251, 250, 246, 0.62) 0%, rgba(251, 250, 246, 0) 26%);
   --atlas-grain-opacity: 0;
-  --atlas-visited-from: #c4dacd;
-  --atlas-visited-to: #b0c9bb;
+  --atlas-visited-from: #bcd5c6;
+  --atlas-visited-to: #a7c1b2;
   --atlas-glow: #a9783f;
   --atlas-aura: #5f8377;
   --atlas-scrim: linear-gradient(90deg, rgba(247, 247, 243, 0) 0%, rgba(247, 247, 243, 0.14) 45%, rgba(247, 247, 243, 0.58) 100%);
@@ -3373,13 +3373,21 @@ watch(lightboxIndex, async (index) => {
     height: 56svh;
   }
 
+  .atlas-top-fade {
+    height: 104px;
+    background: linear-gradient(
+      180deg,
+      rgba(251, 250, 246, 0.8) 0%,
+      rgba(251, 250, 246, 0.38) 56px,
+      rgba(251, 250, 246, 0) 104px
+    );
+  }
+
   .atlas-vignette {
     position: absolute;
     inset: 0 0 auto 0;
     height: 56svh;
-    background:
-      linear-gradient(0deg, var(--ink) 0%, transparent 60%),
-      linear-gradient(180deg, var(--ink) 0%, transparent 22%);
+    background: none;
   }
 
   .atlas-map {
@@ -3392,30 +3400,43 @@ watch(lightboxIndex, async (index) => {
   }
 
   .atlas-svg {
-    -webkit-mask-image: linear-gradient(180deg, #000 0%, #000 76%, transparent 100%);
-    mask-image: linear-gradient(180deg, #000 0%, #000 76%, transparent 100%);
+    -webkit-mask-image: none;
+    mask-image: none;
   }
 
   .atlas-map::after {
-    content: "";
-    position: absolute;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    z-index: 2;
-    height: 90px;
-    pointer-events: none;
-    background: linear-gradient(0deg, var(--ink) 0%, transparent 100%);
+    display: none;
   }
 
   .atlas-lb-nav {
     display: none;
   }
 
+  .atlas-lb-figure {
+    width: 100vw;
+    max-width: 100vw;
+  }
+
+  .atlas-lb-stage {
+    height: 72vh;
+  }
+
+  .atlas-lb-preview,
+  .atlas-lb-full {
+    border-radius: 0;
+  }
+
   .atlas-compass,
   .atlas-scale,
   .atlas-readout {
     display: none;
+  }
+
+  .atlas-tools button {
+    color: rgba(var(--atlas-fg), 0.86);
+    border-color: rgba(var(--atlas-fg), 0.22);
+    background: var(--vp-c-bg);
+    box-shadow: 0 2px 10px rgba(var(--atlas-fg), 0.08);
   }
 
   .atlas-tools {
@@ -3581,7 +3602,7 @@ watch(lightboxIndex, async (index) => {
   }
 
   .atlas-lb-figure {
-    max-width: 92vw;
+    max-width: 100vw;
   }
 
   .atlas-lb-thumbs {
