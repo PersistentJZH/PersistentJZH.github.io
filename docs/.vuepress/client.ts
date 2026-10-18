@@ -27,10 +27,12 @@ if (typeof window !== 'undefined') {
   window.addEventListener('orientationchange', syncHomeViewportHeight)
 }
 
+/**
+ * 使用主题默认的 200 / 36 色板：比 190 / 64 更亮、更柔和，
+ * 避免动画进入低亮度相位时在卡片下方出现深灰色横带。
+ */
 function resolveTintPalette(): TintPalette {
-  return document.documentElement.lang.toLowerCase().startsWith('en')
-    ? { value: 200, offset: 36 }
-    : { value: 190, offset: 64 }
+  return { value: 200, offset: 36 }
 }
 
 let tintHandle: HomeTintPlateHandle | null = null
