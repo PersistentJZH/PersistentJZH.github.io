@@ -3265,11 +3265,15 @@ watch(lightboxIndex, async (index) => {
 
   .atlas-bg,
   .atlas-grain {
-    position: fixed;
+    position: absolute;
+    inset: 0 0 auto 0;
+    height: 56svh;
   }
 
   .atlas-vignette {
-    position: fixed;
+    position: absolute;
+    inset: 0 0 auto 0;
+    height: 56svh;
     background:
       linear-gradient(0deg, var(--ink) 0%, transparent 60%),
       linear-gradient(180deg, var(--ink) 0%, transparent 22%);

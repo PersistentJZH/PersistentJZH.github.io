@@ -58,6 +58,12 @@
     padding-right: 12px;
   }
 
+  /* 旅行地图页：地图全宽，不再留左右白边 */
+  html:has(.atlas) .vp-page {
+    padding-left: 0;
+    padding-right: 0;
+  }
+
   .vp-doc {
     padding: 0;
   }
