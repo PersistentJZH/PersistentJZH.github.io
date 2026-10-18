@@ -35,18 +35,15 @@ function resolveTintPalette(): TintPalette {
 
 let tintHandle: HomeTintPlateHandle | null = null
 let tintHero: HTMLElement | null = null
-let tintObserver: MutationObserver | null = null
 
 function disposeHomeTintPlate() {
-  tintObserver?.disconnect()
-  tintObserver = null
   tintHandle?.destroy()
   tintHandle = null
 }
 
 /**
- * 主题 rc.214 会在低端触屏 / 减少动效时跳过 tint-plate canvas。
- * 这里在主题 canvas 缺席时补一份动画；主题 canvas 出现后再移除自己。
+ * 首页 tint-plate 由本站自己无条件渲染，不再依赖主题的 effect 开关。
+ * 这样即使主题在低端触屏 / 减少动效时跳过了它自带的 canvas，背景也不会消失。
  */
 function syncHomeTintPlate() {
   const hero = document.querySelector<HTMLElement>('.vp-home-hero')
@@ -55,22 +52,8 @@ function syncHomeTintPlate() {
 
   disposeHomeTintPlate()
   tintHero = hero
-  if (!hero)
-    return
-
-  // 主题 canvas 已存在，直接使用。
-  if (hero.querySelector('.bg-filter'))
-    return
-
-  tintHandle = mountHomeTintPlate(hero, resolveTintPalette())
-
-  // 主题的 effect 是异步组件，可能在首屏之后才挂载；
-  // 一旦出现就移除兜底 canvas，避免桌面端重复动画。
-  tintObserver = new MutationObserver(() => {
-    if (hero.querySelector('.bg-filter'))
-      disposeHomeTintPlate()
-  })
-  tintObserver.observe(hero, { childList: true, subtree: true })
+  if (hero)
+    tintHandle = mountHomeTintPlate(hero, resolveTintPalette())
 }
 
 function scheduleHomeTintPlateSync() {

@@ -146,26 +146,8 @@
   overflow: hidden;
 }
 
-/* 首页 Hero 的静态背景兜底。
-   主题在低端触屏或用户开启“减少动态效果”时会跳过 tint-plate canvas；
-   client.ts 会补一份动画 canvas，这张静态图负责无 JS / 首屏时的底色。
-   动画可用时 canvas 会完整盖住这层静态背景。
-   静态图取自 tint-plate 算法 rgb=190 的一帧（t=4）；
-   若调整 README 里的 effectConfig.rgb，需要同步替换这两张图。 */
-.vp-home-hero.full.first {
-  background-color: var(--vp-c-bg);
-  background-image: url("/home-tint-plate-light.png");
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: 100% 100%;
-}
-
-[data-theme="dark"] .vp-home-hero.full.first {
-  background-image: url("/home-tint-plate-dark.png");
-}
-
-/* 主题在低端触屏 / 减少动效时跳过 tint-plate canvas 时，
-   client.ts 会挂载这份兜底动画。无 JS 时则是上面的静态背景图。 */
+/* 首页 Hero 的 tint-plate 动画。
+   不依赖主题自带的 effect，由 client.ts 无条件挂载。 */
 .home-tint-plate {
   position: absolute;
   top: 0;

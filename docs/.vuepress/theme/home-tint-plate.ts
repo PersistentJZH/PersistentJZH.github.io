@@ -1,13 +1,12 @@
 /**
- * 首页 tint-plate 动画兜底。
+ * 首页 tint-plate 动画。
  *
  * VuePress Plume 从 rc.214 开始，会在“低端触屏设备”（粗指针且逻辑核心数 ≤ 4）、
  * 开启“减少动态效果”或开启省流模式时跳过首页的 tint-plate canvas。
  * 本站很多手机上 navigator.hardwareConcurrency 正好是 4，于是背景变成纯白。
  *
- * 这里用同一套算法自己渲染一份 32×32 的 canvas：
- * - 只在主题没有渲染 canvas 时挂载；
- * - 主题 canvas 稍后挂载时自动移除自己，避免桌面端重复渲染；
+ * 为了和升级前保持一致，这里不再依赖主题的 effect：
+ * - 无条件渲染一份 32×32 的 tint-plate canvas；
  * - 尊重 prefers-reduced-motion，只画一帧；
  * - 30fps 绘制，开销很小。
  */
