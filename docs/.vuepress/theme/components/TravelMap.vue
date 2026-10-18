@@ -2014,12 +2014,34 @@ watch(lightboxIndex, async (index) => {
 /* ---------- intro ---------- */
 
 .atlas-intro {
+  /**
+   * 左侧简介单独使用一套更“实”的墨色：
+   * 浅色主题压深、深色主题提亮，同时提高次级文字的墨量，
+   * 让文字在纸质渐变 / 深色地图上都有清晰的层次。
+   */
+  --intro-ink: 0, 0, 0;
+
+  --paper: rgb(var(--intro-ink));
+  --muted: rgba(var(--intro-ink), 0.94);
+  --faint: rgba(var(--intro-ink), 0.84);
+  --line: rgba(var(--intro-ink), 0.22);
+
   position: absolute;
   z-index: 4;
-  top: calc(var(--vp-nav-height) + clamp(24px, 4.2vh, 42px));
-  left: clamp(24px, 4.6vw, 72px);
+  top: calc(var(--vp-nav-height) + clamp(14px, 3.2vh, 32px));
+  left: clamp(20px, 3.6vw, 58px);
   width: min(376px, 30vw);
+  color: rgb(var(--intro-ink));
+  font-weight: 500;
   transition: opacity 0.45s ease, filter 0.45s ease;
+}
+
+[data-theme="dark"] .atlas-intro {
+  --intro-ink: 255, 255, 255;
+
+  --muted: rgba(var(--intro-ink), 0.94);
+  --faint: rgba(var(--intro-ink), 0.86);
+  --line: rgba(var(--intro-ink), 0.24);
 }
 
 .atlas-intro.is-dimmed {
@@ -2032,7 +2054,7 @@ watch(lightboxIndex, async (index) => {
   align-items: center;
   gap: 10px;
   margin: 0;
-  color: rgba(var(--atlas-accent), 0.85);
+  color: rgba(var(--atlas-accent), 1);
   font-size: 8.5px;
   letter-spacing: 0.3em;
   animation: atlas-rise 0.9s 0.12s cubic-bezier(0.22, 0.8, 0.2, 1) both;
@@ -2048,13 +2070,13 @@ watch(lightboxIndex, async (index) => {
   display: block;
   width: 24px;
   height: 1px;
-  background: rgba(var(--atlas-accent), 0.55);
+  background: rgba(var(--atlas-accent), 0.8);
 }
 
 .atlas-title {
   margin: 22px 0 0;
   font-family: var(--serif);
-  font-weight: 400;
+  font-weight: 500;
   font-size: clamp(56px, 5.4vw, 82px);
   line-height: 0.98;
   letter-spacing: 0.02em;
@@ -2073,7 +2095,7 @@ watch(lightboxIndex, async (index) => {
   display: block;
   margin-top: 14px;
   font-size: clamp(16px, 1.45vw, 21px);
-  font-weight: 400;
+  font-weight: 500;
   font-style: italic;
   letter-spacing: 0.03em;
   color: var(--muted);
@@ -2084,9 +2106,10 @@ watch(lightboxIndex, async (index) => {
   margin: 30px 0 0;
   font-family: var(--serif);
   font-size: 16px;
+  font-weight: 500;
   line-height: 1.9;
   letter-spacing: 0.03em;
-  color: rgba(var(--atlas-fg), 0.82);
+  color: rgba(var(--intro-ink), 1);
   animation: atlas-rise 0.95s 0.24s cubic-bezier(0.22, 0.8, 0.2, 1) both;
 }
 
@@ -2096,7 +2119,7 @@ watch(lightboxIndex, async (index) => {
   font-size: 10.5px;
   line-height: 1.95;
   letter-spacing: 0.05em;
-  color: rgba(var(--atlas-fg), 0.62);
+  color: rgba(var(--intro-ink), 0.92);
   animation: atlas-rise 0.95s 0.3s cubic-bezier(0.22, 0.8, 0.2, 1) both;
 }
 
@@ -2124,7 +2147,7 @@ watch(lightboxIndex, async (index) => {
   display: block;
   overflow: hidden;
   font-family: var(--serif);
-  font-weight: 400;
+  font-weight: 500;
   font-size: clamp(15px, 1.15vw, 20px);
   line-height: 1;
   letter-spacing: 0.01em;
@@ -2139,7 +2162,7 @@ watch(lightboxIndex, async (index) => {
   margin-top: 7px;
   font-size: 8.5px;
   letter-spacing: 0.14em;
-  color: rgba(var(--atlas-fg), 0.58);
+  color: rgba(var(--intro-ink), 0.9);
 }
 
 .atlas-stop-list {
@@ -2151,7 +2174,7 @@ watch(lightboxIndex, async (index) => {
   overflow-y: auto;
   overscroll-behavior: contain;
   scrollbar-width: thin;
-  scrollbar-color: rgba(var(--atlas-fg), 0.18) transparent;
+  scrollbar-color: rgba(var(--intro-ink), 0.32) transparent;
   -webkit-mask-image: linear-gradient(180deg, #000 0%, #000 90%, transparent 100%);
   mask-image: linear-gradient(180deg, #000 0%, #000 90%, transparent 100%);
   animation: atlas-rise 0.95s 0.42s cubic-bezier(0.22, 0.8, 0.2, 1) both;
@@ -2163,7 +2186,7 @@ watch(lightboxIndex, async (index) => {
 
 .atlas-stop-list::-webkit-scrollbar-thumb {
   border-radius: 3px;
-  background: rgba(var(--atlas-fg), 0.16);
+  background: rgba(var(--intro-ink), 0.3);
 }
 
 .atlas-stop {
@@ -2175,7 +2198,7 @@ watch(lightboxIndex, async (index) => {
   width: 100%;
   padding: 10px 0;
   border: 0;
-  border-bottom: 1px solid rgba(var(--atlas-fg), 0.07);
+  border-bottom: 1px solid rgba(var(--intro-ink), 0.12);
   background: transparent;
   color: inherit;
   text-align: left;
@@ -2244,7 +2267,7 @@ watch(lightboxIndex, async (index) => {
   overflow: hidden;
   font-size: 8.5px;
   letter-spacing: 0.12em;
-  color: rgba(var(--atlas-fg), 0.58);
+  color: rgba(var(--intro-ink), 0.9);
   text-overflow: ellipsis;
   white-space: nowrap;
 }
@@ -2254,7 +2277,7 @@ watch(lightboxIndex, async (index) => {
   font-family: var(--serif);
   font-size: 12px;
   letter-spacing: 0.05em;
-  color: rgba(var(--atlas-fg), 0.4);
+  color: rgba(var(--intro-ink), 0.7);
   transition: color 0.28s ease;
 }
 
@@ -2293,7 +2316,7 @@ watch(lightboxIndex, async (index) => {
 @media (min-width: 901px) {
   .atlas-list-head > span:last-child::after {
     content: " · SCROLL";
-    color: rgba(var(--atlas-fg), 0.35);
+    color: rgba(var(--intro-ink), 0.65);
   }
 }
 
@@ -3284,7 +3307,7 @@ watch(lightboxIndex, async (index) => {
 
 @media (min-width: 901px) and (max-height: 860px) {
   .atlas-intro {
-    top: calc(var(--vp-nav-height) + 22px);
+    top: calc(var(--vp-nav-height) + 14px);
   }
 
   .atlas-title {
