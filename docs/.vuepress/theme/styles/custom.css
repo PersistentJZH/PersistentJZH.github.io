@@ -531,6 +531,18 @@ html:has(.vp-home-hero) .vp-home {
     overflow: hidden;
     overscroll-behavior-y: none;
   }
+
+  /* iOS Safari 的底部工具栏是白色的：最后一段渐变回底色，和工具栏自然衔接，
+     同时保留上方大部分区域的颜色，避免整块发白。 */
+  .home-tint-plate::after {
+    background: linear-gradient(
+      to bottom,
+      var(--vp-c-bg) 0,
+      transparent 42%,
+      transparent 82%,
+      var(--vp-c-bg) 100%
+    );
+  }
 }
 
 /* ===== 旅行地图页：让导航栏与地图顶部渐变自然衔接 ===== */

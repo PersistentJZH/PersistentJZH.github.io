@@ -11,13 +11,13 @@ import { mountHomeTintPlate, type HomeTintPlateHandle, type TintPalette } from '
 import './theme/styles/custom.css'
 
 /**
- * iOS Safari（尤其是 26 的悬浮工具栏）里 100vh / 100svh 与真实可见区域
+ * iOS Safari（尤其是 26/27 的悬浮工具栏）里 100vh / 100svh 与真实可见区域
  * 可能不一致，首页会多出一截本不该有的滚动距离。
- * 这里把 visualViewport 的真实高度写进 CSS 变量，供首页 Hero 使用。
+ * 这里把 visualViewport 的真实高度写进 CSS 变量，供首页 Hero / footer 使用。
  */
 function syncHomeViewportHeight() {
-  const height = Math.round(window.visualViewport?.height ?? window.innerHeight)
-  document.documentElement.style.setProperty('--vp-home-visible-height', `${height}px`)
+  const visible = Math.round(window.visualViewport?.height ?? window.innerHeight)
+  document.documentElement.style.setProperty('--vp-home-visible-height', `${visible}px`)
 }
 
 if (typeof window !== 'undefined') {
