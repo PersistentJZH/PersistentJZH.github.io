@@ -468,9 +468,13 @@
 }
 
 @media (max-width: 899px) {
-  /* 两列卡片布局下，大范围投影会叠成一条横向暗带，跟随底色动画变化时更明显 */
+  /* 两列卡片布局下，大范围投影会叠成一条横向暗带，跟随底色动画变化时更明显。
+     深色主题规则 [data-theme="dark"] ... 的优先级更高，必须一并覆盖，
+     否则暗色模式下这条投影暗带依旧存在。 */
   .vp-home-hero .home-entry,
-  .vp-home-hero .home-entry:hover {
+  .vp-home-hero .home-entry:hover,
+  [data-theme="dark"] .vp-home-hero .home-entry,
+  [data-theme="dark"] .vp-home-hero .home-entry:hover {
     box-shadow: none;
   }
 
@@ -547,7 +551,15 @@ html:has(.vp-home-hero) .vp-home {
   }
 
   /* iOS Safari 的底部工具栏是白色的：最后一段渐变回底色，和工具栏自然衔接，
-     同时保留上方大部分区域的颜色，避免整块发白。 */
+     同时保留上方大部分区域的颜色，避免整块发白。
+
+     注意不能用“transparent 82% → 背景色 100%”这种两段线性渐变：
+     在 82% 处不透明度的斜率会从 0 突然变成 1/18%，颜色虽然连续，
+     亮度曲线却在这里出现折点（马赫带），于是卡片下方会出现一条
+     很明显的横向分界线，底色动画经过暗色相位时尤其显眼。
+     这里改用 smoothstep 多段缓动，从 72% 开始渐隐，首尾斜率都为 0，
+     就不会再产生那条“黑带”。
+     第一条 background 是不支持 color-mix() 时的降级写法。 */
   .home-tint-plate::after {
     background: linear-gradient(
       to bottom,
@@ -555,6 +567,26 @@ html:has(.vp-home-hero) .vp-home {
       transparent 42%,
       transparent 82%,
       var(--vp-c-bg) 100%
+    );
+    background: linear-gradient(
+      to bottom,
+      var(--vp-c-bg) 0,
+      transparent 42%,
+      color-mix(in srgb, var(--vp-c-bg) 0%, transparent) 72%,
+      color-mix(in srgb, var(--vp-c-bg) 1.5%, transparent) 74%,
+      color-mix(in srgb, var(--vp-c-bg) 5.5%, transparent) 76%,
+      color-mix(in srgb, var(--vp-c-bg) 11.8%, transparent) 78%,
+      color-mix(in srgb, var(--vp-c-bg) 19.8%, transparent) 80%,
+      color-mix(in srgb, var(--vp-c-bg) 29.2%, transparent) 82%,
+      color-mix(in srgb, var(--vp-c-bg) 39.4%, transparent) 84%,
+      color-mix(in srgb, var(--vp-c-bg) 50%, transparent) 86%,
+      color-mix(in srgb, var(--vp-c-bg) 60.6%, transparent) 88%,
+      color-mix(in srgb, var(--vp-c-bg) 70.8%, transparent) 90%,
+      color-mix(in srgb, var(--vp-c-bg) 80.2%, transparent) 92%,
+      color-mix(in srgb, var(--vp-c-bg) 88.2%, transparent) 94%,
+      color-mix(in srgb, var(--vp-c-bg) 94.5%, transparent) 96%,
+      color-mix(in srgb, var(--vp-c-bg) 98.5%, transparent) 98%,
+      color-mix(in srgb, var(--vp-c-bg) 100%, transparent) 100%
     );
   }
 }
