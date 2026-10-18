@@ -146,3 +146,31 @@ html:has(.atlas) .vp-nav,
 html:has(.atlas) .vp-navbar {
   background: transparent !important;
 }
+
+/* ===== 宽屏博客正文：减少左右留白 ===== */
+@media (min-width: 1200px) {
+  html .vp-doc-container.is-blog .container {
+    max-width: none !important;
+    width: 100%;
+  }
+
+  html .vp-doc-container.is-blog .content {
+    max-width: 1200px !important;
+  }
+
+  html .vp-doc-container.is-blog.has-aside .content-container {
+    max-width: 1140px !important;
+  }
+
+  html .vp-doc-container.has-sidebar .content-container {
+    max-width: 720px !important;
+  }
+}
+
+/* ===== 博客展示页：宽屏下也让列表铺满，左右只留 24px ===== */
+@media (min-width: 1200px) {
+  html .vp-blog .blog-container {
+    max-width: none !important;
+    width: 100%;
+  }
+}
