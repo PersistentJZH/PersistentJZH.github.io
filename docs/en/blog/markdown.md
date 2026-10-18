@@ -81,9 +81,9 @@ content right
 - vscode - <Icon name="skill-icons:vscode-dark" size="2em" />
 - twitter - <Icon name="skill-icons:twitter" size="2em" />
 
-**demo wrapper：**
+**window：**
 
-::: demo-wrapper title="Demo" no-padding height="200px"
+::: window title="Demo" no-padding height="200px"
 <style scoped>
 .open-door {
   display: flex;

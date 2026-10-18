@@ -4,5 +4,8 @@ docs/.vuepress/.cache
 docs/.vuepress/.temp
 docs/.vuepress/dist
 
+# vuepress-theme-plume 生成配置时的临时文件
+docs/.vuepress/config.ts.*.mjs
+
 .DS_Store
 *.log

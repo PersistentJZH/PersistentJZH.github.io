@@ -54,22 +54,7 @@ export default defineUserConfig({
     // contributors: true,
     changelog: false,
 
-    /**
-     * 博客
-     * @see https://theme-plume.vuejs.press/config/basic/#blog
-     */
-    // blog: false, // 禁用博客
-    // blog: {
-    //   postList: true, // 是否启用文章列表页
-    //   tags: true, // 是否启用标签页
-    //   archives: true, // 是否启用归档页
-    //   categories: true, // 是否启用分类页
-    //   postCover: 'right', // 文章封面位置
-    //   pagination: 15, // 每页显示文章数量
-    // },
-
-    /* 博客文章页面链接前缀 */
-    article: '/article/',
+    /* 博客/笔记等集合配置见 .vuepress/collections.ts */
 
     /**
      * 编译缓存，加快编译速度
@@ -79,13 +64,10 @@ export default defineUserConfig({
 
     /**
      * 为 markdown 文件自动添加 frontmatter 配置
+     * 本站 frontmatter 均为手写，显式关闭，避免构建时改写源文件
      * @see https://theme-plume.vuejs.press/config/basic/#autofrontmatter
      */
-    // autoFrontmatter: {
-    //   permalink: true,  // 是否生成永久链接
-    //   createTime: true, // 是否生成创建时间
-    //   title: true,      // 是否生成标题
-    // },
+    autoFrontmatter: false,
 
     /* 本地搜索, 默认启用 */
     search: { provider: 'local' },

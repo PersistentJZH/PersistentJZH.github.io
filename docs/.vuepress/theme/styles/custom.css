@@ -58,6 +58,11 @@
     padding-right: 12px;
   }
 
+  .vp-doc-container {
+    padding-left: 12px !important;
+    padding-right: 12px !important;
+  }
+
   /* 旅行地图页：地图全宽，不再留左右白边 */
   html:has(.atlas) .vp-page {
     padding-left: 0;
@@ -84,6 +89,13 @@
   .vp-doc img {
     max-width: 100%;
     height: auto;
+  }
+
+  /* Mermaid 宽图限制在正文宽度内，超出时图表内部横向滚动 */
+  .vp-doc .mermaid-wrapper {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: auto;
   }
 
   /* 表格可水平滚动 */
@@ -149,16 +161,16 @@ html:has(.atlas) .vp-navbar {
 
 /* ===== 宽屏博客正文：减少左右留白 ===== */
 @media (min-width: 1200px) {
-  html .vp-doc-container.is-blog .container {
+  html .vp-doc-container.is-posts .container {
     max-width: none !important;
     width: 100%;
   }
 
-  html .vp-doc-container.is-blog .content {
+  html .vp-doc-container.is-posts .content {
     max-width: 1200px !important;
   }
 
-  html .vp-doc-container.is-blog.has-aside .content-container {
+  html .vp-doc-container.is-posts.has-aside .content-container {
     max-width: 1140px !important;
   }
 
@@ -169,7 +181,7 @@ html:has(.atlas) .vp-navbar {
 
 /* ===== 博客展示页：宽屏下也让列表铺满，左右只留 24px ===== */
 @media (min-width: 1200px) {
-  html .vp-blog .blog-container {
+  html .vp-posts .posts-container {
     max-width: none !important;
     width: 100%;
   }
