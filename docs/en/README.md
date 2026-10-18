@@ -5,7 +5,7 @@ config:
   -
     type: hero
     full: true
-    background: tint-plate
+    effect: tint-plate
     hero:
       name: Jian ZhiHao
       tagline: Blog, Notes, and Field Records

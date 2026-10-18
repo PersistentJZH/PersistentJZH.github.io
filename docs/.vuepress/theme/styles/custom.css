@@ -146,6 +146,57 @@
   overflow: hidden;
 }
 
+/* 首页 Hero 的静态背景兜底。
+   主题在低端触屏或用户开启“减少动态效果”时会跳过 tint-plate canvas；
+   client.ts 会补一份动画 canvas，这张静态图负责无 JS / 首屏时的底色。
+   动画可用时 canvas 会完整盖住这层静态背景。
+   静态图取自 tint-plate 算法 rgb=190 的一帧（t=4）；
+   若调整 README 里的 effectConfig.rgb，需要同步替换这两张图。 */
+.vp-home-hero.full.first {
+  background-color: var(--vp-c-bg);
+  background-image: url("/home-tint-plate-light.png");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+}
+
+[data-theme="dark"] .vp-home-hero.full.first {
+  background-image: url("/home-tint-plate-dark.png");
+}
+
+/* 主题在低端触屏 / 减少动效时跳过 tint-plate canvas 时，
+   client.ts 会挂载这份兜底动画。无 JS 时则是上面的静态背景图。 */
+.home-tint-plate {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  pointer-events: none;
+  transform: translate3d(0, 0, 0);
+}
+
+.home-tint-plate::after {
+  position: absolute;
+  inset: 0;
+  content: "";
+  background: linear-gradient(
+    to bottom,
+    var(--vp-c-bg) 0,
+    transparent 45%,
+    transparent 55%,
+    var(--vp-c-bg) 140%
+  );
+}
+
+.home-tint-plate canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
 .vp-home-hero::after {
   position: absolute;
   right: 0;
@@ -468,6 +519,41 @@ html:has(.vp-home-hero) .vp-navbar.top:not(.screen-open) {
 html:has(.vp-home-hero) .vp-navbar.top:not(.screen-open) .divider,
 html:has(.vp-home-hero) .vp-navbar.top:not(.screen-open) .divider-line {
   background-color: transparent !important;
+}
+
+/* ===== 首页：整屏高度，避免移动端可上下滑动 =====
+   100vh 在 iOS Safari 中取的是“大视口”，可能比实际可见区域高，
+   页面因此会多出一截可滚动距离。
+   --vp-home-visible-height 由 client.ts 用 visualViewport 实时写入，
+   这里再用 svh 兜底，让 Hero + Footer 恰好等于可见高度。 */
+html:has(.vp-home-hero) .vp-home-hero.full {
+  height: var(--vp-home-visible-height, 100vh);
+  height: var(--vp-home-visible-height, 100svh);
+}
+
+html:has(.vp-home-hero) .vp-home-hero.full.once {
+  height: calc(var(--vp-home-visible-height, 100vh) - var(--vp-footer-height, 0px));
+  height: calc(var(--vp-home-visible-height, 100svh) - var(--vp-footer-height, 0px));
+}
+
+html:has(.vp-home-hero) .vp-home {
+  min-height: calc(var(--vp-home-visible-height, 100vh) - var(--vp-nav-height) - var(--vp-footer-height, 0px));
+  min-height: calc(var(--vp-home-visible-height, 100svh) - var(--vp-nav-height) - var(--vp-footer-height, 0px));
+}
+
+@media (max-width: 768px) {
+  /* 首页内容刚好一屏，禁止纵向回弹/多余滚动。
+     用 layout-home 而不是 :has(.vp-home-hero)，避免页面切换过渡期间锁住新页面。 */
+  html.layout-home,
+  html.layout-home body,
+  html.layout-home .vp-layout {
+    height: var(--vp-home-visible-height, 100vh);
+    height: var(--vp-home-visible-height, 100svh);
+    min-height: var(--vp-home-visible-height, 100vh);
+    min-height: var(--vp-home-visible-height, 100svh);
+    overflow: hidden;
+    overscroll-behavior-y: none;
+  }
 }
 
 /* ===== 旅行地图页：让导航栏与地图顶部渐变自然衔接 ===== */

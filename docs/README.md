@@ -5,8 +5,9 @@ description: 技术博客、研究笔记与旅行时光 —— Jian ZhiHao 的�
 config:
   - type: hero
     full: true
-    background: tint-plate
-    tintPlate: 190
+    effect: tint-plate
+    effectConfig:
+      rgb: 190
     hero:
       tagline: <span class="home-eyebrow">zhihaoの博客</span><span class="home-title">技术与远方</span>
       text: |
