@@ -467,8 +467,8 @@
   }
 }
 
-@media (max-width: 768px) {
-  /* 卡片的大范围投影会在手机端叠成一条横向暗带，跟随底色动画变化时更明显 */
+@media (max-width: 899px) {
+  /* 两列卡片布局下，大范围投影会叠成一条横向暗带，跟随底色动画变化时更明显 */
   .vp-home-hero .home-entry,
   .vp-home-hero .home-entry:hover {
     box-shadow: none;
