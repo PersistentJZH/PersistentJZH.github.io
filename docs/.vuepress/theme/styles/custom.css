@@ -545,6 +545,12 @@ html:has(.vp-home-hero) .vp-home {
   }
 }
 
+/* ===== 列表页 footer：跟随列表页底色，避免底部出现一条不同颜色 ===== */
+html.bg-gray .vp-footer {
+  background-color: var(--vp-c-bg-alt);
+  border-top-color: transparent;
+}
+
 /* ===== 旅行地图页：让导航栏与地图顶部渐变自然衔接 ===== */
 html:has(.atlas) .vp-navbar .divider,
 html:has(.atlas) .vp-navbar .divider-line {
