@@ -83,6 +83,7 @@ let panRaf = 0
 let pointerTimer = 0
 let pointerLast = 0
 let pendingPointerLL: [number, number] | null = null
+let atlasLockScrollY = 0
 let pendingPan: { x: number; y: number } | null = null
 let resizeObserver: ResizeObserver | null = null
 let lastFocus: HTMLElement | null = null
@@ -588,6 +589,42 @@ function closeLightbox(): void {
   nextTick(() => galleryEl.value?.focus({ preventScroll: true }))
 }
 
+let lightboxSwipeX = 0
+let lightboxSwipeY = 0
+let lightboxSwipeActive = false
+
+function onLightboxTouchStart(event: TouchEvent): void {
+  const target = event.target as Element | null
+  if (!target || target.closest('.atlas-lb-thumbs, .atlas-lb-close, .atlas-lb-nav')) {
+    lightboxSwipeActive = false
+    return
+  }
+  if (event.touches.length !== 1) {
+    lightboxSwipeActive = false
+    return
+  }
+  lightboxSwipeActive = true
+  lightboxSwipeX = event.touches[0].clientX
+  lightboxSwipeY = event.touches[0].clientY
+}
+
+function onLightboxTouchEnd(event: TouchEvent): void {
+  if (!lightboxSwipeActive)
+    return
+  lightboxSwipeActive = false
+  const touch = event.changedTouches[0]
+  if (!touch)
+    return
+  const dx = touch.clientX - lightboxSwipeX
+  const dy = touch.clientY - lightboxSwipeY
+  if (Math.abs(dx) < 42 || Math.abs(dx) < Math.abs(dy) * 1.2)
+    return
+  if (dx < 0)
+    nextPhoto()
+  else
+    prevPhoto()
+}
+
 function prevPhoto(): void {
   if (!lightboxPhotos.value.length) return
   lightboxIndex.value =
@@ -876,13 +913,29 @@ onBeforeUnmount(() => {
   resizeObserver?.disconnect()
   mapEl.value?.removeEventListener('wheel', onWheel)
   window.removeEventListener('keydown', onKeydown)
-  document.documentElement.classList.remove('atlas-locked')
+  setAtlasLocked(false)
 })
 
-watch([selectedId, lightboxIndex], () => {
-  if (typeof document === 'undefined') return
-  const locked = !!selectedId.value || lightboxIndex.value >= 0
-  document.documentElement.classList.toggle('atlas-locked', locked)
+function setAtlasLocked(locked: boolean): void {
+  if (typeof document === 'undefined')
+    return
+  const html = document.documentElement
+  const isLocked = html.classList.contains('atlas-locked')
+  if (locked === isLocked)
+    return
+  if (locked) {
+    atlasLockScrollY = window.scrollY
+    document.body.style.top = `-${atlasLockScrollY}px`
+    html.classList.add('atlas-locked')
+  } else {
+    html.classList.remove('atlas-locked')
+    document.body.style.top = ''
+    window.scrollTo(0, atlasLockScrollY)
+  }
+}
+
+watch([selectedId, lightboxIndex, clusterMenu], () => {
+  setAtlasLocked(!!selectedId.value || lightboxIndex.value >= 0 || !!clusterMenu.value)
 })
 
 watch(isMobile, () => {
@@ -1223,6 +1276,7 @@ watch(lightboxIndex, async (index) => {
                   <button
                     type="button"
                     class="atlas-wall-button"
+                    :class="photo.file === 'IMG_6226.jpeg' ? 'is-portrait' : 'is-landscape'"
                     :aria-label="`查看照片：${photo.caption}`"
                     @click="openLightbox(index)"
                   >
@@ -1305,6 +1359,8 @@ watch(lightboxIndex, async (index) => {
           aria-modal="true"
           aria-label="照片浏览"
           @click.self="closeLightbox"
+          @touchstart.passive="onLightboxTouchStart"
+          @touchend="onLightboxTouchEnd"
         >
           <Transition name="atlas-lb-ambient">
             <div
@@ -1422,17 +1478,17 @@ watch(lightboxIndex, async (index) => {
   --atlas-elev: rgba(28, 34, 37, 0.18);
   --atlas-picker-scrim: rgba(28, 34, 37, 0.28);
   --atlas-canvas:
-    radial-gradient(48% 54% at 64% 46%, rgba(82, 120, 114, 0.08) 0%, rgba(247, 247, 243, 0) 66%),
-    radial-gradient(34% 38% at 82% 18%, rgba(168, 122, 70, 0.04) 0%, rgba(247, 247, 243, 0) 70%),
-    linear-gradient(180deg, #f7f7f3 0%, #f6f6f2 52%, #f0f0eb 100%);
+    radial-gradient(48% 54% at 64% 46%, rgba(82, 120, 114, 0.07) 0%, rgba(239, 245, 243, 0) 66%),
+    radial-gradient(34% 38% at 82% 18%, rgba(168, 122, 70, 0.03) 0%, rgba(239, 245, 243, 0) 70%),
+    linear-gradient(180deg, #eff5f3 0%, #edf3f0 52%, #e8efeb 100%);
   --atlas-vignette:
-    linear-gradient(90deg, rgba(247, 247, 243, 0.94) 0%, rgba(247, 247, 243, 0.8) 14%, rgba(247, 247, 243, 0.42) 27%, rgba(247, 247, 243, 0.08) 39%, rgba(247, 247, 243, 0) 48%),
-    linear-gradient(0deg, rgba(247, 247, 243, 0.66) 0%, rgba(247, 247, 243, 0) 26%);
-  --atlas-grain-opacity: 0.01;
-  --atlas-visited-from: #c2d2c9;
-  --atlas-visited-to: #afc3b9;
-  --atlas-glow: #a97a42;
-  --atlas-aura: #55756b;
+    linear-gradient(90deg, rgba(251, 250, 246, 0.94) 0%, rgba(251, 250, 246, 0.78) 14%, rgba(251, 250, 246, 0.34) 27%, rgba(251, 250, 246, 0.06) 39%, rgba(251, 250, 246, 0) 48%),
+    linear-gradient(0deg, rgba(251, 250, 246, 0.62) 0%, rgba(251, 250, 246, 0) 26%);
+  --atlas-grain-opacity: 0;
+  --atlas-visited-from: #c4dacd;
+  --atlas-visited-to: #b0c9bb;
+  --atlas-glow: #a9783f;
+  --atlas-aura: #5f8377;
   --atlas-scrim: linear-gradient(90deg, rgba(247, 247, 243, 0) 0%, rgba(247, 247, 243, 0.14) 45%, rgba(247, 247, 243, 0.58) 100%);
   --serif: "Songti SC", "STSong", "Source Han Serif SC", "Noto Serif SC", "Noto Serif CJK SC", "Iowan Old Style", "Palatino Linotype", Georgia, serif;
   --sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
@@ -1490,6 +1546,25 @@ watch(lightboxIndex, async (index) => {
 .atlas *::before,
 .atlas *::after {
   box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.atlas-map,
+.atlas-marker,
+.atlas-cluster {
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+.atlas-side,
+.atlas-side *,
+.atlas-picker-overlay,
+.atlas-picker-overlay *,
+.atlas-lightbox,
+.atlas-lightbox * {
+  -webkit-tap-highlight-color: transparent;
 }
 
 .atlas-bg {
@@ -1515,14 +1590,14 @@ watch(lightboxIndex, async (index) => {
   right: 0;
   left: 0;
   z-index: 2;
-  height: 176px;
+  height: 160px;
   pointer-events: none;
   background: linear-gradient(
     180deg,
-    rgba(232, 239, 232, 0.9) 0%,
-    rgba(240, 245, 239, 0.62) 64px,
-    rgba(247, 247, 243, 0.2) 120px,
-    rgba(247, 247, 243, 0) 176px
+    rgba(251, 250, 246, 0.92) 0%,
+    rgba(251, 250, 246, 0.56) 64px,
+    rgba(251, 250, 246, 0.16) 116px,
+    rgba(251, 250, 246, 0) 160px
   );
 }
 
@@ -1852,6 +1927,7 @@ watch(lightboxIndex, async (index) => {
 }
 
 .atlas-tools button {
+  touch-action: manipulation;
   display: grid;
   place-items: center;
   width: 38px;
@@ -2120,6 +2196,8 @@ watch(lightboxIndex, async (index) => {
 }
 
 .atlas-stop {
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
   display: flex;
   align-items: center;
   gap: 12px;
@@ -2155,11 +2233,13 @@ watch(lightboxIndex, async (index) => {
   transition: opacity 0.35s ease, transform 0.55s cubic-bezier(0.22, 0.8, 0.2, 1), filter 0.35s ease;
 }
 
-.atlas-stop:hover .atlas-stop-thumb img,
-.atlas-stop.is-hovered .atlas-stop-thumb img {
-  opacity: 1;
-  filter: saturate(0.95) contrast(1.03);
-  transform: scale(1.06);
+@media (hover: hover) {
+  .atlas-stop:hover .atlas-stop-thumb img,
+  .atlas-stop.is-hovered .atlas-stop-thumb img {
+    opacity: 1;
+    filter: saturate(0.95) contrast(1.03);
+    transform: scale(1.06);
+  }
 }
 
 .atlas-stop-copy {
@@ -2207,15 +2287,23 @@ watch(lightboxIndex, async (index) => {
   transition: color 0.28s ease;
 }
 
-.atlas-stop:hover .atlas-stop-name,
-.atlas-stop.is-hovered .atlas-stop-name,
 .atlas-stop.is-active .atlas-stop-name {
   color: var(--gold);
 }
 
-.atlas-stop:hover .atlas-stop-index,
 .atlas-stop.is-active .atlas-stop-index {
   color: var(--gold);
+}
+
+@media (hover: hover) {
+  .atlas-stop:hover .atlas-stop-name,
+  .atlas-stop.is-hovered .atlas-stop-name {
+    color: var(--gold);
+  }
+
+  .atlas-stop:hover .atlas-stop-index {
+    color: var(--gold);
+  }
 }
 
 .atlas-list-head {
@@ -2561,18 +2649,27 @@ watch(lightboxIndex, async (index) => {
   border-radius: 5px;
   background: var(--atlas-image-bg);
   cursor: zoom-in;
+  aspect-ratio: 4 / 3;
+  touch-action: manipulation;
+}
+
+.atlas-wall-button.is-portrait {
+  aspect-ratio: 3 / 4;
 }
 
 .atlas-wall-button img {
   display: block;
   width: 100%;
-  height: auto;
+  height: 100%;
+  object-fit: cover;
   transition: transform 0.8s cubic-bezier(0.22, 0.8, 0.2, 1), filter 0.4s ease;
 }
 
-.atlas-wall-button:hover img {
-  transform: scale(1.025);
-  filter: brightness(1.05);
+@media (hover: hover) {
+  .atlas-wall-button:hover img {
+    transform: scale(1.025);
+    filter: brightness(1.05);
+  }
 }
 
 .atlas-wall-item figcaption {
@@ -2588,9 +2685,11 @@ watch(lightboxIndex, async (index) => {
   color: rgba(var(--atlas-fg), 0.46);
 }
 
-.atlas-wall-item:hover figcaption {
-  color: rgba(var(--atlas-fg), 0.68);
-  transform: translateY(-1px);
+@media (hover: hover) {
+  .atlas-wall-item:hover figcaption {
+    color: rgba(var(--atlas-fg), 0.68);
+    transform: translateY(-1px);
+  }
 }
 
 .atlas-wall-item figcaption em {
@@ -2714,6 +2813,7 @@ watch(lightboxIndex, async (index) => {
 }
 
 .atlas-picker-row {
+  touch-action: manipulation;
   display: flex;
   align-items: center;
   gap: 12px;
@@ -2814,6 +2914,7 @@ watch(lightboxIndex, async (index) => {
   position: fixed;
   inset: 0;
   z-index: 80;
+  touch-action: pan-y;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -3031,6 +3132,7 @@ watch(lightboxIndex, async (index) => {
 }
 
 .atlas-lb-thumbs {
+  touch-action: pan-x;
   position: absolute;
   bottom: 24px;
   left: 50%;
@@ -3048,6 +3150,7 @@ watch(lightboxIndex, async (index) => {
 }
 
 .atlas-lb-thumb {
+  touch-action: manipulation;
   flex: 0 0 auto;
   width: 46px;
   height: 34px;
@@ -3305,6 +3408,10 @@ watch(lightboxIndex, async (index) => {
     background: linear-gradient(0deg, var(--ink) 0%, transparent 100%);
   }
 
+  .atlas-lb-nav {
+    display: none;
+  }
+
   .atlas-compass,
   .atlas-scale,
   .atlas-readout {
@@ -3517,6 +3624,14 @@ watch(lightboxIndex, async (index) => {
 html.atlas-locked,
 html.atlas-locked body {
   overflow: hidden;
+}
+
+html.atlas-locked body {
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  width: 100%;
 }
 
 html:has(.atlas) {
