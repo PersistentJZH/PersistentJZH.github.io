@@ -191,6 +191,26 @@
   background: linear-gradient(to bottom, transparent, var(--vp-c-bg));
 }
 
+@media (max-width: 768px) {
+  /* 手机端让 tint-plate 一直铺到 footer 下方，去掉底部的大块白色渐变 */
+  .vp-home-hero {
+    overflow: visible;
+  }
+
+  .vp-home-hero::after {
+    display: none;
+  }
+
+  .home-tint-plate {
+    height: calc(100% + var(--vp-footer-height, 0px));
+  }
+
+  /* 版权贴近底部；保持 footer 总高度不变，避免 Hero 与 footer 之间出现缝隙 */
+  html.layout-home .vp-footer {
+    padding: 38px 24px 10px;
+  }
+}
+
 .vp-home-hero .hero-content {
   position: relative;
   isolation: isolate;
