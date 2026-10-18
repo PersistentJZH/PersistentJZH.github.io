@@ -1592,12 +1592,18 @@ watch(lightboxIndex, async (index) => {
   z-index: 2;
   height: 160px;
   pointer-events: none;
+  /**
+   * 渐隐必须在本层底部精确收尾（100%）。
+   * 之前暗色主题最后一个色标写在 176px，而图层只有 160px 高，
+   * 渐变被硬裁，160px 处还残留约 6% 的暗色，形成一条横向接缝，
+   * 看起来就像地图上面又压了一层。这里统一改用百分比色标，避免被裁切。
+   */
   background: linear-gradient(
     180deg,
     rgba(251, 250, 246, 0.92) 0%,
-    rgba(251, 250, 246, 0.56) 64px,
-    rgba(251, 250, 246, 0.16) 116px,
-    rgba(251, 250, 246, 0) 160px
+    rgba(251, 250, 246, 0.56) 40%,
+    rgba(251, 250, 246, 0.16) 72.5%,
+    rgba(251, 250, 246, 0) 100%
   );
 }
 
@@ -1605,9 +1611,9 @@ watch(lightboxIndex, async (index) => {
   background: linear-gradient(
     180deg,
     rgba(6, 9, 12, 0.94) 0%,
-    rgba(6, 9, 12, 0.7) 64px,
-    rgba(6, 9, 12, 0.22) 120px,
-    rgba(6, 9, 12, 0) 176px
+    rgba(6, 9, 12, 0.7) 40%,
+    rgba(6, 9, 12, 0.22) 75%,
+    rgba(6, 9, 12, 0) 100%
   );
 }
 
@@ -3378,8 +3384,8 @@ watch(lightboxIndex, async (index) => {
     background: linear-gradient(
       180deg,
       rgba(251, 250, 246, 0.8) 0%,
-      rgba(251, 250, 246, 0.38) 56px,
-      rgba(251, 250, 246, 0) 104px
+      rgba(251, 250, 246, 0.38) 54%,
+      rgba(251, 250, 246, 0) 100%
     );
   }
 
