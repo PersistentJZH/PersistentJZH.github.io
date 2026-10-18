@@ -473,6 +473,12 @@
   .vp-home-hero .home-entry:hover {
     box-shadow: none;
   }
+
+  /* iOS Safari 对大范围 backdrop-filter 的合成会在卡片下方留下模糊暗带 */
+  .vp-home-hero .home-entry {
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+  }
 }
 
 @media (max-height: 700px) {
