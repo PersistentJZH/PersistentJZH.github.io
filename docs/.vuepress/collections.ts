@@ -24,6 +24,22 @@ export const zhCollections = defineCollections([
   },
 
   {
+    type: 'post',
+    dir: 'travel-guides',
+    title: '旅行攻略',
+    link: '/travel/guides/',
+    linkPrefix: '/travel/guides/',
+    tagsLink: '/travel/guides/tags/',
+    archivesLink: '/travel/guides/archives/',
+    categoriesLink: '/travel/guides/categories/',
+    pagination: 12,
+    meta: {
+      readingTime: false,
+      wordCount: false,
+    },
+  },
+
+  {
     type: 'doc',
     dir: 'kubernetes',
     title: 'Kubernetes',
@@ -61,7 +77,7 @@ export const zhCollections = defineCollections([
   {
     type: 'doc',
     dir: 'travel',
-    title: '旅行',
+    title: '旅行时光',
     linkPrefix: '/travel/',
     // 旅行页使用全屏地图，不需要侧边栏
   },

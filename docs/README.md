@@ -31,7 +31,7 @@ config:
               <span class="home-entry-no" aria-hidden="true">03</span>
               <span class="home-entry-title">旅行时光</span>
             </span>
-            <span class="home-entry-desc">走过的城市、路上的光与旅行地图。</span>
+            <span class="home-entry-desc">旅行足迹与目的地攻略：走过的城市、路上的光与旅行地图。</span>
             <span class="home-entry-arrow" aria-hidden="true">→</span>
           </a>
           <a class="home-entry" href="https://github.com/PersistentJZH" target="_blank" rel="noopener noreferrer">

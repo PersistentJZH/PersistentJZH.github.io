@@ -6,9 +6,11 @@ import { defineClientConfig, useRoute } from 'vuepress/client'
 //import Swiper from 'vuepress-theme-plume/features/Swiper.vue'
 
 import TravelMap from './theme/components/TravelMap.vue'
+import YangshuoGuide from './theme/components/YangshuoGuide.vue'
 import { mountHomeTintPlate, type HomeTintPlateHandle, type TintPalette } from './theme/home-tint-plate'
 
 import './theme/styles/custom.css'
+import './theme/styles/yangshuo.css'
 
 /**
  * iOS Safari（尤其是 26/27 的悬浮工具栏）里 100vh / 100svh 与真实可见区域
@@ -76,6 +78,7 @@ export default defineClientConfig({
 
     // your custom components
     app.component('TravelMap', TravelMap)
+    app.component('YangshuoGuide', YangshuoGuide)
   },
   setup() {
     const route = useRoute()
