@@ -4,7 +4,8 @@ createTime: 2026/10/22 22:30:00
 permalink: /travel/guides/yangshuo/
 pageLayout: page
 pageClass: yangshuo-page
-backToTop: true
+outline: false
+backToTop: false
 description: 周五 18:00 到阳朔站，周日 14:30 返程深圳北。住十里画廊，租电瓶车玩西街、遇龙河竹筏、千里江山图，附路线地图、里程和电瓶车时间。
 cover: /yangshuo-cover.svg
 coverStyle:
