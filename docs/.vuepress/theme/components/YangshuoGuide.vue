@@ -423,7 +423,7 @@ const days: DayPlan[] = [
       '18:00 阳朔站落地，跨过 29 公里山水到凤鸣。放下行李，去西街吃一条啤酒鱼，为明天的骑行留点体力。',
     keys: ['阳朔站 → 酒店 29km', '西街夜逛', '早睡，明天骑一天'],
     distance: '29 km',
-    weather: '晴 · 17–29℃',
+    weather: '晴间多云 · 18–29℃',
     items: [
       {
         time: '18:00',
@@ -475,7 +475,7 @@ const days: DayPlan[] = [
       '10 点起床，12:15 的竹筏，14:45 穿十里画廊回酒店，15:40 出发去千里江山图，避开 17:00 晚高峰。',
     keys: ['10:00 起床', '12:15 竹筏', '15:40 出发'],
     distance: '约 30 km 骑行',
-    weather: '晴 · 17–30℃',
+    weather: '多云间晴 · 18–28℃',
     items: [
       {
         time: '10:00',
@@ -584,7 +584,7 @@ const days: DayPlan[] = [
       '10 点起床，退房打车去兴坪，行李寄在古镇；逛完 20 元背景直接去阳朔站，14:30 上车。',
     keys: ['10:00 起床', '兴坪 20 元背景', '14:30 返程'],
     distance: '35 km',
-    weather: '多云 · 18–28℃',
+    weather: '多云转晴 · 18–30℃',
     items: [
       {
         time: '10:00',
@@ -646,6 +646,12 @@ const tickets = [
   { name: '大榕树', price: '约 ¥20' },
   { name: '旧县古村', price: '免费' },
   { name: '工农桥', price: '免费' },
+]
+
+const weather = [
+  { date: '10.23', week: '周五', high: 29, low: 18, text: '晴间多云', rain: '0%', sunset: '18:04', uv: '6.8', icon: 'sun' },
+  { date: '10.24', week: '周六', high: 28, low: 18, text: '多云间晴', rain: '0%', sunset: '18:03', uv: '6.8', icon: 'partly' },
+  { date: '10.25', week: '周日', high: 30, low: 18, text: '多云转晴', rain: '0%', sunset: '18:03', uv: '6.8', icon: 'partly' },
 ]
 
 const bookings = [
@@ -846,10 +852,49 @@ function selectSpot(id: string): void {
         </div>
         <div class="ys-fact">
           <small>Weather</small>
-          <b>晴 · 17–30℃</b>
-          <span>日落 18:04 · 带薄外套</span>
+          <b>晴间多云 · 18–30℃</b>
+          <span>三天无雨 · 日落 18:03–18:04</span>
         </div>
       </div>
+    </section>
+
+    <section class="ys-wrap ys-weather" aria-labelledby="weather-title">
+      <div class="ys-weather-head">
+        <div>
+          <p class="ys-kicker">WEATHER · 10.23—10.25</p>
+          <h2 id="weather-title">天气与日落</h2>
+        </div>
+        <p class="ys-weather-source">10.22 预报 · 出发前再看一次</p>
+      </div>
+
+      <div class="ys-weather-grid">
+        <div v-for="w in weather" :key="w.date" class="ys-weather-day">
+          <div class="ys-weather-daytop">
+            <span>{{ w.date }}</span>
+            <em>{{ w.week }}</em>
+          </div>
+          <div class="ys-weather-main">
+            <span class="ys-weather-icon" :class="`is-${w.icon}`" aria-hidden="true">
+              <svg v-if="w.icon === 'sun'" viewBox="0 0 48 48">
+                <circle cx="24" cy="24" r="8.5" />
+                <path d="M24 4v6M24 38v6M4 24h6M38 24h6M9.9 9.9l4.2 4.2M33.9 33.9l4.2 4.2M38.1 9.9l-4.2 4.2M14.1 33.9l-4.2 4.2" />
+              </svg>
+              <svg v-else viewBox="0 0 48 48">
+                <circle cx="17" cy="17" r="6.5" />
+                <path d="M17 4v4M4 17h4M7.5 7.5l2.8 2.8M26.5 7.5l-2.8 2.8" />
+                <path d="M20 37h15a6.5 6.5 0 0 0 0-13 9.5 9.5 0 0 0-18-1 7 7 0 0 0 3 14Z" />
+              </svg>
+            </span>
+            <strong>{{ w.high }}°<small>/{{ w.low }}°</small></strong>
+          </div>
+          <p class="ys-weather-text">{{ w.text }} · 降雨 {{ w.rain }}</p>
+          <p class="ys-weather-meta">日落 {{ w.sunset }} · UV {{ w.uv }}</p>
+        </div>
+      </div>
+
+      <p class="ys-weather-note">
+        早晚 18℃、白天 28–30℃，带一件薄外套；紫外线强，防晒别省；目前三天降雨概率都是 0%，但山区天气多变，出发前再确认一次。
+      </p>
     </section>
 
     <section class="ys-wrap ys-section" aria-labelledby="overview-title">
