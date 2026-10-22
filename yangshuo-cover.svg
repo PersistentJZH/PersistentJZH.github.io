@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" width="1200" height="675">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#fcf6e9"/>
+      <stop offset="1" stop-color="#ecdfc7"/>
+    </linearGradient>
+    <radialGradient id="sunGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0" stop-color="#e3a95f" stop-opacity=".55"/>
+      <stop offset="1" stop-color="#e3a95f" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="river" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#9cc4bc"/>
+      <stop offset="1" stop-color="#5f9a93"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1200" height="675" fill="url(#bg)"/>
+
+  <circle cx="930" cy="175" r="190" fill="url(#sunGlow)"/>
+  <circle cx="930" cy="175" r="58" fill="#e3a95f" opacity=".78"/>
+
+  <g fill="#b7c9b8" opacity=".55">
+    <path d="M0 470V360c42 0 58-64 102-64s50 52 96 52 54-92 106-92 58 84 108 84 54-66 106-66 56 72 108 72 58-50 110-50 58 58 108 58 56-40 108-40 58 46 108 46 54-28 106-28v138Z"/>
+  </g>
+  <g fill="#93ad9b" opacity=".62">
+    <path d="M0 500V410c52 0 70-52 120-52s60 44 112 44 68-74 126-74 66 66 124 66 72-50 130-50 68 54 126 54 70-36 130-36 68 42 128 42 66-26 124-26v122Z"/>
+  </g>
+  <g fill="#6f917e" opacity=".75">
+    <path d="M0 540V470c58 0 78-40 132-40s66 34 122 34 74-60 134-60 70 52 130 52 76-38 136-38 72 42 132 42 74-28 136-28 70 32 134 32 66-20 124-20v96Z"/>
+  </g>
+
+  <path d="M0 560c120-26 200 10 320 4s200-44 330-30 190 46 310 30 160-30 240-14v125H0Z" fill="#e7d8bd"/>
+
+  <path d="M-40 620c150-40 260 10 400-6s230-56 380-40 230 58 380 30 140-28 220-16" fill="none" stroke="#cfe0d8" stroke-width="46" stroke-linecap="round" opacity=".7"/>
+  <path d="M-40 620c150-40 260 10 400-6s230-56 380-40 230 58 380 30 140-28 220-16" fill="none" stroke="url(#river)" stroke-width="12" stroke-linecap="round" opacity=".7"/>
+
+  <g fill="none" stroke="#d2694a" stroke-width="4" stroke-dasharray="12 12" stroke-linecap="round" opacity=".8">
+    <path d="M120 470c90-40 160-90 250-80s120 60 210 30 130-70 220-40"/>
+  </g>
+  <g>
+    <circle cx="120" cy="470" r="12" fill="#d2694a"/>
+    <circle cx="370" cy="390" r="9" fill="#3b7c75"/>
+    <circle cx="580" cy="420" r="9" fill="#3b7c75"/>
+    <circle cx="800" cy="380" r="12" fill="#d2694a"/>
+  </g>
+
+  <text x="78" y="218" font-family="Songti SC, Noto Serif SC, serif" font-size="140" font-weight="600" fill="#2a2721" letter-spacing="6">阳朔</text>
+  <text x="84" y="272" font-family="-apple-system, PingFang SC, sans-serif" font-size="24" font-weight="700" fill="#d2694a" letter-spacing="9">YANGSHUO · 3 DAYS</text>
+  <text x="84" y="334" font-family="Songti SC, Noto Serif SC, serif" font-size="40" fill="#4a4439">骑一辆电瓶车，去追千里江山</text>
+</svg>
