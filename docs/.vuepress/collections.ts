@@ -98,13 +98,6 @@ export const enCollections = defineCollections([
     pagination: 15,
   },
 
-  {
-    type: 'doc',
-    dir: 'demo',
-    title: 'Demo',
-    linkPrefix: '/demo/',
-    sidebar: ['', 'foo', 'bar'],
-  },
   // 英文笔记的源目录已提升到 docs/en/*，为保持既有 URL，
   // 页面链接前缀仍保留 /en/notes/*。
   {

@@ -7,5 +7,8 @@ docs/.vuepress/dist
 # vuepress-theme-plume 生成配置时的临时文件
 docs/.vuepress/config.ts.*.mjs
 
+# 工具抓取和临时结果
+.reasonix/
+
 .DS_Store
 *.log
