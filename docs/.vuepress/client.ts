@@ -7,6 +7,7 @@ import { defineClientConfig, useRoute } from 'vuepress/client'
 
 import TravelMap from './theme/components/TravelMap.vue'
 import YangshuoGuide from './theme/components/YangshuoGuide.vue'
+import BlogLayout from './theme/components/BlogLayout.vue'
 import { mountHomeTintPlate, type HomeTintPlateHandle, type TintPalette } from './theme/home-tint-plate'
 
 import './theme/styles/custom.css'
@@ -69,6 +70,9 @@ function scheduleHomeTintPlateSync() {
 }
 
 export default defineClientConfig({
+  layouts: {
+    Layout: BlogLayout,
+  },
   enhance({ app }) {
     // built-in components
     // app.component('RepoCard', RepoCard)

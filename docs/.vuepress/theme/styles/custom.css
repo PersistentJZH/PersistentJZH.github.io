@@ -770,23 +770,23 @@ html:has(.atlas) .vp-navbar {
 }
 
 /* ===== 博客列表（/blog/）：瀑布流卡片 =====
-   仅作用于中文博客列表页（html 上的 collection-post-article + layout-posts），
-   不影响英文博客、旅行攻略、标签 / 分类 / 归档页。
+   中英文博客列表共用（html 上的 collection-post-article + layout-posts），
+   不影响旅行攻略；分类、标签和归档内容由 BlogExplore 统一展示。
    卡片顺序按列自上而下排列，这是 CSS 多列瀑布流的正常表现。 */
-html[lang="zh-CN"].collection-post-article.layout-posts .vp-post-list {
+html.collection-post-article.layout-posts .vp-post-list {
   display: block;
   flex: 1 2;
   min-width: 0;
   max-width: 100%;
   margin: 0 auto;
   padding-bottom: 24px;
-  column-count: 1;
+  column-count: 2;
   column-gap: 20px;
   column-fill: balance;
 }
 
 /* 卡片：去掉主题的横排内边距，让封面图铺满卡片顶部 */
-html[lang="zh-CN"].collection-post-article.layout-posts .vp-post-list > .vp-post-item {
+html.collection-post-article.layout-posts .vp-post-list > .vp-post-item {
   --wf-cover-ratio: 4 / 3;
 
   display: block;
@@ -802,7 +802,7 @@ html[lang="zh-CN"].collection-post-article.layout-posts .vp-post-list > .vp-post
 
 /* 封面默认 4:3（部分卡片通过 --wf-cover-ratio 改为 1:1），
    覆盖主题按 top 布局写入的行内高度 */
-html[lang="zh-CN"].collection-post-article.layout-posts .vp-post-list .post-cover {
+html.collection-post-article.layout-posts .vp-post-list .post-cover {
   width: 100% !important;
   height: auto !important;
   padding-bottom: 0 !important;
@@ -812,18 +812,18 @@ html[lang="zh-CN"].collection-post-article.layout-posts .vp-post-list .post-cove
   background-color: var(--vp-c-bg-soft);
 }
 
-html[lang="zh-CN"].collection-post-article.layout-posts .vp-post-list .post-cover img {
+html.collection-post-article.layout-posts .vp-post-list .post-cover img {
   width: 100%;
   height: 100%;
   object-fit: cover;
 }
 
-html[lang="zh-CN"].collection-post-article.layout-posts .vp-post-list .vp-post-item:hover .post-cover img {
+html.collection-post-article.layout-posts .vp-post-list .vp-post-item:hover .post-cover img {
   transform: scale(1.045);
 }
 
 /* 没有手动设置 cover 的旧文章 / 新文章：用默认封面兜底，保持瀑布流完整 */
-html[lang="zh-CN"].collection-post-article.layout-posts .vp-post-list > .vp-post-item:not(.has-cover)::before {
+html.collection-post-article.layout-posts .vp-post-list > .vp-post-item:not(.has-cover)::before {
   display: block;
   aspect-ratio: var(--wf-cover-ratio);
   content: "";
@@ -831,157 +831,328 @@ html[lang="zh-CN"].collection-post-article.layout-posts .vp-post-list > .vp-post
 }
 
 /* 卡片正文 */
-html[lang="zh-CN"].collection-post-article.layout-posts .vp-post-list .post-item-content {
-  gap: 8px;
-  padding: 14px 16px 16px;
+html.collection-post-article.layout-posts .vp-post-list .post-item-content {
+  gap: 10px;
+  min-width: 0;
+  padding: 16px;
 }
 
-html[lang="zh-CN"].collection-post-article.layout-posts .vp-post-list .post-item-content h3 {
+html.collection-post-article.layout-posts .vp-post-list .post-item-content h3 {
   align-items: flex-start;
   font-size: 16px;
   line-height: 1.5;
 }
 
-html[lang="zh-CN"].collection-post-article.layout-posts .vp-post-list .post-item-content h3 a {
+html.collection-post-article.layout-posts .vp-post-list .post-item-content h3 a {
   display: -webkit-box;
   overflow: hidden;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 3;
   line-clamp: 3;
+  overflow-wrap: anywhere;
 }
 
-html[lang="zh-CN"].collection-post-article.layout-posts .vp-post-list .post-meta {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
-  gap: 7px 12px;
+/* 分类、标签各占一行；日期和阅读时长统一收在底部，避免互相挤占宽度。 */
+html.collection-post-article.layout-posts .vp-post-list .post-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 8px;
   align-items: center;
-  margin-top: 2px;
-  font-size: 11.5px;
+  margin: 0;
+  font-size: 12px;
   line-height: 1.5;
 }
 
-html[lang="zh-CN"].collection-post-article.layout-posts .vp-post-list .post-meta > div {
+html.collection-post-article.layout-posts .vp-post-list .post-meta > div {
   min-width: 0;
 }
 
 /* 卡片里不再堆叠四个小图标，改用排版和留白区分信息层级 */
-html[lang="zh-CN"].collection-post-article.layout-posts .vp-post-list .post-meta .icon {
+html.collection-post-article.layout-posts .vp-post-list .post-meta .icon {
   display: none;
 }
 
-html[lang="zh-CN"].collection-post-article.layout-posts .vp-post-list .post-meta .category-list {
-  grid-row: 1;
-  grid-column: 1;
+html.collection-post-article.layout-posts .vp-post-list .post-meta .category-list {
+  flex: 0 0 100%;
+  order: 0;
   flex-wrap: wrap;
   gap: 0 4px;
-  font-weight: 500;
   color: var(--vp-c-text-2);
 }
 
-html[lang="zh-CN"].collection-post-article.layout-posts .vp-post-list .post-meta .category-list a:first-of-type {
+html.collection-post-article.layout-posts .vp-post-list .post-meta .category-list a:first-of-type {
   font-weight: 600;
   color: var(--vp-c-brand-1);
 }
 
-html[lang="zh-CN"].collection-post-article.layout-posts .vp-post-list .post-meta .create-time {
-  grid-row: 1;
-  grid-column: 2;
-  justify-self: end;
-  font-size: 11px;
-  color: var(--vp-c-text-3);
-  font-variant-numeric: tabular-nums;
+html.collection-post-article.layout-posts .vp-post-list .post-meta .create-time {
+  order: 3;
 }
 
-html[lang="zh-CN"].collection-post-article.layout-posts .vp-post-list .post-meta .tag-list {
-  grid-row: 2;
-  grid-column: 1;
+html.collection-post-article.layout-posts .vp-post-list .post-meta .tag-list {
+  flex: 0 0 100%;
+  order: 1;
   flex-wrap: wrap;
-  gap: 0 4px;
+  gap: 6px;
 }
 
-html[lang="zh-CN"].collection-post-article.layout-posts .vp-post-list .post-meta .reading-time {
-  grid-row: 2;
-  grid-column: 2;
-  justify-self: end;
+html.collection-post-article.layout-posts .vp-post-list .post-meta:has(.create-time, .reading-time)::after {
+  flex: 0 0 100%;
+  order: 2;
+  height: 1px;
+  content: "";
+  background-color: var(--vp-c-divider);
+}
+
+html.collection-post-article.layout-posts .vp-post-list .post-meta .reading-time {
+  order: 4;
+  margin-left: auto;
+}
+
+html.collection-post-article.layout-posts .vp-post-list .post-meta :is(.create-time, .reading-time) {
   font-size: 11px;
-  color: var(--vp-c-text-3);
+  color: var(--vp-c-text-2);
   font-variant-numeric: tabular-nums;
+  white-space: nowrap;
 }
 
 /* 字数统计在卡片上信息量太低，只保留阅读时长；
    仅当存在「图标 + 字数 + 时长」三个 span 时才隐藏字数 */
-html[lang="zh-CN"].collection-post-article.layout-posts .vp-post-list .post-meta .reading-time:has(> span:nth-of-type(3)) > span:nth-of-type(2) {
+html.collection-post-article.layout-posts .vp-post-list .post-meta .reading-time:has(> span:nth-of-type(3)) > span:nth-of-type(2) {
   display: none;
 }
 
-/* 没有标签的卡片：把日期和阅读时长收到同一行，避免左下角留空 */
-html[lang="zh-CN"].collection-post-article.layout-posts .vp-post-list .post-meta:not(:has(.tag-list)) {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 4px 12px;
-}
-
-html[lang="zh-CN"].collection-post-article.layout-posts .vp-post-list .post-meta:not(:has(.tag-list)) .category-list {
-  flex: 1 1 auto;
-}
-
-html[lang="zh-CN"].collection-post-article.layout-posts .vp-post-list .post-meta:not(:has(.tag-list)) .create-time {
-  order: 2;
-  margin-left: auto;
-}
-
-html[lang="zh-CN"].collection-post-article.layout-posts .vp-post-list .post-meta:not(:has(.tag-list)) .reading-time {
-  order: 3;
-}
-
-html[lang="zh-CN"].collection-post-article.layout-posts .vp-post-list .post-meta .tag-list .tag {
-  padding: 2px 6px;
+html.collection-post-article.layout-posts .vp-post-list .post-meta .tag-list .tag {
+  max-width: 100%;
+  padding: 3px 7px;
+  overflow: hidden;
   font-size: 11px;
-  border-radius: 4px;
+  line-height: 1.5;
+  color: var(--vp-c-text-2);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  background-color: var(--vp-c-bg-soft);
+  border-radius: 6px;
+}
+
+html.collection-post-article.layout-posts .vp-post-list .post-meta .tag-list .tag:hover {
+  color: var(--vp-c-brand-1);
+  background-color: var(--vp-c-brand-soft);
+}
+
+html.collection-post-article.layout-posts .vp-post-list .post-item-content a:focus-visible {
+  outline: 2px solid var(--vp-c-brand-1);
+  outline-offset: 2px;
 }
 
 /* 分页条横跨所有列，避免被挤进最后一列 */
-html[lang="zh-CN"].collection-post-article.layout-posts .vp-post-list > .vp-pagination {
+html.collection-post-article.layout-posts .vp-post-list > .vp-pagination {
   column-span: all;
   -webkit-column-span: all;
   margin-top: 4px;
   border-radius: 10px;
 }
 
-@media (min-width: 768px) {
-  html[lang="zh-CN"].collection-post-article.layout-posts .vp-post-list {
-    column-count: 2;
+/* 手机保持双列，缩小卡片间距和留白，让长标题、标签自然换行。 */
+@media (max-width: 767px) {
+  html.collection-post-article.layout-posts .vp-posts {
+    padding: calc(var(--vp-nav-height) + 16px) 12px 24px;
+  }
+
+  html.collection-post-article.layout-posts .vp-post-list {
+    column-gap: 12px;
+  }
+
+  html.collection-post-article.layout-posts .vp-post-list > .vp-post-item {
+    margin-bottom: 12px;
+    border-radius: 10px;
+  }
+
+  html.collection-post-article.layout-posts .vp-post-list .post-item-content {
+    gap: 8px;
+    padding: 12px 10px;
+  }
+
+  html.collection-post-article.layout-posts .vp-post-list .post-item-content h3 {
+    font-size: 14px;
+  }
+
+  html.collection-post-article.layout-posts .vp-post-list .post-meta {
+    gap: 8px 6px;
+    font-size: 11px;
+  }
+
+  html.collection-post-article.layout-posts .vp-post-list .post-meta .tag-list {
+    gap: 5px;
+  }
+
+  html.collection-post-article.layout-posts .vp-post-list .post-meta .tag-list .tag {
+    padding: 2px 5px;
   }
 }
 
 @media (min-width: 1200px) {
-  html[lang="zh-CN"].collection-post-article.layout-posts .vp-post-list {
+  html.collection-post-article.layout-posts .vp-post-list {
     column-count: 3;
     column-gap: 24px;
   }
 }
 
-@media (min-width: 1600px) {
-  html[lang="zh-CN"].collection-post-article.layout-posts .vp-post-list {
-    column-count: 4;
-  }
-}
-
 /* 瀑布流的关键：让部分卡片的封面更高，形成高低错落 */
-html[lang="zh-CN"].collection-post-article.layout-posts .vp-post-list > .vp-post-item:nth-child(3n + 2) {
+html.collection-post-article.layout-posts .vp-post-list > .vp-post-item:nth-child(3n + 2) {
   --wf-cover-ratio: 1 / 1;
 }
 
-/* 多列布局时，把最后 4 张卡片统一设为方形封面，
-   让各列底部更接近，避免右下角出现一大块空白。
-   这里只在「恰好 14 篇文章」时启用（当前每页 15 条，14 篇会排成 5/5/4）；
-   文章数量变化后自动回到 3n+2 的方形封面节奏。 */
-@media (min-width: 1200px) {
-  html[lang="zh-CN"].collection-post-article.layout-posts .vp-post-list:has(> .vp-post-item:nth-child(14):last-child) > .vp-post-item:nth-child(3n + 2) {
-    --wf-cover-ratio: 4 / 3;
-  }
+/* ===== 中英文博客侧栏：个人资料、统计导航与内容索引 =====
+   列表、标签、分类和归档页共用，保留主题的吸顶行为和移动端隐藏规则。 */
+html.collection-post-article .vp-posts-aside {
+  flex: 0 0 260px;
+  width: 260px;
+  padding: 20px;
+  background-color: var(--vp-c-bg);
+  border: 1px solid var(--vp-c-divider);
+  border-radius: 12px;
+  transition: background-color var(--vp-t-color), border-color var(--vp-t-color);
+}
 
-  html[lang="zh-CN"].collection-post-article.layout-posts .vp-post-list:has(> .vp-post-item:nth-child(14):last-child) > .vp-post-item:nth-child(n + 11) {
-    --wf-cover-ratio: 1 / 1;
+html.collection-post-article .vp-posts-aside .vp-profile,
+html.collection-post-article .vp-posts-aside .vp-profile:hover {
+  display: grid;
+  grid-template-columns: 80px minmax(0, 1fr);
+  gap: 16px 12px;
+  align-items: center;
+  padding: 0;
+  margin: 0;
+  text-align: left;
+  background: transparent;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+html.collection-post-article .vp-posts-aside .vp-profile > p {
+  margin: 0;
+}
+
+html.collection-post-article .vp-posts-aside .vp-profile img {
+  display: block;
+  width: 80px;
+  height: 80px;
+  margin: 0;
+  object-fit: contain;
+}
+
+html.collection-post-article .vp-posts-aside .profile-info {
+  min-width: 0;
+}
+
+html.collection-post-article .vp-posts-aside .vp-profile h3 {
+  margin: 0;
+  font-size: 18px;
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+}
+
+html.collection-post-article .vp-posts-aside :is(.profile-location, .profile-organization) {
+  justify-content: flex-start;
+  margin-top: 6px;
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+html.collection-post-article .vp-posts-aside :is(.profile-location, .profile-organization) p {
+  color: var(--vp-c-text-2);
+}
+
+html.collection-post-article .vp-posts-aside .profile-social {
+  grid-column: 1 / -1;
+  padding: 0;
+  margin: 0;
+  border: 0;
+}
+
+html.collection-post-article .vp-posts-aside .vp-social-links {
+  gap: 8px;
+}
+
+html.collection-post-article .vp-posts-aside .vp-social-link {
+  flex: 1 1 auto;
+  gap: 8px;
+  width: auto;
+  height: 36px;
+  font-size: 12px;
+  font-weight: 500;
+  background-color: var(--vp-c-bg-soft);
+  border-radius: 8px;
+  transition: color var(--vp-t-color), background-color var(--vp-t-color);
+}
+
+/* 链接本身已有完整的无障碍名称，这里补充可见的平台名称。 */
+html.collection-post-article .vp-posts-aside .vp-social-link[href="https://github.com/PersistentJZH"]::after {
+  content: "GitHub";
+}
+
+html.collection-post-article .vp-posts-aside .vp-posts-nav {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 4px;
+  padding-top: 16px;
+  margin-top: 20px;
+  border-top: 1px solid var(--vp-c-divider);
+}
+
+html.collection-post-article .vp-posts-aside .nav-link,
+html.collection-post-article .vp-posts-aside .nav-link:hover {
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+  padding: 8px 4px;
+  margin: 0;
+  text-align: center;
+  background: transparent;
+  border-radius: 8px;
+  box-shadow: none;
+  transform: none;
+}
+
+html.collection-post-article .vp-posts-aside .nav-link .icon {
+  display: none;
+}
+
+html.collection-post-article .vp-posts-aside .nav-link .total {
+  order: -1;
+  padding: 0;
+  font-size: 22px;
+  font-weight: 600;
+  line-height: 1.25;
+  color: var(--vp-c-text-1);
+  font-variant-numeric: tabular-nums;
+}
+
+html.collection-post-article .vp-posts-aside .nav-link .text {
+  flex: none;
+  padding: 0;
+  font-size: 12px;
+  line-height: 1.5;
+  color: var(--vp-c-text-2);
+}
+
+html.collection-post-article .vp-posts-aside :is(.nav-link:hover, .nav-link.active, .vp-social-link:hover) {
+  color: var(--vp-c-brand-1);
+  background-color: var(--vp-c-brand-soft);
+}
+
+html.collection-post-article .vp-posts-aside :is(.nav-link:hover, .nav-link.active) :is(.total, .text) {
+  color: inherit;
+}
+
+html.collection-post-article .vp-posts-aside a:focus-visible {
+  outline: 2px solid var(--vp-c-brand-1);
+  outline-offset: 2px;
+}
+
+/* 矮窗口让侧栏随页面滚动，避免吸顶后底部的分类、标签无法完整显示。 */
+@media (min-width: 768px) and (max-height: 800px) {
+  html.collection-post-article .vp-posts-aside {
+    position: static;
   }
 }

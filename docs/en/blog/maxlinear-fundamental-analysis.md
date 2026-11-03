@@ -1,5 +1,6 @@
 ---
 title: MaxLinear (MXL) Fundamental Analysis
+cover: /blog-covers/circuit.jpg
 tags:
   - investment
   - semiconductors

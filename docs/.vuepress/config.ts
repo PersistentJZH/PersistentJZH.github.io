@@ -10,6 +10,7 @@
  */
 
 import { viteBundler } from '@vuepress/bundler-vite'
+import { fileURLToPath } from 'node:url'
 import { defineUserConfig } from 'vuepress'
 import { plumeTheme } from 'vuepress-theme-plume'
 
@@ -38,6 +39,16 @@ export default defineUserConfig({
 
   bundler: viteBundler(),
   shouldPrefetch: false, // 站点较大，页面数量较多时，不建议启用
+
+  plugins: [{
+    name: 'blog-ui',
+    alias: {
+      '@theme/VPBackToTop.vue': fileURLToPath(new URL('./theme/components/DisabledBackToTop.vue', import.meta.url)),
+      '@theme/Posts/VPPostsCategories.vue': fileURLToPath(new URL('./theme/components/BlogExplore.vue', import.meta.url)),
+      '@theme/Posts/VPPostsTags.vue': fileURLToPath(new URL('./theme/components/BlogExplore.vue', import.meta.url)),
+      '@theme/Posts/VPPostsArchives.vue': fileURLToPath(new URL('./theme/components/BlogExplore.vue', import.meta.url)),
+    },
+  }],
 
   theme: plumeTheme({
     /* 添加您的部署域名, 有助于 SEO, 生成 sitemap */

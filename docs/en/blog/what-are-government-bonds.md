@@ -1,5 +1,6 @@
 ---
 title: What Are Government Bonds?
+cover: /blog-covers/money.jpg
 tags:
   - economics
   - bonds

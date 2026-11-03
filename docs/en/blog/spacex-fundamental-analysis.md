@@ -1,5 +1,6 @@
 ---
 title: SpaceX (SPCX) Deep Dive — The Trillion-Dollar Company Rewriting Space History
+cover: /blog-covers/rocket.jpg
 tags:
   - investment
   - aerospace

@@ -101,6 +101,10 @@ export const enCollections = defineCollections([
     archivesLink: '/blog/archives/',
     categoriesLink: '/blog/categories/',
     pagination: 15,
+    postCover: {
+      layout: 'top',
+      ratio: '4:3',
+    },
   },
 
   // 英文笔记的源目录已提升到 docs/en/*，为保持既有 URL，

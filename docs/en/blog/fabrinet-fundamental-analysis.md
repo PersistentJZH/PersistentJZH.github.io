@@ -1,5 +1,6 @@
 ---
 title: Fabrinet (FN) Fundamental Analysis
+cover: /blog-covers/circuit.jpg
 tags:
   - investment
   - semiconductors

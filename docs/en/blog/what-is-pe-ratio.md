@@ -1,5 +1,6 @@
 ---
 title: What Is P/E Ratio?
+cover: /blog-covers/market.jpg
 tags:
   - economics
   - investment

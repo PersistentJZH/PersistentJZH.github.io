@@ -1,5 +1,6 @@
 ---
 title: What Does a Fed Rate Cut Really Mean?
+cover: /blog-covers/building.jpg
 tags:
   - economics
   - federal-reserve
