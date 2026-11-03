@@ -635,10 +635,136 @@ html:has(.atlas) .vp-navbar {
   }
 }
 
-/* ===== 博客展示页：宽屏下也让列表铺满，左右只留 24px ===== */
+/* ===== 博客展示页：宽屏下让列表铺满，左右与导航栏一致 ===== */
 @media (min-width: 1200px) {
+  html .vp-layout .vp-posts {
+    padding-right: 32px;
+    padding-left: 32px;
+  }
+
   html .vp-posts .posts-container {
     max-width: none !important;
     width: 100%;
+  }
+}
+
+/* ===== 宽屏统一布局：导航栏与文档侧边栏贴边，保留 32px 页边距 =====
+   主题在 ≥1440px 时把导航栏限制在 --vp-layout-max-width（1440px）并居中，
+   文档页的侧边栏还会整体右移，屏幕越宽两侧空白越大。这里统一把页面骨架
+   铺满，左右保留 32px 边距（与窄窗口下的观感一致）：
+   - 无侧边栏的页面（首页、博客列表、文章页等）：导航栏铺满视口；
+   - 有侧边栏的文档页：侧边栏贴左，导航栏标题、正文区域一起左移。 */
+@media (min-width: 1200px) {
+  html .vp-navbar:not(.has-sidebar) .container {
+    max-width: none;
+  }
+}
+
+/* 标题下方单独一条短分隔线，和正文分隔线断开：
+   - 标题链接自带 border-bottom 与正文分隔线相差 1px 且会贴在一起，这里去掉它，
+     改用 box-shadow 画在标题正下方 1px 处，与正文分隔线同高；
+   - 正文分隔线仍从侧边栏右缘开始，两段之间留出侧边栏内边距。 */
+@media (min-width: 960px) {
+  html .vp-layout .vp-navbar.has-sidebar .divider {
+    padding-left: var(--vp-sidebar-width);
+  }
+
+  html .vp-layout .vp-navbar-title.has-sidebar .title {
+    border-bottom-color: transparent;
+    box-shadow: 0 1px 0 0 var(--vp-c-divider);
+  }
+}
+
+@media (min-width: 1440px) {
+  /* 侧边栏底板本身也带居中偏移，先收回 272px 的标准宽度 */
+  html .vp-layout .vp-sidebar {
+    width: var(--vp-sidebar-width);
+    padding-left: 32px;
+  }
+
+  /* 侧边栏收起按钮跟着侧边栏宽度走，否则会浮到正文上方 */
+  html .vp-layout .vp-sidebar-control {
+    width: var(--vp-sidebar-width);
+  }
+
+  /* 只作用于外层的 .title 容器；内层链接也叫 .title，若一起命中会叠加 32px，
+     导致文档页的 logo 比其他页面更靠右。 */
+  html .vp-layout .vp-navbar.has-sidebar .container > .title {
+    width: var(--vp-sidebar-width);
+    padding-left: 32px;
+  }
+
+  html .vp-layout .vp-navbar.has-sidebar .content {
+    padding-right: 32px;
+    padding-left: var(--vp-sidebar-width);
+  }
+
+  html .vp-layout .vp-navbar.has-sidebar .divider {
+    padding-left: var(--vp-sidebar-width);
+  }
+
+  html .vp-layout .vp-content.has-sidebar {
+    padding-right: 0;
+    padding-left: var(--vp-sidebar-width);
+  }
+
+  html .vp-layout .vp-footer.has-sidebar {
+    margin-left: var(--vp-sidebar-width);
+  }
+
+  /* 页脚文字仍按整屏居中，和没有侧边栏的页面保持一致 */
+  html .vp-layout .vp-footer.has-sidebar .container {
+    max-width: none;
+  }
+}
+
+/* ===== 无侧边栏的正文页（文章 / 独立页面）：宽屏下正文铺满 =====
+   文章页和 /notes/ 这类页面会把 750～1140px 的正文 + 右侧大纲整体居中，
+   宽屏下正文左边会空出一大块；这里让正文从 32px 开始，占满到右侧大纲之前，
+   大纲仍贴右边 32px。 */
+@media (min-width: 1200px) {
+  html .vp-layout .vp-doc-container:not(.has-sidebar) .container {
+    max-width: none !important;
+    justify-content: space-between;
+  }
+
+  /* 只作用于正文列，避免影响右侧大纲内部 .content 的 16px 缩进 */
+  html .vp-layout .vp-doc-container:not(.has-sidebar) .container > .content {
+    flex: 1 1 auto;
+    max-width: none !important;
+    padding-left: 0;
+  }
+
+  /* 超过 1600px 后不再继续拉长正文，避免在超宽屏上行宽过大 */
+  html .vp-layout .vp-doc-container:not(.has-sidebar) .content-container {
+    max-width: 1600px !important;
+    margin-left: 0;
+  }
+
+  /* 大纲保持 256px（含左侧 32px 间距），贴住右边 32px */
+  html .vp-layout .vp-doc-container:not(.has-sidebar) .aside {
+    flex: 0 0 256px;
+  }
+}
+
+/* ===== 右侧大纲：竖线与文字之间留出更明显的间距 =====
+   主题默认只留 16px，宽屏下看起来像贴着竖线；这里加到 24px。 */
+@media (min-width: 1200px) {
+  html .vp-layout .vp-doc-aside-outline .content {
+    padding-left: 24px;
+  }
+}
+
+/* ===== 笔记页：正文填满侧边栏与右侧大纲之间的空间 =====
+   笔记正文此前固定 720px 居中，宽屏下中间两侧空白很多；这里改为填满，
+   在侧边栏与大纲之间只保留 32px 间距。 */
+@media (min-width: 1200px) {
+  html .vp-layout .vp-doc-container.has-sidebar .content {
+    flex: 1 1 auto;
+  }
+
+  html .vp-layout .vp-doc-container.has-sidebar .content-container {
+    max-width: 1600px !important;
+    margin-left: 0;
   }
 }
