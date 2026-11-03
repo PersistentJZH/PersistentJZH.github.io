@@ -1,5 +1,6 @@
 ---
 title: SpaceX（SPCX）深度分析：改写航天史的万亿巨头，值不值得押注？
+cover: /blog-covers/rocket.jpg
 tags:
   - 投资
   - 航天

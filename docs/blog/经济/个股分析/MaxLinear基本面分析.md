@@ -1,5 +1,6 @@
 ---
 title: MaxLinear（MXL）基本面深度分析
+cover: /blog-covers/circuit.jpg
 tags:
   - 投资
   - 半导体

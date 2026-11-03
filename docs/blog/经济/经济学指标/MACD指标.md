@@ -1,5 +1,6 @@
 ---
 title: MACD指标
+cover: /blog-covers/chart.jpg
 tags:
   - 经济
   - 投资

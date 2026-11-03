@@ -1,5 +1,6 @@
 ---
 title: bpftrace
+cover: /blog-covers/server.jpg
 createTime: 2025/09/24 23:33:40
 permalink: /article/q315xvoz/
 ---

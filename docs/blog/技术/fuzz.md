@@ -1,5 +1,6 @@
 ---
 title: Go Fuzz测试：自动化漏洞发现的神器
+cover: /blog-covers/code.jpg
 createTime: 2025/09/21 17:30:06
 permalink: /article/qo2sgdvd/
 tags: [Go, 测试, Fuzz, 安全]

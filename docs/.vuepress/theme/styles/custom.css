@@ -768,3 +768,220 @@ html:has(.atlas) .vp-navbar {
     margin-left: 0;
   }
 }
+
+/* ===== 博客列表（/blog/）：瀑布流卡片 =====
+   仅作用于中文博客列表页（html 上的 collection-post-article + layout-posts），
+   不影响英文博客、旅行攻略、标签 / 分类 / 归档页。
+   卡片顺序按列自上而下排列，这是 CSS 多列瀑布流的正常表现。 */
+html[lang="zh-CN"].collection-post-article.layout-posts .vp-post-list {
+  display: block;
+  flex: 1 2;
+  min-width: 0;
+  max-width: 100%;
+  margin: 0 auto;
+  padding-bottom: 24px;
+  column-count: 1;
+  column-gap: 20px;
+  column-fill: balance;
+}
+
+/* 卡片：去掉主题的横排内边距，让封面图铺满卡片顶部 */
+html[lang="zh-CN"].collection-post-article.layout-posts .vp-post-list > .vp-post-item {
+  --wf-cover-ratio: 4 / 3;
+
+  display: block;
+  width: 100%;
+  margin: 0 0 20px;
+  padding: 0;
+  overflow: hidden;
+  border-radius: 12px;
+  break-inside: avoid;
+  page-break-inside: avoid;
+  -webkit-column-break-inside: avoid;
+}
+
+/* 封面默认 4:3（部分卡片通过 --wf-cover-ratio 改为 1:1），
+   覆盖主题按 top 布局写入的行内高度 */
+html[lang="zh-CN"].collection-post-article.layout-posts .vp-post-list .post-cover {
+  width: 100% !important;
+  height: auto !important;
+  padding-bottom: 0 !important;
+  margin: 0 !important;
+  aspect-ratio: var(--wf-cover-ratio);
+  border-radius: 0 !important;
+  background-color: var(--vp-c-bg-soft);
+}
+
+html[lang="zh-CN"].collection-post-article.layout-posts .vp-post-list .post-cover img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+html[lang="zh-CN"].collection-post-article.layout-posts .vp-post-list .vp-post-item:hover .post-cover img {
+  transform: scale(1.045);
+}
+
+/* 没有手动设置 cover 的旧文章 / 新文章：用默认封面兜底，保持瀑布流完整 */
+html[lang="zh-CN"].collection-post-article.layout-posts .vp-post-list > .vp-post-item:not(.has-cover)::before {
+  display: block;
+  aspect-ratio: var(--wf-cover-ratio);
+  content: "";
+  background: url("/blog-covers/default.jpg") center / cover no-repeat;
+}
+
+/* 卡片正文 */
+html[lang="zh-CN"].collection-post-article.layout-posts .vp-post-list .post-item-content {
+  gap: 8px;
+  padding: 14px 16px 16px;
+}
+
+html[lang="zh-CN"].collection-post-article.layout-posts .vp-post-list .post-item-content h3 {
+  align-items: flex-start;
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+html[lang="zh-CN"].collection-post-article.layout-posts .vp-post-list .post-item-content h3 a {
+  display: -webkit-box;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+}
+
+html[lang="zh-CN"].collection-post-article.layout-posts .vp-post-list .post-meta {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 7px 12px;
+  align-items: center;
+  margin-top: 2px;
+  font-size: 11.5px;
+  line-height: 1.5;
+}
+
+html[lang="zh-CN"].collection-post-article.layout-posts .vp-post-list .post-meta > div {
+  min-width: 0;
+}
+
+/* 卡片里不再堆叠四个小图标，改用排版和留白区分信息层级 */
+html[lang="zh-CN"].collection-post-article.layout-posts .vp-post-list .post-meta .icon {
+  display: none;
+}
+
+html[lang="zh-CN"].collection-post-article.layout-posts .vp-post-list .post-meta .category-list {
+  grid-row: 1;
+  grid-column: 1;
+  flex-wrap: wrap;
+  gap: 0 4px;
+  font-weight: 500;
+  color: var(--vp-c-text-2);
+}
+
+html[lang="zh-CN"].collection-post-article.layout-posts .vp-post-list .post-meta .category-list a:first-of-type {
+  font-weight: 600;
+  color: var(--vp-c-brand-1);
+}
+
+html[lang="zh-CN"].collection-post-article.layout-posts .vp-post-list .post-meta .create-time {
+  grid-row: 1;
+  grid-column: 2;
+  justify-self: end;
+  font-size: 11px;
+  color: var(--vp-c-text-3);
+  font-variant-numeric: tabular-nums;
+}
+
+html[lang="zh-CN"].collection-post-article.layout-posts .vp-post-list .post-meta .tag-list {
+  grid-row: 2;
+  grid-column: 1;
+  flex-wrap: wrap;
+  gap: 0 4px;
+}
+
+html[lang="zh-CN"].collection-post-article.layout-posts .vp-post-list .post-meta .reading-time {
+  grid-row: 2;
+  grid-column: 2;
+  justify-self: end;
+  font-size: 11px;
+  color: var(--vp-c-text-3);
+  font-variant-numeric: tabular-nums;
+}
+
+/* 字数统计在卡片上信息量太低，只保留阅读时长；
+   仅当存在「图标 + 字数 + 时长」三个 span 时才隐藏字数 */
+html[lang="zh-CN"].collection-post-article.layout-posts .vp-post-list .post-meta .reading-time:has(> span:nth-of-type(3)) > span:nth-of-type(2) {
+  display: none;
+}
+
+/* 没有标签的卡片：把日期和阅读时长收到同一行，避免左下角留空 */
+html[lang="zh-CN"].collection-post-article.layout-posts .vp-post-list .post-meta:not(:has(.tag-list)) {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 12px;
+}
+
+html[lang="zh-CN"].collection-post-article.layout-posts .vp-post-list .post-meta:not(:has(.tag-list)) .category-list {
+  flex: 1 1 auto;
+}
+
+html[lang="zh-CN"].collection-post-article.layout-posts .vp-post-list .post-meta:not(:has(.tag-list)) .create-time {
+  order: 2;
+  margin-left: auto;
+}
+
+html[lang="zh-CN"].collection-post-article.layout-posts .vp-post-list .post-meta:not(:has(.tag-list)) .reading-time {
+  order: 3;
+}
+
+html[lang="zh-CN"].collection-post-article.layout-posts .vp-post-list .post-meta .tag-list .tag {
+  padding: 2px 6px;
+  font-size: 11px;
+  border-radius: 4px;
+}
+
+/* 分页条横跨所有列，避免被挤进最后一列 */
+html[lang="zh-CN"].collection-post-article.layout-posts .vp-post-list > .vp-pagination {
+  column-span: all;
+  -webkit-column-span: all;
+  margin-top: 4px;
+  border-radius: 10px;
+}
+
+@media (min-width: 768px) {
+  html[lang="zh-CN"].collection-post-article.layout-posts .vp-post-list {
+    column-count: 2;
+  }
+}
+
+@media (min-width: 1200px) {
+  html[lang="zh-CN"].collection-post-article.layout-posts .vp-post-list {
+    column-count: 3;
+    column-gap: 24px;
+  }
+}
+
+@media (min-width: 1600px) {
+  html[lang="zh-CN"].collection-post-article.layout-posts .vp-post-list {
+    column-count: 4;
+  }
+}
+
+/* 瀑布流的关键：让部分卡片的封面更高，形成高低错落 */
+html[lang="zh-CN"].collection-post-article.layout-posts .vp-post-list > .vp-post-item:nth-child(3n + 2) {
+  --wf-cover-ratio: 1 / 1;
+}
+
+/* 多列布局时，把最后 4 张卡片统一设为方形封面，
+   让各列底部更接近，避免右下角出现一大块空白。
+   这里只在「恰好 14 篇文章」时启用（当前每页 15 条，14 篇会排成 5/5/4）；
+   文章数量变化后自动回到 3n+2 的方形封面节奏。 */
+@media (min-width: 1200px) {
+  html[lang="zh-CN"].collection-post-article.layout-posts .vp-post-list:has(> .vp-post-item:nth-child(14):last-child) > .vp-post-item:nth-child(3n + 2) {
+    --wf-cover-ratio: 4 / 3;
+  }
+
+  html[lang="zh-CN"].collection-post-article.layout-posts .vp-post-list:has(> .vp-post-item:nth-child(14):last-child) > .vp-post-item:nth-child(n + 11) {
+    --wf-cover-ratio: 1 / 1;
+  }
+}

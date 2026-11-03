@@ -21,6 +21,11 @@ export const zhCollections = defineCollections([
     archivesLink: '/blog/archives/',
     categoriesLink: '/blog/categories/',
     pagination: 15,
+    // 博客列表使用瀑布流卡片，封面图统一放在卡片顶部
+    postCover: {
+      layout: 'top',
+      ratio: '4:3',
+    },
   },
 
   {

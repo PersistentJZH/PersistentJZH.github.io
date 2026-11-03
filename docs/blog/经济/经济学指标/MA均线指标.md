@@ -1,5 +1,6 @@
 ---
 title: MA均线指标
+cover: /blog-covers/market.jpg
 tags:
   - 经济
   - 投资
