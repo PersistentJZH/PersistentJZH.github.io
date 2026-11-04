@@ -8,6 +8,7 @@ import { defineClientConfig, useRoute } from 'vuepress/client'
 import TravelMap from './theme/components/TravelMap.vue'
 import YangshuoGuide from './theme/components/YangshuoGuide.vue'
 import BlogLayout from './theme/components/BlogLayout.vue'
+import { setupBlogMasonry, syncBlogMasonry } from './theme/blog-masonry'
 import { mountHomeTintPlate, type HomeTintPlateHandle, type TintPalette } from './theme/home-tint-plate'
 
 import './theme/styles/custom.css'
@@ -69,6 +70,31 @@ function scheduleHomeTintPlateSync() {
   })
 }
 
+/**
+ * 博客列表的瀑布流由脚本接管：等页面切换动画结束、列表渲染完成后再排版。
+ */
+function scheduleBlogMasonrySync() {
+  nextTick(() => {
+    syncBlogMasonry()
+    window.setTimeout(syncBlogMasonry, 500)
+  })
+}
+
+/** 悬停时按实际宽度判断省略状态，用原生提示展示完整目录标题。 */
+function updateOutlineTooltip(event: Event) {
+  if (!(event.target instanceof Element))
+    return
+
+  const link = event.target.closest<HTMLAnchorElement>('.vp-doc-aside-outline .outline-link')
+  if (!link)
+    return
+
+  if (link.scrollWidth > link.clientWidth)
+    link.title = link.textContent?.trim() ?? ''
+  else
+    link.removeAttribute('title')
+}
+
 export default defineClientConfig({
   layouts: {
     Layout: BlogLayout,
@@ -87,11 +113,23 @@ export default defineClientConfig({
   setup() {
     const route = useRoute()
 
+    setupBlogMasonry()
+
     onMounted(() => {
+      document.addEventListener('mouseover', updateOutlineTooltip)
+      document.addEventListener('focusin', updateOutlineTooltip)
       syncHomeViewportHeight()
       scheduleHomeTintPlateSync()
+      scheduleBlogMasonrySync()
     })
-    watch(() => route.path, scheduleHomeTintPlateSync, { flush: 'post' })
+    watch(() => route.path, () => {
+      scheduleHomeTintPlateSync()
+      scheduleBlogMasonrySync()
+    }, { flush: 'post' })
     onUnmounted(disposeHomeTintPlate)
+    onUnmounted(() => {
+      document.removeEventListener('mouseover', updateOutlineTooltip)
+      document.removeEventListener('focusin', updateOutlineTooltip)
+    })
   },
 })

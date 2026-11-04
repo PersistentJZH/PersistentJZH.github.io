@@ -24,6 +24,10 @@ export default defineThemeConfig({
 
   social: [
     { icon: 'github', link: 'https://github.com/PersistentJZH' },
+    // 下面两个先把链接留空（侧栏只显示图标、不可点击），
+    // 填上自己的主页地址后自动变成可点击的链接。
+    { icon: 'x', link: '' },
+    { icon: 'instagram', link: '' },
   ],
   navbarSocialInclude: ['github'], // 允许显示在导航栏的 social 社交链接
    aside: true, // 页内侧边栏，显示在右侧
@@ -49,7 +53,8 @@ export default defineThemeConfig({
   transition: {
     page: true,        // 启用 页面间跳转过渡动画
     postList: true,    // 启用 博客文章列表过渡动画
-    appearance: 'fade',  // 启用 深色模式切换过渡动画, 或配置过渡动画类型
+    // 整页 View Transition 在快速连点时会互相取消，并触发主题组件未处理的异常。
+    appearance: false,
   },
 
   locales: {

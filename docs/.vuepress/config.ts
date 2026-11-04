@@ -44,9 +44,13 @@ export default defineUserConfig({
     name: 'blog-ui',
     alias: {
       '@theme/VPBackToTop.vue': fileURLToPath(new URL('./theme/components/DisabledBackToTop.vue', import.meta.url)),
+      '@theme/Posts/VPPostItem.vue': fileURLToPath(new URL('./theme/components/BlogPostItem.vue', import.meta.url)),
+      '@theme/Posts/VPPostsExtract.vue': fileURLToPath(new URL('./theme/components/BlogPostsExtract.vue', import.meta.url)),
       '@theme/Posts/VPPostsCategories.vue': fileURLToPath(new URL('./theme/components/BlogExplore.vue', import.meta.url)),
       '@theme/Posts/VPPostsTags.vue': fileURLToPath(new URL('./theme/components/BlogExplore.vue', import.meta.url)),
       '@theme/Posts/VPPostsArchives.vue': fileURLToPath(new URL('./theme/components/BlogExplore.vue', import.meta.url)),
+      // 空链接的社交项渲染成不可点击的图标
+      '@theme/VPSocialLinks.vue': fileURLToPath(new URL('./theme/components/BlogSocialLinks.vue', import.meta.url)),
     },
   }],
 

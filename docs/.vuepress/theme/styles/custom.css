@@ -718,8 +718,8 @@ html:has(.atlas) .vp-navbar {
   }
 }
 
-/* ===== 无侧边栏的正文页（文章 / 独立页面）：宽屏下正文铺满 =====
-   文章页和 /notes/ 这类页面会把 750～1140px 的正文 + 右侧大纲整体居中，
+/* ===== 无侧边栏的正文页：宽屏下正文铺满，博客文章在下方单独居中 =====
+   /notes/ 这类页面会把 750～1140px 的正文 + 右侧大纲整体居中，
    宽屏下正文左边会空出一大块；这里让正文从 32px 开始，占满到右侧大纲之前，
    大纲仍贴右边 32px。 */
 @media (min-width: 1200px) {
@@ -744,6 +744,95 @@ html:has(.atlas) .vp-navbar {
   /* 大纲保持 256px（含左侧 32px 间距），贴住右边 32px */
   html .vp-layout .vp-doc-container:not(.has-sidebar) .aside {
     flex: 0 0 256px;
+  }
+}
+
+/* ===== 博客文章：正文居中，两侧各留出与目录相同的宽度 =====
+   目录在 1280px 起显示，左右各预留 208px（含目录与正文之间的 24px 间距）。
+   无目录时保留相同的正文位置和宽度；窄屏取消两侧占位。 */
+html.collection-post-article .vp-layout .vp-doc-container:not(.has-sidebar) > .container {
+  max-width: 1600px !important;
+}
+
+html.collection-post-article .vp-layout .vp-doc-container:not(.has-sidebar) > .container > .content {
+  min-width: 0;
+  max-width: none !important;
+  padding-inline: 0;
+  margin-inline: 0;
+}
+
+html.collection-post-article .vp-layout .vp-doc-container:not(.has-sidebar) .content-container {
+  max-width: none !important;
+  margin-inline: 0;
+}
+
+@media (min-width: 1280px) {
+  html.collection-post-article .vp-layout .vp-doc-container:not(.has-sidebar) > .container {
+    display: grid;
+    grid-template-columns: 208px minmax(0, 1fr) 208px;
+    align-items: start;
+    max-width: 2016px !important; /* 正文最多 1600px，加两侧各 208px */
+  }
+
+  html.collection-post-article .vp-layout .vp-doc-container:not(.has-sidebar) > .container > .content {
+    grid-column: 2;
+    grid-row: 1;
+  }
+
+  html.collection-post-article .vp-layout .vp-doc-container:not(.has-sidebar) > .container > .aside {
+    grid-column: 3;
+    grid-row: 1;
+    padding-left: 24px;
+  }
+
+  html.collection-post-article .vp-layout .vp-doc-container:not(.has-sidebar) .aside-container,
+  html.collection-post-article .vp-layout .vp-doc-container:not(.has-sidebar) .aside-curtain {
+    width: 184px;
+  }
+}
+
+/* 博客目录收起时用实际章节生成短线；展开后沿用原有目录样式。
+   只在支持鼠标悬停的桌面设备启用。 */
+@media (min-width: 1280px) and (hover: hover) and (pointer: fine) {
+  html.collection-post-article .aside:not(:hover):not(:focus-within) .vp-doc-aside-outline .content {
+    border-left-color: transparent;
+  }
+
+  html.collection-post-article .aside:not(:hover):not(:focus-within) .vp-doc-aside-outline .outline-header,
+  html.collection-post-article .aside:not(:hover):not(:focus-within) .vp-doc-aside-outline .outline-marker {
+    display: none;
+  }
+
+  html.collection-post-article .aside:not(:hover):not(:focus-within) .vp-doc-aside-outline .nested {
+    padding-left: 0;
+  }
+
+  html.collection-post-article .aside:not(:hover):not(:focus-within) .vp-doc-aside-outline .outline-link {
+    position: relative;
+    height: 14px;
+    font-size: 0;
+    line-height: 14px;
+  }
+
+  html.collection-post-article .aside:not(:hover):not(:focus-within) .vp-doc-aside-outline .outline-link::before {
+    content: '';
+    position: absolute;
+    top: 6px;
+    left: 0;
+    width: 20px;
+    height: 2px;
+    background: var(--vp-c-text-3);
+    border-radius: 2px;
+    opacity: 0.45;
+  }
+
+  html.collection-post-article .aside:not(:hover):not(:focus-within) .vp-doc-aside-outline .nested .outline-link::before {
+    width: 12px;
+  }
+
+  html.collection-post-article .aside:not(:hover):not(:focus-within) .vp-doc-aside-outline .outline-link.active::before {
+    background: var(--vp-c-text-1);
+    opacity: 1;
   }
 }
 
@@ -772,17 +861,39 @@ html:has(.atlas) .vp-navbar {
 /* ===== 博客列表（/blog/）：瀑布流卡片 =====
    中英文博客列表共用（html 上的 collection-post-article + layout-posts），
    不影响旅行攻略；分类、标签和归档内容由 BlogExplore 统一展示。
-   卡片顺序按列自上而下排列，这是 CSS 多列瀑布流的正常表现。 */
+
+   列数不再写死：列宽保持 285px 以上，列数随列表宽度自适应
+   （14 寸 3 列、16 寸 4 列、更宽的屏幕上 5~6 列），避免宽屏下卡片被拉宽。
+   真正的位置由 theme/blog-masonry.ts 计算（按最矮的一列摆放卡片）；
+   下面这套多列规则是脚本接管前（首帧）的兜底布局。 */
 html.collection-post-article.layout-posts .vp-post-list {
+  --masonry-gap: 20px;
+  --masonry-min-col: 285px;
+
   display: block;
   flex: 1 2;
   min-width: 0;
   max-width: 100%;
   margin: 0 auto;
   padding-bottom: 24px;
-  column-count: 2;
-  column-gap: 20px;
+  column-count: auto;
+  column-width: var(--masonry-min-col);
+  column-gap: var(--masonry-gap);
   column-fill: balance;
+}
+
+/* 脚本接管后：卡片绝对定位到各自的列位置，容器高度由脚本写入 */
+html.collection-post-article.layout-posts .vp-post-list.is-masonry {
+  position: relative;
+  column-count: 1;
+  column-width: auto;
+}
+
+html.collection-post-article.layout-posts .vp-post-list.is-masonry > .vp-post-item {
+  position: absolute;
+  top: 0;
+  left: 0;
+  margin: 0;
 }
 
 /* inline-block 让卡片作为完整的行内块参与分栏，避免 Safari
@@ -827,15 +938,6 @@ html.collection-post-article.layout-posts .vp-post-list .post-cover img {
 
 html.collection-post-article.layout-posts .vp-post-list .vp-post-item:hover .post-cover img {
   transform: scale(1.045);
-}
-
-/* 没有手动设置 cover 的旧文章 / 新文章：用默认封面兜底，保持瀑布流完整 */
-html.collection-post-article.layout-posts .vp-post-list > .vp-post-item:not(.has-cover)::before {
-  display: block;
-  aspect-ratio: var(--wf-cover-ratio);
-  content: "";
-  background: url("/blog-covers/default.jpg") center / cover no-repeat;
-  border-radius: var(--wf-card-radius) var(--wf-card-radius) 0 0;
 }
 
 /* 卡片正文 */
@@ -936,16 +1038,16 @@ html.collection-post-article.layout-posts .vp-post-list .post-meta .tag-list .ta
   overflow: hidden;
   font-size: 11px;
   line-height: 1.5;
-  color: var(--vp-c-text-2);
+  color: color-mix(in srgb, var(--vp-tag-color, var(--vp-c-brand-1)) 35%, var(--vp-c-text-1));
   text-overflow: ellipsis;
   white-space: nowrap;
-  background-color: var(--vp-c-bg-soft);
+  background-color: var(--vp-tag-bg, var(--vp-c-brand-soft));
   border-radius: 6px;
+  transition: color var(--vp-t-color), background-color var(--vp-t-color), box-shadow var(--vp-t-color);
 }
 
 html.collection-post-article.layout-posts .vp-post-list .post-meta .tag-list .tag:hover {
-  color: var(--vp-c-brand-1);
-  background-color: var(--vp-c-brand-soft);
+  box-shadow: inset 0 0 0 1px currentcolor;
 }
 
 html.collection-post-article.layout-posts .vp-post-list .post-item-content a:focus-visible {
@@ -961,6 +1063,15 @@ html.collection-post-article.layout-posts .vp-post-list > .vp-pagination {
   border-radius: 10px;
 }
 
+/* 脚本接管后卡片脱离文档流，分页条固定到列表底部 */
+html.collection-post-article.layout-posts .vp-post-list.is-masonry > .vp-pagination {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  margin: 0;
+}
+
 /* 手机保持双列，缩小卡片间距和留白，让长标题、标签自然换行。 */
 @media (max-width: 767px) {
   html.collection-post-article.layout-posts .vp-posts {
@@ -968,7 +1079,9 @@ html.collection-post-article.layout-posts .vp-post-list > .vp-pagination {
   }
 
   html.collection-post-article.layout-posts .vp-post-list {
-    column-gap: 12px;
+    --masonry-gap: 12px;
+
+    column-gap: var(--masonry-gap);
   }
 
   html.collection-post-article.layout-posts .vp-post-list > .vp-post-item {
@@ -1000,35 +1113,39 @@ html.collection-post-article.layout-posts .vp-post-list > .vp-pagination {
   }
 }
 
-@media (min-width: 1200px) {
-  html.collection-post-article.layout-posts .vp-post-list {
-    column-count: 3;
-    column-gap: 24px;
-  }
-}
-
 /* 瀑布流的关键：让部分卡片的封面更高，形成高低错落 */
 html.collection-post-article.layout-posts .vp-post-list > .vp-post-item:nth-child(3n + 2) {
   --wf-cover-ratio: 1 / 1;
 }
 
-/* ===== 中英文博客侧栏：个人资料、统计导航与内容索引 =====
-   列表、标签、分类和归档页共用，保留主题的吸顶行为和移动端隐藏规则。 */
+/* ===== 中英文博客侧栏：个人资料、导航入口与内容索引 =====
+   列表、标签、分类和归档页共用，保留主题的吸顶行为。
+   1) 资料区：头像 + 名字 + 社交图标；
+   2) 导航区：标签 / 分类 / 归档竖排，每行一个入口；
+   3) 索引区：文章分类、常用标签、最近更新。
+   卡片高度接近一屏，超出视口时在卡片内部滚动，避免吸顶后被裁掉。 */
 html.collection-post-article .vp-posts-aside {
   flex: 0 0 260px;
   width: 260px;
-  padding: 20px;
+  /* 卡片高度贴住视口底部：右侧不会在卡片下面留出一道空白 */
+  height: calc(100dvh - var(--vp-nav-height) - 2rem - 1rem);
+  box-sizing: border-box;
+  padding: 18px;
+  overflow-y: auto;
+  /* 窗口不够高时卡片内部滚动：给一条细滚动条，提示下面还有内容 */
+  scrollbar-width: thin;
+  scrollbar-color: var(--vp-c-divider) transparent;
   background-color: var(--vp-c-bg);
   border: 1px solid var(--vp-c-divider);
   border-radius: 12px;
   transition: background-color var(--vp-t-color), border-color var(--vp-t-color);
 }
 
-html.collection-post-article .vp-posts-aside .vp-profile,
-html.collection-post-article .vp-posts-aside .vp-profile:hover {
+html.collection-post-article :is(.vp-posts-aside, .blog-mobile-card) .vp-profile,
+html.collection-post-article :is(.vp-posts-aside, .blog-mobile-card) .vp-profile:hover {
   display: grid;
-  grid-template-columns: 80px minmax(0, 1fr);
-  gap: 16px 12px;
+  grid-template-columns: 60px minmax(0, 1fr);
+  gap: 14px 12px;
   align-items: center;
   padding: 0;
   margin: 0;
@@ -1038,130 +1155,283 @@ html.collection-post-article .vp-posts-aside .vp-profile:hover {
   box-shadow: none;
 }
 
-html.collection-post-article .vp-posts-aside .vp-profile > p {
+html.collection-post-article :is(.vp-posts-aside, .blog-mobile-card) .vp-profile > p {
+  grid-column: 1;
+  grid-row: 1;
   margin: 0;
 }
 
-html.collection-post-article .vp-posts-aside .vp-profile img {
+html.collection-post-article :is(.vp-posts-aside, .blog-mobile-card) .vp-profile img {
   display: block;
-  width: 80px;
-  height: 80px;
+  width: 60px;
+  height: 60px;
   margin: 0;
   object-fit: contain;
 }
 
-html.collection-post-article .vp-posts-aside .profile-info {
+html.collection-post-article :is(.vp-posts-aside, .blog-mobile-card) .profile-info {
+  grid-column: 2;
+  grid-row: 1;
   min-width: 0;
 }
 
-html.collection-post-article .vp-posts-aside .vp-profile h3 {
+html.collection-post-article :is(.vp-posts-aside, .blog-mobile-card) .vp-profile h3 {
   margin: 0;
-  font-size: 18px;
-  line-height: 1.5;
+  font-size: 16px;
+  line-height: 1.35;
   overflow-wrap: anywhere;
 }
 
-html.collection-post-article .vp-posts-aside :is(.profile-location, .profile-organization) {
+html.collection-post-article :is(.vp-posts-aside, .blog-mobile-card) :is(.profile-location, .profile-organization) {
   justify-content: flex-start;
-  margin-top: 6px;
-  font-size: 12px;
+  margin-top: 4px;
+  font-size: 11.5px;
   line-height: 1.5;
 }
 
-html.collection-post-article .vp-posts-aside :is(.profile-location, .profile-organization) p {
+html.collection-post-article :is(.vp-posts-aside, .blog-mobile-card) :is(.profile-location, .profile-organization) p {
   color: var(--vp-c-text-2);
 }
 
-html.collection-post-article .vp-posts-aside .profile-social {
+/* 联系方式独占一行，三个等宽入口与资料卡内容左右对齐。 */
+html.collection-post-article :is(.vp-posts-aside, .blog-mobile-card) .profile-social {
   grid-column: 1 / -1;
+  grid-row: 2;
   padding: 0;
   margin: 0;
   border: 0;
 }
 
-html.collection-post-article .vp-posts-aside .vp-social-links {
+html.collection-post-article :is(.vp-posts-aside, .blog-mobile-card) .vp-social-links {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 8px;
 }
 
-html.collection-post-article .vp-posts-aside .vp-social-link {
-  flex: 1 1 auto;
-  gap: 8px;
-  width: auto;
+html.collection-post-article :is(.vp-posts-aside, .blog-mobile-card) .vp-social-link {
+  display: inline-flex;
+  flex: 0 0 auto;
+  gap: 0;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
   height: 36px;
-  font-size: 12px;
-  font-weight: 500;
+  padding: 0;
+  font-size: 16px;
+  color: var(--vp-c-text-2);
   background-color: var(--vp-c-bg-soft);
+  border: 0;
   border-radius: 8px;
   transition: color var(--vp-t-color), background-color var(--vp-t-color);
 }
 
-/* 链接本身已有完整的无障碍名称，这里补充可见的平台名称。 */
-html.collection-post-article .vp-posts-aside .vp-social-link[href="https://github.com/PersistentJZH"]::after {
-  content: "GitHub";
-}
-
-html.collection-post-article .vp-posts-aside .vp-posts-nav {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 4px;
-  padding-top: 16px;
-  margin-top: 20px;
-  border-top: 1px solid var(--vp-c-divider);
-}
-
-html.collection-post-article .vp-posts-aside .nav-link,
-html.collection-post-article .vp-posts-aside .nav-link:hover {
-  flex-direction: column;
-  gap: 4px;
-  min-width: 0;
-  padding: 8px 4px;
-  margin: 0;
-  text-align: center;
-  background: transparent;
-  border-radius: 8px;
-  box-shadow: none;
-  transform: none;
-}
-
-html.collection-post-article .vp-posts-aside .nav-link .icon {
-  display: none;
-}
-
-html.collection-post-article .vp-posts-aside .nav-link .total {
-  order: -1;
-  padding: 0;
-  font-size: 22px;
-  font-weight: 600;
-  line-height: 1.25;
-  color: var(--vp-c-text-1);
-  font-variant-numeric: tabular-nums;
-}
-
-html.collection-post-article .vp-posts-aside .nav-link .text {
+html.collection-post-article :is(.vp-posts-aside, .blog-mobile-card) .vp-social-link > .vp-icon {
+  display: block;
   flex: none;
-  padding: 0;
-  font-size: 12px;
-  line-height: 1.5;
-  color: var(--vp-c-text-2);
+  width: 16px;
+  height: 16px;
 }
 
-html.collection-post-article .vp-posts-aside :is(.nav-link:hover, .nav-link.active, .vp-social-link:hover) {
+html.collection-post-article :is(.vp-posts-aside, .blog-mobile-card) a.vp-social-link:is(:hover, :focus-visible) {
   color: var(--vp-c-brand-1);
   background-color: var(--vp-c-brand-soft);
 }
 
-html.collection-post-article .vp-posts-aside :is(.nav-link:hover, .nav-link.active) :is(.total, .text) {
+html.collection-post-article :is(.vp-posts-aside, .blog-mobile-card) .vp-social-link.is-placeholder {
+  color: var(--vp-c-text-3);
+  opacity: 1;
+}
+
+/* 导航入口：标签 / 分类 / 归档竖排，每行都是一个完整入口 */
+html.collection-post-article :is(.vp-posts-aside, .blog-mobile-card) .vp-posts-nav {
+  display: block;
+  padding: 4px;
+  margin-top: 16px;
+  background-color: var(--vp-c-bg-soft);
+  border: 0;
+  border-radius: 10px;
+}
+
+html.collection-post-article :is(.vp-posts-aside, .blog-mobile-card) .nav-link,
+html.collection-post-article :is(.vp-posts-aside, .blog-mobile-card) .nav-link:hover {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  height: 36px;
+  padding: 0 8px;
+  margin: 0;
+  font-size: 12.5px;
+  font-weight: 500;
+  color: var(--vp-c-text-1);
+  background: transparent;
+  border-radius: 7px;
+  box-shadow: none;
+  transform: none;
+}
+
+html.collection-post-article :is(.vp-posts-aside, .blog-mobile-card) .nav-link .icon {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  width: 14px;
+  height: 14px;
+  font-size: 14px;
+  color: var(--vp-c-text-3);
+}
+
+html.collection-post-article :is(.vp-posts-aside, .blog-mobile-card) .nav-link .icon-logo {
+  margin-right: 0;
+  color: var(--vp-c-text-3);
+}
+
+html.collection-post-article :is(.vp-posts-aside, .blog-mobile-card) .nav-link .text {
+  flex: 1;
+  min-width: 0;
+  padding: 0;
+  font-size: 12.5px;
+  line-height: 1.5;
+  text-align: left;
+}
+
+html.collection-post-article :is(.vp-posts-aside, .blog-mobile-card) .nav-link .total {
+  flex: none;
+  padding: 0;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--vp-c-text-3);
+  font-variant-numeric: tabular-nums;
+}
+
+html.collection-post-article :is(.vp-posts-aside, .blog-mobile-card) .nav-link .vpi-chevron-right {
+  flex: none;
+  font-size: 11px;
+  color: var(--vp-c-text-3);
+  opacity: 0.7;
+}
+
+html.collection-post-article :is(.vp-posts-aside, .blog-mobile-card) .nav-link:hover,
+html.collection-post-article :is(.vp-posts-aside, .blog-mobile-card) .nav-link.active {
+  color: var(--vp-c-brand-1);
+  background-color: var(--vp-c-brand-soft);
+}
+
+html.collection-post-article :is(.vp-posts-aside, .blog-mobile-card) .nav-link:hover :is(.text, .total),
+html.collection-post-article :is(.vp-posts-aside, .blog-mobile-card) .nav-link.active :is(.text, .total) {
   color: inherit;
 }
 
-html.collection-post-article .vp-posts-aside a:focus-visible {
+html.collection-post-article :is(.vp-posts-aside, .blog-mobile-card) .nav-link:hover .icon,
+html.collection-post-article :is(.vp-posts-aside, .blog-mobile-card) .nav-link.active .icon {
+  color: inherit;
+}
+
+html.collection-post-article :is(.vp-posts-aside, .blog-mobile-card) a:focus-visible {
   outline: 2px solid var(--vp-c-brand-1);
   outline-offset: 2px;
 }
 
-/* 矮窗口让侧栏随页面滚动，避免吸顶后底部的分类、标签无法完整显示。 */
-@media (min-width: 768px) and (max-height: 800px) {
-  html.collection-post-article .vp-posts-aside {
-    position: static;
+/* 手机底部面板复用侧栏内容，替换主题自带的精简资料和导航。 */
+html.collection-post-article .posts-modal-container:has(> .blog-mobile-card) > :is(.profile, .posts-nav) {
+  display: none;
+}
+
+@media (max-width: 767px) {
+  html.collection-post-article .vp-posts-extract {
+    right: 12px;
+    bottom: calc(20px + env(safe-area-inset-bottom, 0px));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    padding: 0;
+    border: 1px solid var(--vp-c-divider);
+    border-radius: 14px;
+  }
+
+  html.collection-post-article .vp-posts-extract .icon {
+    font-size: 20px;
+  }
+
+  html.collection-post-article .posts-modal-container {
+    right: 0;
+    left: 0;
+    width: 100%;
+    max-width: 560px;
+    max-height: 85vh;
+    max-height: 85dvh;
+    padding: 20px 16px calc(16px + env(safe-area-inset-bottom, 0px));
+    margin: 0 auto;
+    overflow-y: auto;
+    overscroll-behavior-y: contain;
+    scrollbar-width: thin;
+    border: 1px solid var(--vp-c-divider);
+    border-bottom: 0;
+    border-radius: 20px 20px 0 0;
+  }
+
+  html.collection-post-article .posts-modal-container::before {
+    position: absolute;
+    top: 8px;
+    left: calc(50% - 16px);
+    width: 32px;
+    height: 4px;
+    content: "";
+    background-color: var(--vp-c-divider);
+    border-radius: 2px;
+  }
+
+  html.collection-post-article .posts-modal-close {
+    position: sticky;
+    top: 0;
+    right: auto;
+    z-index: 1;
+    width: 44px;
+    height: 44px;
+    /* 关闭按钮覆盖右上角，不挤窄下方整行联系方式。 */
+    margin: -4px -4px -40px auto;
+    background-color: var(--vp-c-bg);
+  }
+
+  html.collection-post-article .blog-mobile-card .vp-profile,
+  html.collection-post-article .blog-mobile-card .vp-profile:hover {
+    grid-template-columns: 56px minmax(0, 1fr);
+    padding-right: 0;
+  }
+
+  html.collection-post-article .blog-mobile-card .profile-info {
+    padding-right: 40px;
+  }
+
+  html.collection-post-article .blog-mobile-card .vp-profile img {
+    width: 56px;
+    height: 56px;
+  }
+
+  html.collection-post-article .blog-mobile-card .vp-social-link,
+  html.collection-post-article .blog-mobile-card .vp-social-link:hover {
+    width: 100%;
+    height: 44px;
+    font-size: 18px;
+    border-radius: 10px;
+  }
+
+  html.collection-post-article .blog-mobile-card .vp-social-link > .vp-icon {
+    width: 18px;
+    height: 18px;
+  }
+
+  /* 沿用桌面的纵向导航，手机每行增加到 44px，方便点击。 */
+  html.collection-post-article .blog-mobile-card .nav-link,
+  html.collection-post-article .blog-mobile-card .nav-link:hover {
+    height: 44px;
+    padding: 0 10px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html.collection-post-article .posts-modal-container {
+      transition: none;
+    }
   }
 }

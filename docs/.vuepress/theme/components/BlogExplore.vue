@@ -248,7 +248,7 @@ function monthLabel(month: string) {
 
 .tag-filter-panel .explore-chips a.colored-tag {
   color: var(--vp-tag-color, var(--vp-c-brand-1));
-  color: color-mix(in srgb, var(--vp-tag-color, var(--vp-c-brand-1)) 75%, var(--vp-c-text-1));
+  color: color-mix(in srgb, var(--vp-tag-color, var(--vp-c-brand-1)) 35%, var(--vp-c-text-1));
   background: var(--vp-tag-bg, var(--vp-c-brand-soft));
   border-color: transparent;
 }
