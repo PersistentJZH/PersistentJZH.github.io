@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import type { ThemePostsItem } from 'vuepress-theme-plume/shared'
 import { computed, ref } from 'vue'
 import { useRoute } from 'vuepress/client'
 import { VPLink, useData, usePostsCategory, useTagColors } from 'vuepress-theme-plume/client'
@@ -7,7 +6,8 @@ import VPCategories from 'vuepress-theme-plume/components/Posts/VPCategories.vue
 import ThemeCategories from 'vuepress-theme-plume/components/Posts/VPPostsCategories.vue'
 import ThemeTags from 'vuepress-theme-plume/components/Posts/VPPostsTags.vue'
 import ThemeArchives from 'vuepress-theme-plume/components/Posts/VPPostsArchives.vue'
-import { postDate, useBlogData } from '../blog-data'
+import { useBlogData } from '../blog-data'
+import BlogArchives from './BlogArchives.vue'
 import BlogArticleRows from './BlogArticleRows.vue'
 
 const { page } = useData()
@@ -17,7 +17,7 @@ const { categories: categoryTree } = usePostsCategory()
 const tagColors = useTagColors()
 const view = computed(() => page.value.type === 'posts-tags' ? 'tags' : page.value.type === 'posts-archives' ? 'archives' : 'categories')
 const legacyView = computed(() => ({ categories: ThemeCategories, tags: ThemeTags, archives: ThemeArchives })[view.value])
-const filterKey = computed(() => ({ categories: 'id', tags: 'tag', archives: 'year' })[view.value])
+const filterKey = computed(() => view.value === 'tags' ? 'tag' : 'id')
 const selected = computed(() => {
   const value = route.query[filterKey.value]
   return typeof value === 'string' ? value : ''
@@ -29,52 +29,15 @@ function filterLink(value = '') {
 
 const tagSearch = ref('')
 const visibleTags = computed(() => tags.value.filter(tag => tag.name.toLocaleLowerCase(locale.value).includes(tagSearch.value.trim().toLocaleLowerCase(locale.value))))
-const filteredPosts = computed(() => posts.value.filter((post) => {
-  if (view.value === 'categories' || !selected.value)
-    return true
-  if (view.value === 'tags')
-    return post.tags?.includes(selected.value)
-  return (postDate(post.createTime).slice(0, 4) || 'undated') === selected.value
-}))
+const filteredPosts = computed(() => view.value === 'tags' && selected.value
+  ? posts.value.filter(post => post.tags?.includes(selected.value))
+  : posts.value)
 const resultTitle = computed(() => selected.value || copy.value.allArticles)
-
-const years = computed(() => {
-  const counts = new Map<string, number>()
-  for (const post of posts.value) {
-    const year = postDate(post.createTime).slice(0, 4) || 'undated'
-    counts.set(year, (counts.get(year) ?? 0) + 1)
-  }
-  return [...counts].map(([year, count]) => ({ year, count }))
-})
-const archiveGroups = computed(() => {
-  const groups: { year: string, count: number, months: { month: string, posts: ThemePostsItem[] }[] }[] = []
-  for (const post of filteredPosts.value) {
-    const date = postDate(post.createTime)
-    const year = date.slice(0, 4) || 'undated'
-    const month = date.slice(5, 7)
-    let yearGroup = groups.find(group => group.year === year)
-    if (!yearGroup) {
-      yearGroup = { year, count: 0, months: [] }
-      groups.push(yearGroup)
-    }
-    yearGroup.count++
-    let monthGroup = yearGroup.months.find(group => group.month === month)
-    if (!monthGroup) {
-      monthGroup = { month, posts: [] }
-      yearGroup.months.push(monthGroup)
-    }
-    monthGroup.posts.push(post)
-  }
-  return groups
-})
-
-function monthLabel(month: string) {
-  return month ? new Intl.DateTimeFormat(locale.value, { month: 'long', timeZone: 'UTC' }).format(new Date(Date.UTC(2000, Number(month) - 1, 1))) : copy.value.unknownDate
-}
 </script>
 
 <template>
-  <div v-if="isBlog" class="blog-explore" :class="`explore-${view}`">
+  <BlogArchives v-if="isBlog && view === 'archives'" />
+  <div v-else-if="isBlog" class="blog-explore" :class="`explore-${view}`">
     <h1 class="explore-title">{{ copy[view] }}</h1>
 
     <section v-if="view === 'categories'" class="category-tree-panel" :aria-label="copy.browseCategories">
@@ -96,25 +59,12 @@ function monthLabel(month: string) {
       <p v-if="!visibleTags.length" class="filter-empty" role="status">{{ copy.noTags }}</p>
     </section>
 
-    <nav v-else class="explore-chips archive-filters" :aria-label="copy.archives">
-      <VPLink :href="filterLink()" :class="{ active: !selected }" :aria-current="!selected ? 'page' : undefined">{{ copy.allYears }} <span>{{ posts.length }}</span></VPLink>
-      <VPLink v-for="item in years" :key="item.year" :href="filterLink(item.year)" :class="{ active: selected === item.year }" :aria-current="selected === item.year ? 'page' : undefined">{{ item.year === 'undated' ? copy.unknownDate : item.year }} <span>{{ item.count }}</span></VPLink>
-    </nav>
-
-    <section v-if="view === 'tags' && selected" class="explore-results">
+    <section v-if="view === 'tags'" class="explore-results">
       <div class="results-heading">
         <h2>{{ resultTitle }} <span aria-live="polite">{{ copy.count(filteredPosts.length) }}</span></h2>
         <VPLink v-if="selected" :href="filterLink()" class="clear-filter">{{ copy.clear }}</VPLink>
       </div>
       <BlogArticleRows :posts="filteredPosts" />
-    </section>
-
-    <section v-for="group in view === 'archives' ? archiveGroups : []" :key="group.year" class="archive-year">
-      <div class="year-heading"><h2>{{ group.year === 'undated' ? copy.unknownDate : group.year }}</h2><span>{{ copy.count(group.count) }}</span></div>
-      <div v-for="month in group.months" :key="month.month" class="archive-month">
-        <h3 class="month-label">{{ monthLabel(month.month) }}<span>{{ copy.count(month.posts.length) }}</span></h3>
-        <BlogArticleRows :posts="month.posts" compact />
-      </div>
     </section>
 
     <div v-if="!filteredPosts.length" class="explore-empty" role="status">
@@ -134,7 +84,7 @@ function monthLabel(month: string) {
   min-width: 0;
 }
 
-.category-tree-panel, .tag-filter-panel, .archive-year, .explore-empty {
+.category-tree-panel, .tag-filter-panel, .explore-empty {
   padding: 24px;
   background: var(--vp-c-bg);
   border: 1px solid var(--vp-c-divider);
@@ -351,60 +301,6 @@ function monthLabel(month: string) {
   color: var(--vp-c-brand-1);
 }
 
-.archive-filters a {
-  background: var(--vp-c-bg);
-  border-color: var(--vp-c-divider);
-}
-
-.year-heading {
-  display: flex;
-  gap: 12px;
-  align-items: baseline;
-  justify-content: space-between;
-  padding-bottom: 16px;
-  border-bottom: 1px solid var(--vp-c-divider);
-}
-
-.year-heading h2 {
-  margin: 0;
-  font-size: 26px;
-  font-weight: 650;
-  line-height: 1.4;
-  font-variant-numeric: tabular-nums;
-}
-
-.year-heading > span {
-  font-size: 12px;
-  color: var(--vp-c-text-2);
-}
-
-.archive-month {
-  display: grid;
-  grid-template-columns: 96px minmax(0, 1fr);
-  gap: 24px;
-  margin-top: 20px;
-}
-
-.month-label {
-  margin: 12px 0 0;
-  font-size: 15px;
-  font-weight: 600;
-  color: var(--vp-c-brand-1);
-}
-
-.month-label span {
-  display: block;
-  margin-top: 4px;
-  font-size: 11px;
-  font-weight: 400;
-  color: var(--vp-c-text-2);
-}
-
-.archive-month :deep(.blog-article-rows) {
-  padding-left: 20px;
-  border-left: 1px solid var(--vp-c-divider);
-}
-
 .explore-empty {
   padding: 40px 20px;
   text-align: center;
@@ -432,21 +328,12 @@ function monthLabel(month: string) {
   outline-offset: 3px;
 }
 
-
-@media (max-width: 1199px) {
-  .archive-month {
-    grid-template-columns: 72px minmax(0, 1fr);
-    gap: 12px;
-  }
-
-}
-
 @media (max-width: 767px) {
   .blog-explore {
     gap: 18px;
   }
 
-  .category-tree-panel, .tag-filter-panel, .archive-year {
+  .category-tree-panel, .tag-filter-panel {
     padding: 18px 16px;
   }
 
@@ -456,28 +343,6 @@ function monthLabel(month: string) {
 
   .category-tree-panel :deep(.vp-category-group .folder) {
     font-size: 15px;
-  }
-
-
-  .archive-month {
-    grid-template-columns: minmax(0, 1fr);
-    gap: 6px;
-  }
-
-  .month-label {
-    display: flex;
-    gap: 10px;
-    align-items: baseline;
-    margin: 0;
-  }
-
-  .month-label span {
-    margin: 0;
-  }
-
-  .archive-month :deep(.blog-article-rows) {
-    padding-left: 0;
-    border-left: 0;
   }
 
   .tag-search {
