@@ -1,0 +1,1 @@
+var e=`/architecture-calico-deae813300e472483f84d6bfb49650ab.svg`;export{e as t};
