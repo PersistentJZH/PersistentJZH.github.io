@@ -7,6 +7,8 @@
  * @see https://theme-plume.vuejs.press/config/collections/
  */
 import { defineCollections } from 'vuepress-theme-plume'
+import { englishCategories } from '../../scripts/locale-labels.mjs'
+import { englishSidebar } from './english-sidebar'
 
 /* =================== locale: zh-CN ======================= */
 
@@ -30,7 +32,7 @@ export const zhCollections = defineCollections([
 
   {
     type: 'post',
-    dir: 'travel-guides',
+    dir: 'travel/guides',
     title: '旅行攻略',
     link: '/travel/guides/',
     linkPrefix: '/travel/guides/',
@@ -46,45 +48,38 @@ export const zhCollections = defineCollections([
 
   {
     type: 'doc',
-    dir: 'kubernetes',
+    dir: 'notes/kubernetes',
     title: 'Kubernetes',
-    linkPrefix: '/k8s/',
+    linkPrefix: '/notes/kubernetes/',
     sidebar: 'auto',
   },
   {
     type: 'doc',
-    dir: 'ai-infra',
+    dir: 'notes/ai-infra',
     title: 'AI Infra',
-    linkPrefix: '/ai-infra/',
+    linkPrefix: '/notes/ai-infra/',
     sidebar: 'auto',
   },
   {
     type: 'doc',
-    dir: 'program-language',
-    title: 'Languages',
-    linkPrefix: '/program-language/',
+    dir: 'notes/program-language',
+    title: '编程语言',
+    linkPrefix: '/notes/program-language/',
     sidebar: 'auto',
   },
   {
     type: 'doc',
-    dir: 'linux',
+    dir: 'notes/linux',
     title: 'Linux',
-    linkPrefix: '/linux/',
+    linkPrefix: '/notes/linux/',
     sidebar: 'auto',
   },
   {
     type: 'doc',
-    dir: 'basic-knowledge',
+    dir: 'notes/basic-knowledge',
     title: '基础知识',
-    linkPrefix: '/basic-knowledge/',
+    linkPrefix: '/notes/basic-knowledge/',
     sidebar: 'auto',
-  },
-  {
-    type: 'doc',
-    dir: 'travel',
-    title: '旅行时光',
-    linkPrefix: '/travel/',
-    // 旅行页使用全屏地图，不需要侧边栏
   },
 ])
 
@@ -101,33 +96,65 @@ export const enCollections = defineCollections([
     archivesLink: '/blog/archives/',
     categoriesLink: '/blog/categories/',
     pagination: 15,
+    categoriesTransform: categories => categories.map(category => ({
+      ...category, name: englishCategories[category.name] ?? category.name,
+    })),
+    // 博客列表使用瀑布流卡片，封面图统一放在卡片顶部
     postCover: {
       layout: 'top',
       ratio: '4:3',
     },
   },
 
-  // 英文笔记的源目录已提升到 docs/en/*，为保持既有 URL，
-  // 页面链接前缀仍保留 /en/notes/*。
+  {
+    type: 'post',
+    dir: 'travel/guides',
+    title: 'Travel Guides',
+    link: '/travel/guides/',
+    linkPrefix: '/travel/guides/',
+    tagsLink: '/travel/guides/tags/',
+    archivesLink: '/travel/guides/archives/',
+    categoriesLink: '/travel/guides/categories/',
+    pagination: 12,
+    meta: {
+      readingTime: false,
+      wordCount: false,
+    },
+  },
+
   {
     type: 'doc',
-    dir: 'k8s',
-    title: 'K8s',
-    linkPrefix: '/notes/k8s/',
-    sidebar: 'auto',
+    dir: 'notes/kubernetes',
+    title: 'Kubernetes',
+    linkPrefix: '/notes/kubernetes/',
+    sidebar: englishSidebar('kubernetes'),
   },
   {
     type: 'doc',
-    dir: 'ai',
-    title: 'AI',
-    linkPrefix: '/notes/ai/',
-    sidebar: 'auto',
+    dir: 'notes/ai-infra',
+    title: 'AI Infra',
+    linkPrefix: '/notes/ai-infra/',
+    sidebar: englishSidebar('ai-infra'),
   },
   {
     type: 'doc',
-    dir: 'travel',
-    title: 'Travel',
-    linkPrefix: '/notes/travel/',
-    // 英文旅行页同样使用全屏地图，不需要侧边栏
+    dir: 'notes/program-language',
+    title: 'Programming Languages',
+    linkPrefix: '/notes/program-language/',
+    sidebar: englishSidebar('program-language'),
+  },
+  {
+    type: 'doc',
+    dir: 'notes/linux',
+    title: 'Linux',
+    linkPrefix: '/notes/linux/',
+    sidebar: englishSidebar('linux'),
+  },
+  {
+    type: 'doc',
+    dir: 'notes/basic-knowledge',
+    title: 'Fundamentals',
+    linkPrefix: '/notes/basic-knowledge/',
+    sidebar: englishSidebar('basic-knowledge'),
   },
 ])

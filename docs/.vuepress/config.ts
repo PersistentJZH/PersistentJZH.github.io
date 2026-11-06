@@ -13,6 +13,8 @@ import { viteBundler } from '@vuepress/bundler-vite'
 import { fileURLToPath } from 'node:url'
 import { defineUserConfig } from 'vuepress'
 import { plumeTheme } from 'vuepress-theme-plume'
+import { notesIndexPlugin } from './plugins/notes-index'
+import { localeRedirectsPlugin } from './plugins/locale-redirects'
 
 export default defineUserConfig({
   base: '/',
@@ -40,7 +42,7 @@ export default defineUserConfig({
   bundler: viteBundler(),
   shouldPrefetch: false, // 站点较大，页面数量较多时，不建议启用
 
-  plugins: [{
+  plugins: [notesIndexPlugin(), localeRedirectsPlugin(), {
     name: 'blog-ui',
     alias: {
       '@theme/VPBackToTop.vue': fileURLToPath(new URL('./theme/components/DisabledBackToTop.vue', import.meta.url)),

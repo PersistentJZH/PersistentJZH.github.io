@@ -5,23 +5,20 @@
  */
 
 import { defineNavbarConfig } from 'vuepress-theme-plume'
-
-const lineIcon = (body: string) => ({
-  svg: `<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${body}</svg>`,
-})
+import { lineIcon, topicIcons } from './theme/icons/topic-icons'
 
 const icons = {
   home: lineIcon('<path d="m3 10 9-7 9 7"/><path d="M5 10v10h14V10"/><path d="M9 20v-6h6v6"/>'),
   blog: lineIcon('<path d="M4 19.5V5a2 2 0 0 1 2-2h12v18H6a2 2 0 0 1-2-1.5Z"/><path d="M8 7h6"/><path d="M8 11h8"/><path d="M8 15h5"/>'),
   notes: lineIcon('<path d="M12 7v14"/><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H12V5H6.5A2.5 2.5 0 0 0 4 7.5v12Z"/><path d="M20 19.5A2.5 2.5 0 0 0 17.5 17H12V5h5.5A2.5 2.5 0 0 1 20 7.5v12Z"/>'),
   allNotes: lineIcon('<path d="M8 6h13"/><path d="M8 12h13"/><path d="M8 18h13"/><path d="M3 6h.01"/><path d="M3 12h.01"/><path d="M3 18h.01"/>'),
-  kubernetes: lineIcon('<path d="M12 3 4 7v10l8 4 8-4V7l-8-4Z"/><path d="M12 8v8"/><path d="m8 10 8 4"/><path d="m16 10-8 4"/>'),
-  ai: lineIcon('<rect x="6" y="6" width="12" height="12" rx="2"/><path d="M9 2v4"/><path d="M15 2v4"/><path d="M9 18v4"/><path d="M15 18v4"/><path d="M2 9h4"/><path d="M2 15h4"/><path d="M18 9h4"/><path d="M18 15h4"/><path d="M10 12h4"/>'),
-  languages: lineIcon('<path d="m8 9-4 3 4 3"/><path d="m16 9 4 3-4 3"/><path d="m14 5-4 14"/>'),
-  fundamentals: lineIcon('<path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2Z"/><path d="M12 7v6"/><path d="M9 10h6"/>'),
+  kubernetes: topicIcons['kubernetes'],
+  ai: topicIcons['ai-infra'],
+  languages: topicIcons['program-language'],
+  fundamentals: topicIcons['basic-knowledge'],
   travel: lineIcon('<path d="M9 18 3 21V6l6-3 6 3 6-3v15l-6 3-6-3Z"/><path d="M9 3v15"/><path d="M15 6v15"/>'),
   guide: lineIcon('<circle cx="12" cy="12" r="9"/><path d="m15.5 8.5-2 5-5 2 2-5 5-2Z"/>'),
-  linux: lineIcon('<path d="M12 2C7.6 2 4 5.6 4 10v3c0 4.4 3.6 8 8 8s8-3.6 8-8v-3c0-4.4-3.6-8-8-8z"/><path d="M12 5.5c-3 0-5.5 2.2-5.5 5v1.5c0 2.8 2.5 5 5.5 5s5.5-2.2 5.5-5v-1.5c0-2.8-2.5-5-5.5-5z"/><path d="M4.5 12c-2 1-3 3-2 5"/><path d="M19.5 12c2 1 3 3 2 5"/><path d="M7 20.5h3.5"/><path d="M13.5 20.5H17"/><path d="M10 9l1.5 2 1.5-2"/><path d="M9.5 7.5v1M14.5 7.5v1"/>'),
+  linux: topicIcons['linux'],
 }
 
 export const zhNavbar = defineNavbarConfig([
@@ -35,11 +32,11 @@ export const zhNavbar = defineNavbarConfig([
     icon: icons.notes,
     items: [
       { text: '全部笔记', link: '/notes/', icon: icons.allNotes },
-      { text: 'Kubernetes', link: '/k8s/', icon: icons.kubernetes },
-      { text: 'AI Infra', link: '/ai-infra/', icon: icons.ai },
-      { text: 'Linux', link: '/linux/', icon: icons.linux },
-      { text: 'Languages', link: '/program-language/', icon: icons.languages },
-      { text: 'Fundamentals', link: '/basic-knowledge/', icon: icons.fundamentals },
+      { text: 'Kubernetes', link: '/notes/kubernetes/', icon: icons.kubernetes },
+      { text: 'AI Infra', link: '/notes/ai-infra/', icon: icons.ai },
+      { text: 'Linux', link: '/notes/linux/', icon: icons.linux },
+      { text: '编程语言', link: '/notes/program-language/', icon: icons.languages },
+      { text: '基础知识', link: '/notes/basic-knowledge/', icon: icons.fundamentals },
     ]
   },
   {
@@ -53,15 +50,26 @@ export const zhNavbar = defineNavbarConfig([
 ])
 
 export const enNavbar = defineNavbarConfig([
-  { text: 'Home', link: '/en/' },
-  { text: 'Blog', link: '/en/blog/' },
+  { text: 'Home', link: '/en/', icon: icons.home },
+  { text: 'Blog', link: '/en/blog/', icon: icons.blog },
   {
-    text: 'Notes',
+    text: 'Technical Notes',
+    icon: icons.notes,
     items: [
-      { text: 'All Notes', link: '/en/notes/' },
-      { text: 'Kubernetes', link: '/en/notes/k8s/' },
-      { text: 'AI', link: '/en/notes/ai/' },
-    ]
+      { text: 'All Notes', link: '/en/notes/', icon: icons.allNotes },
+      { text: 'Kubernetes', link: '/en/notes/kubernetes/', icon: icons.kubernetes },
+      { text: 'AI Infra', link: '/en/notes/ai-infra/', icon: icons.ai },
+      { text: 'Linux', link: '/en/notes/linux/', icon: icons.linux },
+      { text: 'Programming Languages', link: '/en/notes/program-language/', icon: icons.languages },
+      { text: 'Fundamentals', link: '/en/notes/basic-knowledge/', icon: icons.fundamentals },
+    ],
   },
-  { text: 'Travel', link: '/en/notes/travel/' },
+  {
+    text: 'Travel',
+    icon: icons.travel,
+    items: [
+      { text: 'Travel Map', link: '/en/travel/', icon: icons.travel },
+      { text: 'Travel Guides', link: '/en/travel/guides/', icon: icons.guide },
+    ],
+  },
 ])

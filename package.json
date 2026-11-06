@@ -10,8 +10,9 @@
   "scripts": {
     "docs:dev": "vuepress dev docs",
     "docs:dev-clean": "vuepress dev docs --clean-cache --clean-temp",
-    "docs:build": "vuepress build docs --clean-cache --clean-temp",
+    "docs:build": "npm run docs:check-locales && vuepress build docs --clean-cache --clean-temp",
     "docs:preview": "http-server docs/.vuepress/dist",
+    "docs:check-locales": "node scripts/check-locales.mjs",
     "vp-update": "npx vp-update"
   },
   "devDependencies": {

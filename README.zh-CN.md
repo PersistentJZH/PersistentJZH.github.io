@@ -10,6 +10,12 @@ npm i
 
 ## Usage
 
+英文文章放在 `docs/en/`，目录结构与中文一致，permalink 使用中文地址加 `/en` 前缀。新增或修改中文文章时，同步完整英文正文、日期、封面、标签和内部链接。完成翻译同步后再更新 `sourceHash`；它是中文源文件统一为 LF 换行后的 SHA-256。英文导航和侧边栏标签维护在 `docs/.vuepress` 与 `scripts/locale-labels.mjs` 中。
+
+运行 `npm run docs:check-locales` 检查文章覆盖、译文是否过期、元数据、未翻译正文，以及标题、代码块和图片数量。生产构建会自动执行此检查。
+
+英文旅行页面还通过 `sourceDependenciesHash` 校验共享旅行组件及城市、照片数据。修改这些内容后，同步英文词典，再使用 `scripts/check-locales.mjs` 导出的 `translationDependencyHash` 更新该值。
+
 ```sh
 # 启动开发服务
 npm run docs:dev

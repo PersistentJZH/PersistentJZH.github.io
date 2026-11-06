@@ -91,10 +91,10 @@ export default defineThemeConfig({
        */
       profile: {
         avatar: '/new_avatar.png',
-        name: 'zhihao blog',
+        name: 'zhihao',
         description: '',
         // circle: true,
-        // location: '',
+        location: 'Shenzhen, China',
         // organization: '',
       },
 

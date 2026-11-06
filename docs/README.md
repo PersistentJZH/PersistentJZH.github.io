@@ -21,7 +21,7 @@ config:
           <a class="home-entry" href="/notes/">
             <span class="home-entry-head">
               <span class="home-entry-no" aria-hidden="true">02</span>
-              <span class="home-entry-title">研究笔记</span>
+              <span class="home-entry-title">技术笔记</span>
             </span>
             <span class="home-entry-desc">Kubernetes、AI Infra、Linux 与基础知识的系统整理。</span>
             <span class="home-entry-arrow" aria-hidden="true">→</span>

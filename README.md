@@ -10,6 +10,12 @@ npm i
 
 ## Usage
 
+English articles live under `docs/en/`, mirroring the Chinese article directories and using `/en` plus the original permalink. When adding or changing a Chinese article, update its complete English translation, date, cover, tags, and internal links. Refresh the translation's `sourceHash` only after synchronizing the text; it is the SHA-256 of the Chinese source file with LF line endings. English navigation and sidebar labels are maintained in `docs/.vuepress` and `scripts/locale-labels.mjs`.
+
+Run `npm run docs:check-locales` to check article coverage, source freshness, metadata, untranslated prose, and heading/code-block/image counts. Production builds run this check automatically.
+
+The English travel pages also record `sourceDependenciesHash` for shared travel components and city/photo data. After changing that content, synchronize its English dictionary and refresh this hash with the exported `translationDependencyHash` helper in `scripts/check-locales.mjs`.
+
 ```sh
 # start dev server
 npm run docs:dev

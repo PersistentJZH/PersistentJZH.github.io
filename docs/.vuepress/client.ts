@@ -5,14 +5,16 @@ import { defineClientConfig, useRoute } from 'vuepress/client'
 // import NpmBadgeGroup from 'vuepress-theme-plume/features/NpmBadgeGroup.vue'
 //import Swiper from 'vuepress-theme-plume/features/Swiper.vue'
 
-import TravelMap from './theme/components/TravelMap.vue'
-import YangshuoGuide from './theme/components/YangshuoGuide.vue'
+import TravelMap from './theme/components/travel/TravelMap.vue'
+import YangshuoGuide from './theme/components/travel/YangshuoGuide.vue'
 import BlogLayout from './theme/components/BlogLayout.vue'
+import NotesHome from './theme/components/notes/NotesHome.vue'
 import { setupBlogMasonry, syncBlogMasonry } from './theme/blog-masonry'
+import { localeRedirects } from './locale-redirects'
 import { mountHomeTintPlate, type HomeTintPlateHandle, type TintPalette } from './theme/home-tint-plate'
 
 import './theme/styles/custom.css'
-import './theme/styles/yangshuo.css'
+import './theme/components/travel/yangshuo.css'
 
 /**
  * iOS Safari（尤其是 26/27 的悬浮工具栏）里 100vh / 100svh 与真实可见区域
@@ -99,7 +101,13 @@ export default defineClientConfig({
   layouts: {
     Layout: BlogLayout,
   },
-  enhance({ app }) {
+  enhance({ app, router }) {
+    if (typeof window !== 'undefined') {
+      router.beforeEach((to) => {
+        const target = localeRedirects[to.path]
+        if (target) return { path: target, query: to.query, hash: to.hash, replace: true }
+      })
+    }
     // built-in components
     // app.component('RepoCard', RepoCard)
     // app.component('NpmBadge', NpmBadge)
@@ -109,6 +117,7 @@ export default defineClientConfig({
     // your custom components
     app.component('TravelMap', TravelMap)
     app.component('YangshuoGuide', YangshuoGuide)
+    app.component('NotesHome', NotesHome)
   },
   setup() {
     const route = useRoute()

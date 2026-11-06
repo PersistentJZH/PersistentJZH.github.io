@@ -14,13 +14,30 @@ tags:
 
 手机拍完一组照片，写博客时还要导出、压缩、上传 OSS，再逐个复制图片地址。可以把这些步骤串成一个快捷指令：在相册多选照片，分享到「上传到博客」，上传结束后得到一份包含全部图片链接的 Markdown 文件。
 
-这套方案使用 **iPhone 原生快捷指令、阿里云函数计算 FC 和现有 OSS Bucket**。推荐在 Mac 上编辑快捷指令，通过 iCloud 同步到 iPhone，日常直接在手机相册选图上传。下面包含云端接口的完整代码、部署配置、两个快捷指令的搭建方法，以及批量上传中断后的操作。
+## 先看效果
 
-本文给出的是可自行部署的实现。云端代码可以独立运行，快捷指令需要按文中的动作搭建，可以在 Mac 上完成编辑。配置时，把示例中的 Bucket、地域、接口地址和上传令牌换成自己的。
+**选照片 → 分享到快捷指令 → 得到可以直接贴进博客的图片标签。** 下面是一次上传 3 张照片后的通知，链接已经复制到剪贴板，同时保存成了 Markdown 文件。
 
-## 搭好以后，手机上怎么用
+<img
+  src="https://zhihao-blog.oss-cn-hangzhou.aliyuncs.com/blog/uploads/2026-11-06/2997a691-67cd-4cd3-bd45-f3847c868f88-0001-24829eae-20e2-4b52-b521-145efc68b14c.jpg"
+  alt="快捷指令上传完成通知：已上传 3/3 张，Markdown 链接已复制"
+  width="1206"
+  height="416"
+  style="display: block; width: 400px; max-width: 100%; height: auto;"
+/>
 
-第一次配置时，把接口地址和专用上传令牌保存进快捷指令，并授权它访问照片、网络和指定的文件夹。日常按下面几步操作。
+入口就在相册的分享菜单里。截图中这条指令叫「上传到博客 OSS」，下文简称「上传到博客」。
+
+<img
+  src="https://zhihao-blog.oss-cn-hangzhou.aliyuncs.com/blog/uploads/2026-11-05/f9250c1c-68a9-4f7a-96a7-767fdcac4fe5-0001-ca14c0ad-5789-4b89-93c3-bcf68293945e.jpg"
+  alt="在 iPhone 相册分享菜单中选择上传到博客 OSS"
+  width="1206"
+  height="2622"
+  loading="lazy"
+  style="display: block; width: 400px; max-width: 100%; height: auto;"
+/>
+
+搭好以后，日常按下面几步操作。
 
 1. 打开「照片」，点「选择」，勾选本次要上传的照片。
 2. 点分享按钮，选择「上传到博客」。
@@ -28,7 +45,7 @@ tags:
 4. 保持快捷指令在前台，等待逐张处理。
 5. 完成后，图片链接自动复制到剪贴板，Markdown 文件保存在 `iCloud 云盘/Shortcuts/BlogUploads/`。
 
-在 Mac 上打开这份文件，就能把链接粘进博客文章。第一次可以先选 2 张照片试用，之后按 20～30 张一批上传。
+在 Mac 上打开这份文件，就能把链接粘进博客文章。第一次可以先选 2 张照片试用，之后按 20～30 张一批上传。每批最多 500 张，单张图片上限 50 MiB。
 
 最终文件类似下面这样，Markdown 文件里保存的是可以直接贴进博客的 `<img>` 标签。
 
@@ -48,9 +65,13 @@ tags:
 />
 ```
 
-照片上传后，就能通过链接访问。把生成的图片标签放进文章或旅行相册后，再按博客原来的流程发布。
+照片上传后，就能通过链接访问。把生成的图片标签放进文章或旅行相册后，再按博客原来的流程发布。写文章时可以把 `alt` 换成照片描述；`400px` 只控制网页显示宽度，不会压缩图片文件。
 
 ## 上传过程
+
+这套方案使用 **iPhone 原生快捷指令、阿里云函数计算 FC 和现有 OSS Bucket**。FC 负责签发临时上传地址、确认上传结果和查询图片清单，照片由手机直接传到 OSS。
+
+下面给出云端接口的完整代码、部署配置和两个快捷指令的搭建方法。推荐在 Mac 上编辑快捷指令，通过 iCloud 同步到 iPhone。配置时，把示例中的 Bucket、地域、接口地址和上传令牌换成自己的，首次运行再授权照片、网络和文件夹访问。
 
 ```mermaid
 sequenceDiagram
@@ -66,6 +87,23 @@ sequenceDiagram
     F-->>P: 返回 HTML 图片标签
     Note over P: 保存图片链接.md，复制到剪贴板
 ```
+
+## 这套方案要花多少钱
+
+FC 不用包月买服务器，CPU、内存使用时长和调用次数统一折算成计算单位 CU。按 2026 年 11 月 6 日查询到的官方标准价，第一档为 **0.00011 元/CU**：活跃 CPU 折合 0.00011 元/vCPU·秒，内存 0.0000165 元/GB·秒，调用 0.00825 元/万次。[FC 按量计费说明](https://help.aliyun.com/zh/functioncompute/pay-as-you-go-billing-methods)
+
+小用量还要算上 **每个函数每小时最低消费 0.01 元**：该小时有调用或占用计算资源，不足一分钱也按一分钱收。本文把最小实例数设为 `0`，缩容到零后不收费；请求结束后默认还会延迟 1 分钟释放实例，这段时间也计费。[最低消费与实例释放规则](https://help.aliyun.com/zh/functioncompute/product-change-description-on-optimizing-function-billing-mode)
+
+照片由手机直传 OSS，FC 只处理地址、上传确认和清单。以杭州地域、OSS 标准本地冗余存储为例，按下面的用量估算一个月的费用，不计资源包或试用优惠。
+
+| 项目 | 假设用量与参考单价 | 月费用 |
+| --- | --- | --- |
+| FC | 当月有调用或资源占用的计费小时共 30 个，每小时用量费均低于 0.01 元 | 约 0.30 元 |
+| OSS 存储 | 月均存储 2 GB，0.12 元/GB/月 | 约 0.24 元 |
+| OSS 图片下行流量 | 读者访问产生 10 GB，按忙时（08:00～24:00）0.50 元/GB 估算 | 约 5 元 |
+| OSS 读写请求 | 合计约 1 万次，0.01 元/万次 | 约 0.01 元 |
+
+这个例子合计约 **5.6 元/月**，主要花在读者浏览图片的流量上。存储按累计保留的照片容量计算，照片越多，费用也会增加；上面的估算不含域名、可选日志和 FC 少量公网流量费用，实际价格以所选地域和账单为准。[OSS 存储费用](https://help.aliyun.com/zh/oss/storage-fees) · [OSS 流量与请求计费示例](https://help.aliyun.com/zh/oss/billing-examples)
 
 ## 一、先配 OSS
 
@@ -324,41 +362,7 @@ openssl rand -hex 32
 
 等两条指令同步到 iPhone，就可以使用了。首次按提示授权，出现「始终允许」就选它。批量照片仍反复弹出数据共享提示时，在「设置」里搜索「快捷指令」，进入 **高级**，开启 **允许共享大量数据**。[Apple 的快捷指令隐私设置说明](https://support.apple.com/zh-cn/guide/shortcuts/apd961a4fc65/ios)
 
-## 四、以后就这样上传
-
-相册里选中照片，点 **分享 → 上传到博客**。截图里我把这条指令命名为「上传到博客 OSS」。
-
-<img
-  src="https://zhihao-blog.oss-cn-hangzhou.aliyuncs.com/blog/uploads/2026-11-05/f9250c1c-68a9-4f7a-96a7-767fdcac4fe5-0001-ca14c0ad-5789-4b89-93c3-bcf68293945e.jpg"
-  alt="在 iPhone 相册分享菜单中选择上传到博客 OSS"
-  width="1206"
-  height="2622"
-  loading="lazy"
-  style="display: block; width: 400px; max-width: 100%; height: auto;"
-/>
-
-给这批照片起个名字，比如「阳朔旅行」，保持快捷指令在前台，等上传完成。看到下面这样的通知，就可以回博客正文粘贴了。
-
-<img
-  src="https://zhihao-blog.oss-cn-hangzhou.aliyuncs.com/blog/uploads/2026-11-05/f9250c1c-68a9-4f7a-96a7-767fdcac4fe5-0004-29b3bc59-1f45-4868-bcbd-0eb25f490bd5.png"
-  alt="上传完成通知，显示已上传 3/3 张且图片链接已复制"
-  width="1206"
-  height="2622"
-  loading="lazy"
-  style="display: block; width: 400px; max-width: 100%; height: auto;"
-/>
-
-每批最多 500 张，单张图片上限 50 MiB。照片多的时候可以分几批传。
-
-复制的内容带有批次标题，后面是每张照片的标签。图片部分长这样，写文章时可以把 `alt` 换成照片描述。`400px` 控制的是网页显示宽度。
-
-```html
-<img
-  src="https://你的图片域名/blog/uploads/2026-11-05/照片文件名.jpg"
-  alt="照片 1"
-  style="display: block; width: 400px; max-width: 100%; height: auto;"
-/>
-```
+## 四、文件和上传记录
 
 ### 照片存在哪儿
 
