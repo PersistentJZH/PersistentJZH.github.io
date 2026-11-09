@@ -6,11 +6,12 @@ readingTime: false
 createTime: 2026/05/24 15:13:20
 ---
 
-AI 基础设施相关笔记，目前围绕 GPU 资源管理、设备分配和虚拟化实现展开。
+AI 基础设施相关笔记，涵盖 GPU 资源管理、设备分配、虚拟化实现，以及 LLM 的数学基础与推理原理。
 
 - [DRA 与 Device Plugin](/notes/ai-infra/dra-device-plugin/)
 - [HAMi](/notes/ai-infra/hami/)
 - [HAMi 设备注入与库劫持](/notes/ai-infra/hjzbo16q/)
+- [Transformer 的数学原理与完整推导](/notes/ai-infra/llm/transformer-math/)
 
 <img src="/ai-infra-landscape.png" alt="AI Infra 知识全景图" style="width: 100%; max-width: 1200px;">
 

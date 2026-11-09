@@ -49,6 +49,34 @@
   */
 }
 
+/* ===== LLM 文章图注 ===== */
+
+.vp-doc .llm-figure-caption {
+  margin: -0.5rem 0 1.5rem;
+  font-size: 0.85rem;
+  line-height: 1.6;
+  color: var(--vp-c-text-2);
+}
+
+.vp-doc .llm-figure-caption > p {
+  margin: 0;
+  font-size: inherit;
+  line-height: inherit;
+  color: inherit;
+}
+
+.vp-doc .llm-figure-caption a {
+  font-weight: inherit;
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.vp-doc .llm-figure-caption a:hover,
+.vp-doc .llm-figure-caption a:focus-visible {
+  color: var(--vp-c-brand-1);
+}
+
 /* ===== 移动端适配 ===== */
 
 /* 移动端去掉多余的内边距，充分利用屏幕宽度 */

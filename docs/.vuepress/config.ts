@@ -149,9 +149,9 @@ export default defineUserConfig({
     //     kotlin: true,     // ::: kotlin-repl
     //     python: true,     // ::: python-repl
     //   },
-    //   math: {             // 启用数学公式
-    //     type: 'katex',
-    //   },
+      math: {               // 使用 KaTeX 渲染行内和块级数学公式
+        type: 'katex',
+      },
     //   chartjs: true,      // 启用 chart.js
     //   echarts: true,      // 启用 ECharts
     mermaid: true,      // 启用 mermaid
