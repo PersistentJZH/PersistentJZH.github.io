@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="560" height="464.333333" viewBox="0 0 720 597" role="img" aria-labelledby="title desc">
+<title id="title">Same generation step, two execution paths</title>
+<desc id="desc">Both paths use context 我 爱 爱 to predict 学习. Without caching, positions 1, 2 and 3 are passed through the model and all Q/K/V are recalculated. With KV Cache, only the new token at position 3 is processed to calculate its Q/K/V. Attention uses its new Q with K/V from all three positions, combining cached positions 1 and 2 with new position 3. Subsequent operations produce the same last-position result and selected token.</desc>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#356BC3"/></marker><marker id="greenArrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#14836D"/></marker></defs>
+<g font-family="-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC','Microsoft YaHei',sans-serif">
+<rect x="1" y="1" width="718" height="595" rx="16" fill="#FFFFFF" stroke="#D7E0EA" stroke-width="1.6"/>
+<text x="28" y="37" font-size="25" fill="#182A43" font-weight="600" text-anchor="start">Same generation step, two execution paths</text>
+<text x="30" y="67" font-size="22" fill="#506277" font-weight="400" text-anchor="start">Context: 我 爱 爱   →   Predict: 学习</text>
+<rect x="24" y="86" width="672" height="191" rx="12" fill="#FFFFFF" stroke="#D7E0EA" stroke-width="1.6"/>
+<text x="42" y="116" font-size="23" fill="#194C96" font-weight="600" text-anchor="start">Without caching: process all three positions</text>
+<rect x="43" y="139" width="60" height="49" rx="10" fill="#E8F0FF" stroke="#356BC3" stroke-width="1.6"/>
+<text x="73" y="171" font-size="23" fill="#194C96" font-weight="600" text-anchor="middle">1 · 我</text>
+<rect x="111" y="139" width="60" height="49" rx="10" fill="#E8F0FF" stroke="#356BC3" stroke-width="1.6"/>
+<text x="141" y="171" font-size="23" fill="#194C96" font-weight="600" text-anchor="middle">2 · 爱</text>
+<rect x="179" y="139" width="60" height="49" rx="10" fill="#E8F0FF" stroke="#356BC3" stroke-width="1.6"/>
+<text x="209" y="171" font-size="23" fill="#194C96" font-weight="600" text-anchor="middle">3 · 爱</text>
+<text x="137" y="219" font-size="21" fill="#506277" font-weight="400" text-anchor="middle">All tokens in</text>
+<path d="M 239 164 L 268 164" fill="none" stroke="#356BC3" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<rect x="273" y="138" width="188" height="51" rx="10" fill="#E8F0FF" stroke="#356BC3" stroke-width="1.6"/>
+<text x="367" y="160" font-size="21" fill="#194C96" font-weight="600" text-anchor="middle">Recompute Q/K/V</text>
+<text x="367" y="181" font-size="19" fill="#506277" font-weight="400" text-anchor="middle">at all positions</text>
+<path d="M 462 164 L 492 164" fill="none" stroke="#356BC3" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<rect x="498" y="137" width="178" height="105" rx="10" fill="#E1F5EE" stroke="#14836D" stroke-width="1.6"/>
+<text x="587" y="161" font-size="19" fill="#115E50" font-weight="600" text-anchor="middle">Attention + FFN</text>
+<text x="587" y="192" font-size="19" fill="#115E50" font-weight="400" text-anchor="middle">Last-position result</text>
+<text x="587" y="225" font-size="25" fill="#115E50" font-weight="600" text-anchor="middle">→ 学习</text>
+<text x="367" y="219" font-size="19" fill="#506277" font-weight="400" text-anchor="middle">Same model weights</text>
+<rect x="24" y="293" width="672" height="249" rx="12" fill="#FFFFFF" stroke="#D7E0EA" stroke-width="1.6"/>
+<text x="42" y="324" font-size="23" fill="#194C96" font-weight="600" text-anchor="start">With KV Cache: process only the new position</text>
+<rect x="43" y="350" width="196" height="57" rx="10" fill="#E8F0FF" stroke="#356BC3" stroke-width="1.6"/>
+<text x="141" y="374" font-size="22" fill="#194C96" font-weight="600" text-anchor="middle">Position 3 only</text>
+<text x="141" y="399" font-size="25" fill="#194C96" font-weight="600" text-anchor="middle">爱</text>
+<path d="M 240 378 L 268 378" fill="none" stroke="#356BC3" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<rect x="273" y="350" width="188" height="57" rx="10" fill="#E8F0FF" stroke="#356BC3" stroke-width="1.6"/>
+<text x="367" y="373" font-size="20" fill="#194C96" font-weight="600" text-anchor="middle">Compute new Q/K/V</text>
+<text x="367" y="398" font-size="24" fill="#194C96" font-weight="400" text-anchor="middle">q₃, k₃, v₃</text>
+<path d="M 462 378 L 491 378" fill="none" stroke="#356BC3" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<rect x="498" y="350" width="178" height="162" rx="10" fill="#E1F5EE" stroke="#14836D" stroke-width="1.6"/>
+<text x="587" y="374" font-size="21" fill="#115E50" font-weight="600" text-anchor="middle">New Q reads</text>
+<text x="587" y="401" font-size="18" fill="#115E50" font-weight="600" text-anchor="middle">K/V at all 3 positions</text>
+<text x="587" y="433" font-size="19" fill="#115E50" font-weight="400" text-anchor="middle">Then the same</text>
+<text x="587" y="458" font-size="19" fill="#115E50" font-weight="400" text-anchor="middle">last-position result</text>
+<text x="587" y="492" font-size="25" fill="#115E50" font-weight="600" text-anchor="middle">→ 学习</text>
+<rect x="43" y="444" width="418" height="67" rx="10" fill="#E1F5EE" stroke="#14836D" stroke-width="1.6"/>
+<text x="252" y="471" font-size="21" fill="#115E50" font-weight="600" text-anchor="middle">Read saved K/V: positions 1 and 2</text>
+<text x="252" y="498" font-size="20" fill="#506277" font-weight="400" text-anchor="middle">Old rows are reused directly</text>
+<path d="M 461 479 L 478 479 L 478 415 L 493 415" fill="none" stroke="#14836D" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#greenArrow)"/>
+<text x="30" y="578" font-size="22" fill="#506277" font-weight="400" text-anchor="start">Same context, same last-position result.</text>
+</g>
+</svg>

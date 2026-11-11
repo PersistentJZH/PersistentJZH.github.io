@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="560" height="464.333333" viewBox="0 0 720 597" role="img" aria-labelledby="title desc">
+<title id="title">同一次生成：两种执行方式</title>
+<desc id="desc">两种方式都根据完整上下文“我 爱 爱”预测“学习”。无缓存时，三个位置全部送入模型并重算 Q/K/V；有缓存时，只送入位置 3 的新 token 并计算它的 Q/K/V。新 Q 读取全部三个位置的 K/V，其中位置 1、2 直接从历史缓存读取，位置 3 刚刚计算。随后得到相同的末位置结果并选出相同的 token。</desc>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#356BC3"/></marker><marker id="greenArrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#14836D"/></marker></defs>
+<g font-family="-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC','Microsoft YaHei',sans-serif">
+<rect x="1" y="1" width="718" height="595" rx="16" fill="#FFFFFF" stroke="#D7E0EA" stroke-width="1.6"/>
+<text x="28" y="37" font-size="25" fill="#182A43" font-weight="600" text-anchor="start">同一次生成：两种执行方式</text>
+<text x="30" y="67" font-size="22" fill="#506277" font-weight="400" text-anchor="start">完整上下文：我 爱 爱   →   预测：学习</text>
+<rect x="24" y="86" width="672" height="191" rx="12" fill="#FFFFFF" stroke="#D7E0EA" stroke-width="1.6"/>
+<text x="42" y="116" font-size="23" fill="#194C96" font-weight="600" text-anchor="start">无缓存：重新处理全部三个位置</text>
+<rect x="43" y="139" width="60" height="49" rx="10" fill="#E8F0FF" stroke="#356BC3" stroke-width="1.6"/>
+<text x="73" y="171" font-size="23" fill="#194C96" font-weight="600" text-anchor="middle">1 · 我</text>
+<rect x="111" y="139" width="60" height="49" rx="10" fill="#E8F0FF" stroke="#356BC3" stroke-width="1.6"/>
+<text x="141" y="171" font-size="23" fill="#194C96" font-weight="600" text-anchor="middle">2 · 爱</text>
+<rect x="179" y="139" width="60" height="49" rx="10" fill="#E8F0FF" stroke="#356BC3" stroke-width="1.6"/>
+<text x="209" y="171" font-size="23" fill="#194C96" font-weight="600" text-anchor="middle">3 · 爱</text>
+<text x="137" y="219" font-size="21" fill="#506277" font-weight="400" text-anchor="middle">全部 token 输入</text>
+<path d="M 239 164 L 268 164" fill="none" stroke="#356BC3" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<rect x="273" y="138" width="188" height="51" rx="10" fill="#E8F0FF" stroke="#356BC3" stroke-width="1.6"/>
+<text x="367" y="160" font-size="21" fill="#194C96" font-weight="600" text-anchor="middle">重算三行 Q/K/V</text>
+<text x="367" y="181" font-size="19" fill="#506277" font-weight="400" text-anchor="middle">三个位置都计算</text>
+<path d="M 462 164 L 492 164" fill="none" stroke="#356BC3" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<rect x="498" y="137" width="178" height="105" rx="10" fill="#E1F5EE" stroke="#14836D" stroke-width="1.6"/>
+<text x="587" y="161" font-size="19" fill="#115E50" font-weight="600" text-anchor="middle">注意力及后续运算</text>
+<text x="587" y="192" font-size="19" fill="#115E50" font-weight="400" text-anchor="middle">末位置结果</text>
+<text x="587" y="225" font-size="25" fill="#115E50" font-weight="600" text-anchor="middle">→ 学习</text>
+<text x="367" y="219" font-size="19" fill="#506277" font-weight="400" text-anchor="middle">使用同一套模型参数</text>
+<rect x="24" y="293" width="672" height="249" rx="12" fill="#FFFFFF" stroke="#D7E0EA" stroke-width="1.6"/>
+<text x="42" y="324" font-size="23" fill="#194C96" font-weight="600" text-anchor="start">使用 KV Cache：只处理新的位置</text>
+<rect x="43" y="350" width="196" height="57" rx="10" fill="#E8F0FF" stroke="#356BC3" stroke-width="1.6"/>
+<text x="141" y="374" font-size="22" fill="#194C96" font-weight="600" text-anchor="middle">只输入位置 3</text>
+<text x="141" y="399" font-size="25" fill="#194C96" font-weight="600" text-anchor="middle">爱</text>
+<path d="M 240 378 L 268 378" fill="none" stroke="#356BC3" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<rect x="273" y="350" width="188" height="57" rx="10" fill="#E8F0FF" stroke="#356BC3" stroke-width="1.6"/>
+<text x="367" y="373" font-size="20" fill="#194C96" font-weight="600" text-anchor="middle">只算新位置 Q/K/V</text>
+<text x="367" y="398" font-size="24" fill="#194C96" font-weight="400" text-anchor="middle">q₃, k₃, v₃</text>
+<path d="M 462 378 L 491 378" fill="none" stroke="#356BC3" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<rect x="498" y="350" width="178" height="162" rx="10" fill="#E1F5EE" stroke="#14836D" stroke-width="1.6"/>
+<text x="587" y="374" font-size="21" fill="#115E50" font-weight="600" text-anchor="middle">新 Q 读取</text>
+<text x="587" y="401" font-size="21" fill="#115E50" font-weight="600" text-anchor="middle">三个位置的 K/V</text>
+<text x="587" y="433" font-size="19" fill="#115E50" font-weight="400" text-anchor="middle">继续后续运算</text>
+<text x="587" y="458" font-size="19" fill="#115E50" font-weight="400" text-anchor="middle">末位置结果相同</text>
+<text x="587" y="492" font-size="25" fill="#115E50" font-weight="600" text-anchor="middle">→ 学习</text>
+<rect x="43" y="444" width="418" height="67" rx="10" fill="#E1F5EE" stroke="#14836D" stroke-width="1.6"/>
+<text x="252" y="471" font-size="21" fill="#115E50" font-weight="600" text-anchor="middle">读取历史缓存：位置 1、2 的 K/V</text>
+<text x="252" y="498" font-size="20" fill="#506277" font-weight="400" text-anchor="middle">旧行直接读取，不必重新计算</text>
+<path d="M 461 479 L 478 479 L 478 415 L 493 415" fill="none" stroke="#14836D" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#greenArrow)"/>
+<text x="30" y="578" font-size="22" fill="#506277" font-weight="400" text-anchor="start">读取同一段上下文，得到相同的末位置结果。</text>
+</g>
+</svg>
