@@ -13,6 +13,7 @@ AI 基础设施相关笔记，涵盖 GPU 资源管理、设备分配、虚拟化
 - [HAMi 设备注入与库劫持](/notes/ai-infra/hjzbo16q/)
 - [Transformer 的数学原理与完整推导](/notes/ai-infra/llm/transformer-math/)
 - [从数学角度理解 vLLM](/notes/ai-infra/llm/kv-cache-vllm/)
+- [读懂 Qwen3-1.7B：模型文件的用途、关系与加载流程](/notes/ai-infra/llm/model-files-vllm/)
 
 <img src="/ai-infra-landscape.png" alt="AI Infra 知识全景图" style="width: 100%; max-width: 1200px;">
 
