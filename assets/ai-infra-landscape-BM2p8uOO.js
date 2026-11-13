@@ -1,0 +1,1 @@
+var e=`/ai-infra-landscape.png`;export{e as t};

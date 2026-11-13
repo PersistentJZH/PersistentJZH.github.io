@@ -1,0 +1,21 @@
+Illustrations from Dive into Deep Learning (D2L)
+Authors: Aston Zhang, Zachary C. Lipton, Mu Li, and Alexander J. Smola
+License: Creative Commons Attribution-ShareAlike 4.0 International (CC BY-SA 4.0)
+License URL: https://creativecommons.org/licenses/by-sa/4.0/
+Upstream license: https://github.com/d2l-ai/d2l-en/blob/master/LICENSE
+The original SVG files are reproduced without modification.
+
+attention-output.svg
+Figure 11.3.1: Computing the output of attention pooling as a weighted average of values.
+Source page: https://d2l.ai/chapter_attention-mechanisms-and-transformers/attention-scoring-functions.html
+Original image: https://d2l.ai/_images/attention-output.svg
+
+multi-head-attention.svg
+Figure 11.5.1: Multi-head attention.
+Source page: https://d2l.ai/chapter_attention-mechanisms-and-transformers/multihead-attention.html
+Original image: https://d2l.ai/_images/multi-head-attention.svg
+
+transformer.svg
+Figure 11.7.1: The Transformer architecture.
+Source page: https://d2l.ai/chapter_attention-mechanisms-and-transformers/transformer.html
+Original image: https://d2l.ai/_images/transformer.svg

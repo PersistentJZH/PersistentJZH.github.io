@@ -1,0 +1,1 @@
+var e=`/kubernetes-landscape.png`;export{e as t};

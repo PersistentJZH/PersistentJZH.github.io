@@ -1,0 +1,76 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="1100" viewBox="0 0 960 1100" role="img" aria-labelledby="title desc">
+<title id="title">Qwen3-1.7B · 整体模型结构</title><desc id="desc">Qwen3-1.7B 的真实结构概览。模型外的聊天模板与 tokenizer 将文本转换为形状 B 乘 T 的 token ID。输入 embedding 使用形状 151936 乘 2048 的权重 W_E，得到 B 乘 T 乘 2048 的表示。28 个结构相同但参数不同的 Decoder block 保持隐藏维度 2048。最终 RMSNorm 后取最后一个有效位置，得到 B 乘 2048 的隐藏向量 h，再用共享的 W_E 转置计算 B 乘 151936 的 logits。模型外的采样和解码产生下一个 token。青色虚线表示 embedding 与 lm_head 共享同一权重，不是额外的数据流。RoPE 在每层的 Q 和 K 上施加。B 表示批次大小，T 表示本次处理的 token 数。</desc>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M 1 1 L 9 5 L 1 9 Z" fill="#3568B0"/></marker></defs>
+<g font-family="-apple-system,BlinkMacSystemFont,Segoe UI,PingFang SC,Microsoft YaHei,Arial,sans-serif">
+<rect x="1" y="1" width="958" height="1098" rx="18" fill="#FFFFFF" stroke="#D6E0EA" stroke-width="1.5"/>
+<text x="32" y="47" font-size="28" fill="#172C45" font-weight="650" text-anchor="start">Qwen3-1.7B · 整体模型结构</text>
+<text x="32" y="78" font-size="20" fill="#52657B" font-weight="400" text-anchor="start">逻辑张量布局 · 实际参数尺寸 · 生成下一个 token</text>
+<rect x="120" y="106" width="490" height="80" rx="12" fill="#F4F7FA" stroke="#D6E0EA" stroke-width="1.5"/>
+<text x="365" y="137" font-size="23" fill="#172C45" font-weight="600" text-anchor="middle">文本 / 聊天消息</text>
+<text x="365" y="166" font-size="21" fill="#52657B" font-weight="400" text-anchor="middle">聊天模板 + tokenizer</text>
+<text x="718" y="134" font-size="19" fill="#52657B" font-weight="600" text-anchor="start">模型外</text>
+<text x="718" y="161" font-size="19" fill="#52657B" font-weight="400" text-anchor="start">文本处理</text>
+<path d="M 365 188 V 214" stroke="#3568B0" stroke-width="2.5" fill="none" marker-end="url(#arrow)"/>
+<rect x="250" y="220" width="230" height="44" rx="10" fill="#FFFFFF" stroke="#B9CEE7" stroke-width="1.5"/>
+<text x="365" y="249" font-size="21" fill="#172C45" font-weight="500" text-anchor="middle">Token IDs  [B, T]</text>
+<rect x="72" y="277" width="590" height="657" rx="16" fill="#F8FAFD" stroke="#C8D7E8" stroke-width="1.5"/>
+<text x="92" y="302" font-size="18" fill="#3568B0" font-weight="600" text-anchor="start">Qwen3ForCausalLM</text>
+<path d="M 365 265 V 311" stroke="#3568B0" stroke-width="2.5" fill="none" marker-end="url(#arrow)"/>
+<rect x="120" y="316" width="490" height="78" rx="12" fill="#EDF4FC" stroke="#B9CEE7" stroke-width="1.5"/>
+<text x="365" y="347" font-size="22" fill="#172C45" font-weight="600" text-anchor="middle">Token Embedding · 查表得到向量</text>
+<text x="365" y="378" font-size="21" fill="#3568B0" font-weight="400" text-anchor="middle">W_E  [151936, 2048]</text>
+<path d="M 365 395 V 423" stroke="#3568B0" stroke-width="2.5" fill="none" marker-end="url(#arrow)"/>
+<text x="388" y="416" font-size="18" fill="#52657B" font-weight="400" text-anchor="start">[B, T, 2048]</text>
+<rect x="110" y="428" width="510" height="170" rx="13" fill="#EAF2FD" stroke="#ADC6E7" stroke-width="1.5"/>
+<text x="365" y="460" font-size="24" fill="#172C45" font-weight="650" text-anchor="middle">28 个 Decoder blocks</text>
+<rect x="156" y="479" width="158" height="44" rx="9" fill="#FFFFFF" stroke="#B9CEE7" stroke-width="1.5"/>
+<rect x="416" y="479" width="158" height="44" rx="9" fill="#FFFFFF" stroke="#B9CEE7" stroke-width="1.5"/>
+<text x="235" y="508" font-size="20" fill="#172C45" font-weight="500" text-anchor="middle">Decoder 0</text>
+<text x="495" y="508" font-size="20" fill="#172C45" font-weight="500" text-anchor="middle">Decoder 27</text>
+<text x="365" y="511" font-size="30" fill="#3568B0" font-weight="600" text-anchor="middle">···</text>
+<text x="365" y="552" font-size="21" fill="#3568B0" font-weight="400" text-anchor="middle">同一结构 · 各层参数不同</text>
+<text x="365" y="582" font-size="20" fill="#52657B" font-weight="400" text-anchor="middle">每层 2048 → 2048</text>
+<path d="M 365 599 V 627" stroke="#3568B0" stroke-width="2.5" fill="none" marker-end="url(#arrow)"/>
+<rect x="140" y="632" width="450" height="72" rx="12" fill="#EDF4FC" stroke="#B9CEE7" stroke-width="1.5"/>
+<text x="365" y="661" font-size="23" fill="#172C45" font-weight="600" text-anchor="middle">最终 RMSNorm</text>
+<text x="365" y="690" font-size="20" fill="#3568B0" font-weight="400" text-anchor="middle">weight  [2048]</text>
+<path d="M 365 705 V 731" stroke="#3568B0" stroke-width="2.5" fill="none" marker-end="url(#arrow)"/>
+<text x="389" y="725" font-size="18" fill="#52657B" font-weight="400" text-anchor="start">[B, T, 2048]</text>
+<rect x="140" y="736" width="450" height="64" rx="12" fill="#FFFFFF" stroke="#B9CEE7" stroke-width="1.5"/>
+<text x="365" y="763" font-size="21" fill="#172C45" font-weight="500" text-anchor="middle">生成时取最后有效位置</text>
+<text x="365" y="789" font-size="20" fill="#3568B0" font-weight="400" text-anchor="middle">h  [B, 2048]</text>
+<path d="M 365 801 V 827" stroke="#3568B0" stroke-width="2.5" fill="none" marker-end="url(#arrow)"/>
+<rect x="120" y="832" width="490" height="78" rx="12" fill="#EDF4FC" stroke="#B9CEE7" stroke-width="1.5"/>
+<text x="365" y="861" font-size="22" fill="#172C45" font-weight="600" text-anchor="middle">词表投影 · lm_head</text>
+<text x="365" y="891" font-size="21" fill="#3568B0" font-weight="400" text-anchor="middle">logits = h W_Eᵀ  →  [B, 151936]</text>
+<path d="M 610 355 H 685 V 871 H 610" fill="none" stroke="#168476" stroke-width="2.5" stroke-dasharray="7 6" stroke-linejoin="round"/>
+<circle cx="610" cy="355" r="4" fill="#168476"/><circle cx="610" cy="871" r="4" fill="#168476"/>
+<path d="M 685 768 H 710" fill="none" stroke="#168476" stroke-width="2.5" stroke-dasharray="7 6"/>
+<rect x="714" y="277" width="214" height="239" rx="12" fill="#FFFFFF" stroke="#D6E0EA" stroke-width="1.5"/>
+<text x="732" y="309" font-size="21" fill="#172C45" font-weight="600" text-anchor="start">实际模型尺寸</text>
+<text x="732" y="348" font-size="18" fill="#52657B" font-weight="400" text-anchor="start">词表 151936</text>
+<text x="732" y="382" font-size="18" fill="#52657B" font-weight="400" text-anchor="start">隐藏维度 2048</text>
+<text x="732" y="416" font-size="18" fill="#52657B" font-weight="400" text-anchor="start">16 个 Q / 8 个 KV 头</text>
+<text x="732" y="450" font-size="18" fill="#52657B" font-weight="400" text-anchor="start">每头维度 128</text>
+<text x="732" y="484" font-size="18" fill="#52657B" font-weight="400" text-anchor="start">FFN 中间维度 6144</text>
+<rect x="714" y="542" width="214" height="113" rx="12" fill="#F4F8FD" stroke="#D6E0EA" stroke-width="1.5"/>
+<text x="821" y="573" font-size="20" fill="#172C45" font-weight="600" text-anchor="middle">RoPE 位于每一层</text>
+<text x="821" y="604" font-size="18" fill="#3568B0" font-weight="400" text-anchor="middle">只作用于 Q / K</text>
+<text x="821" y="634" font-size="18" fill="#52657B" font-weight="400" text-anchor="middle">见 Decoder block 详图</text>
+<rect x="714" y="704" width="214" height="132" rx="12" fill="#F0FAF7" stroke="#A8D6CA" stroke-width="1.5"/>
+<text x="821" y="734" font-size="20" fill="#12665D" font-weight="600" text-anchor="middle">共享同一个 W_E</text>
+<text x="821" y="763" font-size="18" fill="#12665D" font-weight="400" text-anchor="middle">虚线表示权重绑定</text>
+<text x="821" y="793" font-size="18" fill="#12665D" font-weight="400" text-anchor="middle">tie_word_embeddings</text>
+<text x="821" y="820" font-size="18" fill="#12665D" font-weight="400" text-anchor="middle">= true</text>
+<rect x="714" y="860" width="214" height="74" rx="12" fill="#FFFFFF" stroke="#D6E0EA" stroke-width="1.5"/>
+<text x="821" y="890" font-size="18" fill="#52657B" text-anchor="middle">独立参数 · 约 1.72B</text>
+<text x="821" y="919" font-size="20" fill="#172C45" font-weight="600" text-anchor="middle">1,720,574,976</text>
+<path d="M 365 911 V 957" stroke="#3568B0" stroke-width="2.5" fill="none" marker-end="url(#arrow)"/>
+<rect x="120" y="962" width="490" height="78" rx="12" fill="#F4F7FA" stroke="#D6E0EA" stroke-width="1.5"/>
+<text x="365" y="993" font-size="21" fill="#172C45" font-weight="600" text-anchor="middle">采样 → next token ID → 解码</text>
+<text x="365" y="1023" font-size="19" fill="#52657B" font-weight="400" text-anchor="middle">输出下一个 token 对应的文本</text>
+<text x="718" y="990" font-size="19" fill="#52657B" font-weight="600" text-anchor="start">模型外</text>
+<text x="718" y="1018" font-size="19" fill="#52657B" font-weight="400" text-anchor="start">采样与解码</text>
+<path d="M 32 1058 H 928" stroke="#D6E0EA" stroke-width="1"/>
+<text x="32" y="1085" font-size="18" fill="#52657B" font-weight="400" text-anchor="start">B：批次大小     T：本次处理的 token 数；每条序列取一个预测位置</text>
+</g></svg>

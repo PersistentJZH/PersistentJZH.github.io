@@ -1,0 +1,76 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="1100" viewBox="0 0 960 1100" role="img" aria-labelledby="title desc">
+<title id="title">Qwen3-1.7B · Model overview</title><desc id="desc">Actual Qwen3-1.7B model structure. Outside the model, the chat template and tokenizer turn text into token IDs of shape B by T. Token embedding uses W_E of shape 151936 by 2048 to produce B by T by 2048 representations. Twenty-eight decoder blocks share the same structure but have different parameters, preserving hidden size 2048. After final RMSNorm, select the last valid position to obtain h of shape B by 2048. The language model head uses the same W_E transposed to compute logits of shape B by 151936. Sampling and decoding outside the model produce the next token. A teal dashed line denotes shared weights, not additional data flow. RoPE acts on Q and K inside each decoder layer. B is the batch size and T is the number of tokens processed in this call.</desc>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M 1 1 L 9 5 L 1 9 Z" fill="#3568B0"/></marker></defs>
+<g font-family="-apple-system,BlinkMacSystemFont,Segoe UI,PingFang SC,Microsoft YaHei,Arial,sans-serif">
+<rect x="1" y="1" width="958" height="1098" rx="18" fill="#FFFFFF" stroke="#D6E0EA" stroke-width="1.5"/>
+<text x="32" y="47" font-size="28" fill="#172C45" font-weight="650" text-anchor="start">Qwen3-1.7B · Model overview</text>
+<text x="32" y="78" font-size="20" fill="#52657B" font-weight="400" text-anchor="start">Logical tensor layout · actual dimensions · generating one token</text>
+<rect x="120" y="106" width="490" height="80" rx="12" fill="#F4F7FA" stroke="#D6E0EA" stroke-width="1.5"/>
+<text x="365" y="137" font-size="23" fill="#172C45" font-weight="600" text-anchor="middle">Text / chat messages</text>
+<text x="365" y="166" font-size="21" fill="#52657B" font-weight="400" text-anchor="middle">Chat template + tokenizer</text>
+<text x="718" y="134" font-size="19" fill="#52657B" font-weight="600" text-anchor="start">Outside the model</text>
+<text x="718" y="161" font-size="19" fill="#52657B" font-weight="400" text-anchor="start">Text processing</text>
+<path d="M 365 188 V 214" stroke="#3568B0" stroke-width="2.5" fill="none" marker-end="url(#arrow)"/>
+<rect x="250" y="220" width="230" height="44" rx="10" fill="#FFFFFF" stroke="#B9CEE7" stroke-width="1.5"/>
+<text x="365" y="249" font-size="21" fill="#172C45" font-weight="500" text-anchor="middle">Token IDs  [B, T]</text>
+<rect x="72" y="277" width="590" height="657" rx="16" fill="#F8FAFD" stroke="#C8D7E8" stroke-width="1.5"/>
+<text x="92" y="302" font-size="18" fill="#3568B0" font-weight="600" text-anchor="start">Qwen3ForCausalLM</text>
+<path d="M 365 265 V 311" stroke="#3568B0" stroke-width="2.5" fill="none" marker-end="url(#arrow)"/>
+<rect x="120" y="316" width="490" height="78" rx="12" fill="#EDF4FC" stroke="#B9CEE7" stroke-width="1.5"/>
+<text x="365" y="347" font-size="22" fill="#172C45" font-weight="600" text-anchor="middle">Token Embedding · vector lookup</text>
+<text x="365" y="378" font-size="21" fill="#3568B0" font-weight="400" text-anchor="middle">W_E  [151936, 2048]</text>
+<path d="M 365 395 V 423" stroke="#3568B0" stroke-width="2.5" fill="none" marker-end="url(#arrow)"/>
+<text x="388" y="416" font-size="18" fill="#52657B" font-weight="400" text-anchor="start">[B, T, 2048]</text>
+<rect x="110" y="428" width="510" height="170" rx="13" fill="#EAF2FD" stroke="#ADC6E7" stroke-width="1.5"/>
+<text x="365" y="460" font-size="24" fill="#172C45" font-weight="650" text-anchor="middle">28 Decoder blocks</text>
+<rect x="156" y="479" width="158" height="44" rx="9" fill="#FFFFFF" stroke="#B9CEE7" stroke-width="1.5"/>
+<rect x="416" y="479" width="158" height="44" rx="9" fill="#FFFFFF" stroke="#B9CEE7" stroke-width="1.5"/>
+<text x="235" y="508" font-size="20" fill="#172C45" font-weight="500" text-anchor="middle">Decoder 0</text>
+<text x="495" y="508" font-size="20" fill="#172C45" font-weight="500" text-anchor="middle">Decoder 27</text>
+<text x="365" y="511" font-size="30" fill="#3568B0" font-weight="600" text-anchor="middle">···</text>
+<text x="365" y="552" font-size="21" fill="#3568B0" font-weight="400" text-anchor="middle">Same structure · different parameters</text>
+<text x="365" y="582" font-size="20" fill="#52657B" font-weight="400" text-anchor="middle">Each layer: 2048 → 2048</text>
+<path d="M 365 599 V 627" stroke="#3568B0" stroke-width="2.5" fill="none" marker-end="url(#arrow)"/>
+<rect x="140" y="632" width="450" height="72" rx="12" fill="#EDF4FC" stroke="#B9CEE7" stroke-width="1.5"/>
+<text x="365" y="661" font-size="23" fill="#172C45" font-weight="600" text-anchor="middle">Final RMSNorm</text>
+<text x="365" y="690" font-size="20" fill="#3568B0" font-weight="400" text-anchor="middle">weight  [2048]</text>
+<path d="M 365 705 V 731" stroke="#3568B0" stroke-width="2.5" fill="none" marker-end="url(#arrow)"/>
+<text x="389" y="725" font-size="18" fill="#52657B" font-weight="400" text-anchor="start">[B, T, 2048]</text>
+<rect x="140" y="736" width="450" height="64" rx="12" fill="#FFFFFF" stroke="#B9CEE7" stroke-width="1.5"/>
+<text x="365" y="763" font-size="21" fill="#172C45" font-weight="500" text-anchor="middle">Select the last valid position</text>
+<text x="365" y="789" font-size="20" fill="#3568B0" font-weight="400" text-anchor="middle">h  [B, 2048]</text>
+<path d="M 365 801 V 827" stroke="#3568B0" stroke-width="2.5" fill="none" marker-end="url(#arrow)"/>
+<rect x="120" y="832" width="490" height="78" rx="12" fill="#EDF4FC" stroke="#B9CEE7" stroke-width="1.5"/>
+<text x="365" y="861" font-size="22" fill="#172C45" font-weight="600" text-anchor="middle">Vocabulary projection · lm_head</text>
+<text x="365" y="891" font-size="21" fill="#3568B0" font-weight="400" text-anchor="middle">logits = h W_Eᵀ  →  [B, 151936]</text>
+<path d="M 610 355 H 685 V 871 H 610" fill="none" stroke="#168476" stroke-width="2.5" stroke-dasharray="7 6" stroke-linejoin="round"/>
+<circle cx="610" cy="355" r="4" fill="#168476"/><circle cx="610" cy="871" r="4" fill="#168476"/>
+<path d="M 685 768 H 710" fill="none" stroke="#168476" stroke-width="2.5" stroke-dasharray="7 6"/>
+<rect x="714" y="277" width="214" height="239" rx="12" fill="#FFFFFF" stroke="#D6E0EA" stroke-width="1.5"/>
+<text x="732" y="309" font-size="21" fill="#172C45" font-weight="600" text-anchor="start">Model dimensions</text>
+<text x="732" y="348" font-size="18" fill="#52657B" font-weight="400" text-anchor="start">Vocabulary 151936</text>
+<text x="732" y="382" font-size="18" fill="#52657B" font-weight="400" text-anchor="start">Hidden size 2048</text>
+<text x="732" y="416" font-size="18" fill="#52657B" font-weight="400" text-anchor="start">16 Q / 8 KV heads</text>
+<text x="732" y="450" font-size="18" fill="#52657B" font-weight="400" text-anchor="start">Head dimension 128</text>
+<text x="732" y="484" font-size="18" fill="#52657B" font-weight="400" text-anchor="start">FFN width 6144</text>
+<rect x="714" y="542" width="214" height="113" rx="12" fill="#F4F8FD" stroke="#D6E0EA" stroke-width="1.5"/>
+<text x="821" y="573" font-size="20" fill="#172C45" font-weight="600" text-anchor="middle">RoPE in every layer</text>
+<text x="821" y="604" font-size="18" fill="#3568B0" font-weight="400" text-anchor="middle">Applied to Q / K only</text>
+<text x="821" y="634" font-size="18" fill="#52657B" font-weight="400" text-anchor="middle">See the block detail</text>
+<rect x="714" y="704" width="214" height="132" rx="12" fill="#F0FAF7" stroke="#A8D6CA" stroke-width="1.5"/>
+<text x="821" y="734" font-size="20" fill="#12665D" font-weight="600" text-anchor="middle">Share the same W_E</text>
+<text x="821" y="763" font-size="18" fill="#12665D" font-weight="400" text-anchor="middle">Dashed = tied weights</text>
+<text x="821" y="793" font-size="18" fill="#12665D" font-weight="400" text-anchor="middle">tie_word_embeddings</text>
+<text x="821" y="820" font-size="18" fill="#12665D" font-weight="400" text-anchor="middle">= true</text>
+<rect x="714" y="860" width="214" height="74" rx="12" fill="#FFFFFF" stroke="#D6E0EA" stroke-width="1.5"/>
+<text x="821" y="890" font-size="18" fill="#52657B" text-anchor="middle">Unique params · 1.72B</text>
+<text x="821" y="919" font-size="20" fill="#172C45" font-weight="600" text-anchor="middle">1,720,574,976</text>
+<path d="M 365 911 V 957" stroke="#3568B0" stroke-width="2.5" fill="none" marker-end="url(#arrow)"/>
+<rect x="120" y="962" width="490" height="78" rx="12" fill="#F4F7FA" stroke="#D6E0EA" stroke-width="1.5"/>
+<text x="365" y="993" font-size="21" fill="#172C45" font-weight="600" text-anchor="middle">Sample → next token ID → decode</text>
+<text x="365" y="1023" font-size="19" fill="#52657B" font-weight="400" text-anchor="middle">Output text for the next token</text>
+<text x="718" y="990" font-size="19" fill="#52657B" font-weight="600" text-anchor="start">Outside the model</text>
+<text x="718" y="1018" font-size="19" fill="#52657B" font-weight="400" text-anchor="start">Sampling + decoding</text>
+<path d="M 32 1058 H 928" stroke="#D6E0EA" stroke-width="1"/>
+<text x="32" y="1085" font-size="18" fill="#52657B" font-weight="400" text-anchor="start">B: batch size     T: tokens processed in this call; one prediction position per sequence</text>
+</g></svg>

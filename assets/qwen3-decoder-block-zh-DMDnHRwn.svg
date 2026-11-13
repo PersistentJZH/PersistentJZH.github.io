@@ -1,0 +1,116 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1100" height="1810" viewBox="0 0 1100 1810" role="img" aria-labelledby="title desc">
+<title id="title">Qwen3-1.7B：展开一个 Decoder block</title><desc id="desc">第 i 层使用 Pre-RMSNorm。输入先归一化，经过 Q/K/V 投影；Q/K 各做逐头 RMSNorm 和 RoPE，V 直接进入因果 GQA。注意力输出投影后与输入残差相加。再经 RMSNorm、SiLU gate 与 up 的逐元素乘积、down 投影和第二次残差相加。隐藏维度2048，16个Q头、8个KV头，每头128维，MLP中间维度6144。</desc>
+<defs>
+<marker id="blueArrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M 1 1 L 9 5 L 1 9 Z" fill="#3568B0"/></marker>
+<marker id="tealArrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M 1 1 L 9 5 L 1 9 Z" fill="#168476"/></marker>
+<marker id="amberArrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M 1 1 L 9 5 L 1 9 Z" fill="#B77920"/></marker>
+</defs><g font-family="-apple-system,BlinkMacSystemFont,Segoe UI,PingFang SC,Microsoft YaHei,Arial,sans-serif">
+<rect x="1" y="1" width="1098" height="1808" rx="20" fill="#FFFFFF" stroke="#D6E0EA" stroke-width="1.6"/>
+<text x="32" y="45" font-size="30" fill="#172C45" font-weight="650" text-anchor="start">Qwen3-1.7B：展开一个 Decoder block</text>
+<text x="32" y="76" font-size="18" fill="#52657B" font-weight="400" text-anchor="start">model.layers.i  ·  i = 0 … 27  ·  28 层结构相同，参数各自独立</text>
+<rect x="330" y="102" width="440" height="64" rx="12" fill="#F4F7FA" stroke="#B9CEE7" stroke-width="1.6"/>
+<text x="550.0" y="131" font-size="22" fill="#172C45" font-weight="600" text-anchor="middle">输入 x</text>
+<text x="550.0" y="157" font-size="18" fill="#52657B" font-weight="400" text-anchor="middle">[B, T, 2048]</text>
+<path d="M 550 167 V 214" fill="none" stroke="#3568B0" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#blueArrow)"/>
+<path d="M 550 188 H 80 V 970 H 526" fill="none" stroke="#B77920" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#amberArrow)"/>
+<circle cx="550" cy="188" r="4" fill="#B77920"/>
+<text x="96" y="920" font-size="20" fill="#B77920" font-weight="600" text-anchor="start">原输入 x</text>
+<text x="96" y="946" font-size="18" fill="#B77920" font-weight="400" text-anchor="start">残差旁路</text>
+<rect x="330" y="215" width="440" height="74" rx="12" fill="#EDF4FC" stroke="#B9CEE7" stroke-width="1.6"/>
+<text x="550.0" y="244" font-size="22" fill="#172C45" font-weight="600" text-anchor="middle">RMSNorm</text>
+<text x="550.0" y="270" font-size="18" fill="#52657B" font-weight="400" text-anchor="middle">input_layernorm · γ [2048]</text>
+<path d="M 550 290 V 310" fill="none" stroke="#3568B0" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M 550 310 H 280 V 329" fill="none" stroke="#3568B0" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#blueArrow)"/>
+<path d="M 550 310 V 329" fill="none" stroke="#3568B0" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#blueArrow)"/>
+<path d="M 550 310 H 820 V 329" fill="none" stroke="#3568B0" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#blueArrow)"/>
+<rect x="160" y="330" width="240" height="102" rx="12" fill="#EDF4FC" stroke="#B9CEE7" stroke-width="1.6"/>
+<text x="280.0" y="359" font-size="22" fill="#172C45" font-weight="600" text-anchor="middle">Q · q_proj</text>
+<text x="280.0" y="386" font-size="18" fill="#52657B" font-weight="400" text-anchor="middle">W [2048, 2048]</text>
+<text x="280.0" y="413" font-size="18" fill="#3568B0" font-weight="500" text-anchor="middle">[B, T, 16, 128]</text>
+<rect x="430" y="330" width="240" height="102" rx="12" fill="#EDF4FC" stroke="#B9CEE7" stroke-width="1.6"/>
+<text x="550.0" y="359" font-size="22" fill="#172C45" font-weight="600" text-anchor="middle">K · k_proj</text>
+<text x="550.0" y="386" font-size="18" fill="#52657B" font-weight="400" text-anchor="middle">W [1024, 2048]</text>
+<text x="550.0" y="413" font-size="18" fill="#3568B0" font-weight="500" text-anchor="middle">[B, T, 8, 128]</text>
+<rect x="700" y="330" width="240" height="102" rx="12" fill="#EDF4FC" stroke="#B9CEE7" stroke-width="1.6"/>
+<text x="820.0" y="359" font-size="22" fill="#172C45" font-weight="600" text-anchor="middle">V · v_proj</text>
+<text x="820.0" y="386" font-size="18" fill="#52657B" font-weight="400" text-anchor="middle">W [1024, 2048]</text>
+<text x="820.0" y="413" font-size="18" fill="#3568B0" font-weight="500" text-anchor="middle">[B, T, 8, 128]</text>
+<path d="M 280 433 V 459" fill="none" stroke="#3568B0" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#blueArrow)"/>
+<path d="M 550 433 V 459" fill="none" stroke="#3568B0" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#blueArrow)"/>
+<rect x="160" y="460" width="240" height="70" rx="12" fill="#EDF4FC" stroke="#B9CEE7" stroke-width="1.6"/>
+<text x="280.0" y="489" font-size="22" fill="#172C45" font-weight="600" text-anchor="middle">Q RMSNorm</text>
+<text x="280.0" y="515" font-size="18" fill="#52657B" font-weight="400" text-anchor="middle">q_norm · γ [128]</text>
+<rect x="430" y="460" width="240" height="70" rx="12" fill="#EDF4FC" stroke="#B9CEE7" stroke-width="1.6"/>
+<text x="550.0" y="489" font-size="22" fill="#172C45" font-weight="600" text-anchor="middle">K RMSNorm</text>
+<text x="550.0" y="515" font-size="18" fill="#52657B" font-weight="400" text-anchor="middle">k_norm · γ [128]</text>
+<path d="M 280 531 V 564" fill="none" stroke="#3568B0" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#blueArrow)"/>
+<path d="M 550 531 V 564" fill="none" stroke="#3568B0" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#blueArrow)"/>
+<rect x="160" y="565" width="240" height="70" rx="12" fill="#EDF4FC" stroke="#B9CEE7" stroke-width="1.6"/>
+<text x="280.0" y="594" font-size="22" fill="#172C45" font-weight="600" text-anchor="middle">RoPE · Q</text>
+<text x="280.0" y="620" font-size="18" fill="#52657B" font-weight="400" text-anchor="middle">θ = 1,000,000</text>
+<rect x="430" y="565" width="240" height="70" rx="12" fill="#EDF4FC" stroke="#B9CEE7" stroke-width="1.6"/>
+<text x="550.0" y="594" font-size="22" fill="#172C45" font-weight="600" text-anchor="middle">RoPE · K</text>
+<text x="550.0" y="620" font-size="18" fill="#52657B" font-weight="400" text-anchor="middle">θ = 1,000,000</text>
+<path d="M 280 636 V 699" fill="none" stroke="#3568B0" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#blueArrow)"/>
+<path d="M 550 636 V 699" fill="none" stroke="#3568B0" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#blueArrow)"/>
+<path d="M 820 433 V 699" fill="none" stroke="#3568B0" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#blueArrow)"/>
+<text x="842" y="527" font-size="18" fill="#52657B" font-weight="500" text-anchor="start">V 直接通过</text>
+<text x="842" y="557" font-size="18" fill="#52657B" font-weight="400" text-anchor="start">不做 Q/K Norm</text>
+<text x="842" y="584" font-size="18" fill="#52657B" font-weight="400" text-anchor="start">不做 RoPE</text>
+<rect x="160" y="700" width="780" height="110" rx="12" fill="#EDF4FC" stroke="#B9CEE7" stroke-width="1.6"/>
+<text x="550.0" y="729" font-size="22" fill="#172C45" font-weight="600" text-anchor="middle">因果 GQA 注意力</text>
+<text x="550.0" y="756" font-size="18" fill="#52657B" font-weight="400" text-anchor="middle">16 个 Q 头；每 2 个 Q 头共享一组 K/V</text>
+<text x="550.0" y="783" font-size="18" fill="#3568B0" font-weight="500" text-anchor="middle">[B, T, 16, 128]  →  拼接  →  [B, T, 2048]</text>
+<path d="M 550 811 V 849" fill="none" stroke="#3568B0" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#blueArrow)"/>
+<rect x="330" y="850" width="440" height="76" rx="12" fill="#EDF4FC" stroke="#B9CEE7" stroke-width="1.6"/>
+<text x="550.0" y="879" font-size="22" fill="#172C45" font-weight="600" text-anchor="middle">输出投影 · o_proj</text>
+<text x="550.0" y="905" font-size="18" fill="#52657B" font-weight="400" text-anchor="middle">W [2048, 2048]</text>
+<path d="M 550 927 V 946" fill="none" stroke="#3568B0" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#blueArrow)"/>
+<circle cx="550" cy="970" r="23" fill="#FFFAEF" stroke="#B77920" stroke-width="2"/>
+<text x="550" y="979" font-size="29" fill="#B77920" font-weight="600" text-anchor="middle">+</text>
+<text x="600" y="960" font-size="19" fill="#B77920" font-weight="500" text-anchor="start">第一次残差相加</text>
+<text x="600" y="987" font-size="18" fill="#52657B" font-weight="400" text-anchor="start">u = x + Attention(RMSNorm(x))</text>
+<path d="M 550 994 V 1034" fill="none" stroke="#3568B0" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#blueArrow)"/>
+<path d="M 550 1012 H 1020 V 1580 H 574" fill="none" stroke="#B77920" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#amberArrow)"/>
+<circle cx="550" cy="1012" r="4" fill="#B77920"/>
+<text x="1004" y="1528" font-size="20" fill="#B77920" font-weight="600" text-anchor="end">保留 u</text>
+<text x="1004" y="1555" font-size="18" fill="#B77920" font-weight="400" text-anchor="end">残差旁路</text>
+<rect x="330" y="1035" width="440" height="74" rx="12" fill="#EAF7F3" stroke="#ABD8CD" stroke-width="1.6"/>
+<text x="550.0" y="1064" font-size="22" fill="#172C45" font-weight="600" text-anchor="middle">RMSNorm</text>
+<text x="550.0" y="1090" font-size="18" fill="#52657B" font-weight="400" text-anchor="middle">post_attention_layernorm · γ [2048]</text>
+<path d="M 550 1110 V 1132" fill="none" stroke="#168476" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M 550 1132 H 350 V 1159" fill="none" stroke="#168476" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#tealArrow)"/>
+<path d="M 550 1132 H 750 V 1159" fill="none" stroke="#168476" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#tealArrow)"/>
+<rect x="200" y="1160" width="300" height="102" rx="12" fill="#EAF7F3" stroke="#ABD8CD" stroke-width="1.6"/>
+<text x="350.0" y="1189" font-size="22" fill="#172C45" font-weight="600" text-anchor="middle">gate_proj</text>
+<text x="350.0" y="1216" font-size="18" fill="#52657B" font-weight="400" text-anchor="middle">W [6144, 2048]</text>
+<text x="350.0" y="1243" font-size="18" fill="#168476" font-weight="500" text-anchor="middle">[B, T, 6144]</text>
+<rect x="600" y="1160" width="300" height="102" rx="12" fill="#EAF7F3" stroke="#ABD8CD" stroke-width="1.6"/>
+<text x="750.0" y="1189" font-size="22" fill="#172C45" font-weight="600" text-anchor="middle">up_proj</text>
+<text x="750.0" y="1216" font-size="18" fill="#52657B" font-weight="400" text-anchor="middle">W [6144, 2048]</text>
+<text x="750.0" y="1243" font-size="18" fill="#168476" font-weight="500" text-anchor="middle">[B, T, 6144]</text>
+<path d="M 350 1263 V 1289" fill="none" stroke="#168476" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#tealArrow)"/>
+<rect x="200" y="1290" width="300" height="58" rx="12" fill="#EAF7F3" stroke="#ABD8CD" stroke-width="1.6"/>
+<text x="350" y="1327" font-size="23" fill="#172C45" font-weight="600" text-anchor="middle">SiLU</text>
+<path d="M 350 1349 V 1385 H 526" fill="none" stroke="#168476" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#tealArrow)"/>
+<path d="M 750 1263 V 1385 H 574" fill="none" stroke="#168476" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#tealArrow)"/>
+<circle cx="550" cy="1385" r="23" fill="#FFFAEF" stroke="#168476" stroke-width="2"/>
+<text x="550" y="1394" font-size="29" fill="#168476" font-weight="600" text-anchor="middle">⊙</text>
+<text x="595" y="1420" font-size="18" fill="#168476" font-weight="500" text-anchor="start">逐元素相乘 · [B, T, 6144]</text>
+<path d="M 550 1409 V 1444" fill="none" stroke="#168476" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#tealArrow)"/>
+<rect x="330" y="1445" width="440" height="90" rx="12" fill="#EAF7F3" stroke="#ABD8CD" stroke-width="1.6"/>
+<text x="550.0" y="1474" font-size="22" fill="#172C45" font-weight="600" text-anchor="middle">down_proj</text>
+<text x="550.0" y="1501" font-size="18" fill="#52657B" font-weight="400" text-anchor="middle">W [2048, 6144]</text>
+<text x="550.0" y="1528" font-size="18" fill="#168476" font-weight="500" text-anchor="middle">[B, T, 2048]</text>
+<path d="M 550 1536 V 1556" fill="none" stroke="#168476" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#tealArrow)"/>
+<circle cx="550" cy="1580" r="23" fill="#FFFAEF" stroke="#B77920" stroke-width="2"/>
+<text x="550" y="1589" font-size="29" fill="#B77920" font-weight="600" text-anchor="middle">+</text>
+<text x="600" y="1617" font-size="17" fill="#B77920" font-weight="500" text-anchor="start">第二次残差相加 · y = u + MLP(RMSNorm(u))</text>
+<path d="M 550 1604 V 1639" fill="none" stroke="#168476" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#tealArrow)"/>
+<rect x="330" y="1640" width="440" height="68" rx="12" fill="#F4F7FA" stroke="#B9CEE7" stroke-width="1.6"/>
+<text x="550.0" y="1669" font-size="22" fill="#172C45" font-weight="600" text-anchor="middle">输出 y → 下一层</text>
+<text x="550.0" y="1695" font-size="18" fill="#52657B" font-weight="400" text-anchor="middle">[B, T, 2048]</text>
+<path d="M 32 1733 H 1068" fill="none" stroke="#C8D7E8" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/>
+<text x="32" y="1763" font-size="18" fill="#52657B" font-weight="400" text-anchor="start">B：批大小；T：序列长度。形状为逻辑布局，未展开缓存和并行。</text>
+<text x="32" y="1790" font-size="18" fill="#52657B" font-weight="400" text-anchor="start">W 按 [输出维度, 输入维度] 标注；γ 是归一化缩放参数。</text>
+</g></svg>

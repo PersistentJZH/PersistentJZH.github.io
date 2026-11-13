@@ -1,0 +1,97 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="560" height="548.8" viewBox="0 0 800 784" role="img" aria-labelledby="title desc">
+<title id="title">C 从 Prefill 到 Decode，何时开始？</title><desc id="desc">A、B 在时间线之前已各处理两个提示词位置完成 Prefill，并输出首个 token。C 在轮1结束后到达。固定批：轮1 A/B Decode，B结束；轮2 A Decode并结束，C等待；轮3 C Prefill输出第1个token；轮4 C Decode输出第2个token。连续批：轮2 A Decode与C Prefill同轮，C输出第1个token；轮3 C Decode输出第2个token；轮4继续Decode输出第3个token。每格显示阶段及输出token序号。调度轮不是等长时间单位。</desc>
+<g font-family="-apple-system,BlinkMacSystemFont,Segoe UI,PingFang SC,Microsoft YaHei,Arial,sans-serif">
+<rect x="1" y="1" width="798" height="782" rx="16" fill="#FFFFFF" stroke="#D7E0EA" stroke-width="1.2"/>
+<text x="28" y="40" font-size="27" fill="#182A43" font-weight="650" text-anchor="start">C 从 Prefill 到 Decode，何时开始？</text>
+<rect x="28" y="59" width="744" height="70" rx="10" fill="#F4F7FB" stroke="#D7E0EA" stroke-width="1.2"/>
+<text x="45" y="86" font-size="21" fill="#182A43" font-weight="500" text-anchor="start">共同起点：A、B 各已 Prefill 2 个输入位置</text>
+<text x="45" y="114" font-size="20" fill="#506277" font-weight="400" text-anchor="start">各自已输出首个 token；下面从调度轮 1 开始。</text>
+<rect x="28" y="145" width="744" height="248" rx="12" fill="#FFFFFF" stroke="#D7E0EA" stroke-width="1.2"/>
+<text x="44" y="175" font-size="23" fill="#182A43" font-weight="600" text-anchor="start">固定批：等 A、B 都结束才接入 C</text>
+<text x="215.0" y="210" font-size="20" fill="#506277" font-weight="600" text-anchor="middle">轮 1</text>
+<text x="373.0" y="210" font-size="20" fill="#506277" font-weight="600" text-anchor="middle">轮 2</text>
+<text x="531.0" y="210" font-size="20" fill="#506277" font-weight="600" text-anchor="middle">轮 3</text>
+<text x="689.0" y="210" font-size="20" fill="#506277" font-weight="600" text-anchor="middle">轮 4</text>
+<text x="294" y="198" font-size="15" fill="#8A5710" font-weight="500" text-anchor="middle">C 到达</text>
+<path d="M 294 215 L 294 382" fill="none" stroke="#B87916" stroke-width="1.3" stroke-dasharray="4 4"/>
+<text x="76" y="255" font-size="25" fill="#182A43" font-weight="650" text-anchor="middle">A</text>
+<text x="76" y="311" font-size="25" fill="#182A43" font-weight="650" text-anchor="middle">B</text>
+<text x="76" y="367" font-size="25" fill="#182A43" font-weight="650" text-anchor="middle">C</text>
+<rect x="140" y="223" width="150" height="50" rx="7" fill="#E8F0FF" stroke="#356BC3" stroke-width="1.2"/>
+<text x="215.0" y="245" font-size="21" fill="#194C96" font-weight="600" text-anchor="middle">Decode</text>
+<text x="215.0" y="266" font-size="18" fill="#194C96" font-weight="400" text-anchor="middle">第 2 个</text>
+<rect x="298" y="223" width="150" height="50" rx="7" fill="#E8F0FF" stroke="#356BC3" stroke-width="1.2"/>
+<text x="373.0" y="245" font-size="21" fill="#194C96" font-weight="600" text-anchor="middle">Decode</text>
+<text x="373.0" y="266" font-size="18" fill="#194C96" font-weight="400" text-anchor="middle">第 3 个 · 结束</text>
+<rect x="456" y="223" width="150" height="50" rx="7" fill="#F7F9FB" stroke="#C9D3DF" stroke-width="1.2"/>
+<text x="531.0" y="255" font-size="20" fill="#506277" font-weight="400" text-anchor="middle">已结束</text>
+<rect x="614" y="223" width="150" height="50" rx="7" fill="#F7F9FB" stroke="#C9D3DF" stroke-width="1.2"/>
+<text x="689.0" y="255" font-size="20" fill="#506277" font-weight="400" text-anchor="middle">已结束</text>
+<rect x="140" y="279" width="150" height="50" rx="7" fill="#E8F0FF" stroke="#356BC3" stroke-width="1.2"/>
+<text x="215.0" y="301" font-size="21" fill="#194C96" font-weight="600" text-anchor="middle">Decode</text>
+<text x="215.0" y="322" font-size="18" fill="#194C96" font-weight="400" text-anchor="middle">第 2 个 · 结束</text>
+<rect x="298" y="279" width="150" height="50" rx="7" fill="#F7F9FB" stroke="#C9D3DF" stroke-width="1.2"/>
+<text x="373.0" y="311" font-size="20" fill="#506277" font-weight="400" text-anchor="middle">已结束</text>
+<rect x="456" y="279" width="150" height="50" rx="7" fill="#F7F9FB" stroke="#C9D3DF" stroke-width="1.2"/>
+<text x="531.0" y="311" font-size="20" fill="#506277" font-weight="400" text-anchor="middle">已结束</text>
+<rect x="614" y="279" width="150" height="50" rx="7" fill="#F7F9FB" stroke="#C9D3DF" stroke-width="1.2"/>
+<text x="689.0" y="311" font-size="20" fill="#506277" font-weight="400" text-anchor="middle">已结束</text>
+<rect x="140" y="335" width="150" height="50" rx="7" fill="#F7F9FB" stroke="#C9D3DF" stroke-width="1.2"/>
+<text x="215.0" y="367" font-size="20" fill="#506277" font-weight="400" text-anchor="middle">未到达</text>
+<rect x="298" y="335" width="150" height="50" rx="7" fill="#FFF3D8" stroke="#B87916" stroke-width="1.2" stroke-dasharray="5 4"/>
+<text x="373.0" y="357" font-size="21" fill="#8A5710" font-weight="500" text-anchor="middle">等待</text>
+<text x="373.0" y="378" font-size="17" fill="#8A5710" font-weight="400" text-anchor="middle">尚未 Prefill</text>
+<rect x="456" y="335" width="150" height="50" rx="7" fill="#F0E9FF" stroke="#8458BB" stroke-width="1.2"/>
+<text x="531.0" y="357" font-size="21" fill="#68449A" font-weight="600" text-anchor="middle">Prefill</text>
+<text x="531.0" y="378" font-size="18" fill="#68449A" font-weight="400" text-anchor="middle">第 1 个</text>
+<rect x="614" y="335" width="150" height="50" rx="7" fill="#E8F0FF" stroke="#356BC3" stroke-width="1.2"/>
+<text x="689.0" y="357" font-size="21" fill="#194C96" font-weight="600" text-anchor="middle">Decode</text>
+<text x="689.0" y="378" font-size="18" fill="#194C96" font-weight="400" text-anchor="middle">第 2 个</text>
+<rect x="28" y="413" width="744" height="248" rx="12" fill="#FFFFFF" stroke="#D7E0EA" stroke-width="1.2"/>
+<text x="44" y="443" font-size="23" fill="#182A43" font-weight="600" text-anchor="start">连续批：轮 2 就接入 C 的 Prefill</text>
+<rect x="294" y="453" width="158" height="199" rx="10" fill="#F8F7FC" stroke="#D8CBEF" stroke-width="1"/>
+<text x="215.0" y="478" font-size="20" fill="#506277" font-weight="600" text-anchor="middle">轮 1</text>
+<text x="373.0" y="478" font-size="20" fill="#506277" font-weight="600" text-anchor="middle">轮 2</text>
+<text x="531.0" y="478" font-size="20" fill="#506277" font-weight="600" text-anchor="middle">轮 3</text>
+<text x="689.0" y="478" font-size="20" fill="#506277" font-weight="600" text-anchor="middle">轮 4</text>
+<text x="294" y="466" font-size="15" fill="#8A5710" font-weight="500" text-anchor="middle">C 到达</text>
+<path d="M 294 483 L 294 650" fill="none" stroke="#B87916" stroke-width="1.3" stroke-dasharray="4 4"/>
+<text x="76" y="523" font-size="25" fill="#182A43" font-weight="650" text-anchor="middle">A</text>
+<text x="76" y="579" font-size="25" fill="#182A43" font-weight="650" text-anchor="middle">B</text>
+<text x="76" y="635" font-size="25" fill="#182A43" font-weight="650" text-anchor="middle">C</text>
+<rect x="140" y="491" width="150" height="50" rx="7" fill="#E8F0FF" stroke="#356BC3" stroke-width="1.2"/>
+<text x="215.0" y="513" font-size="21" fill="#194C96" font-weight="600" text-anchor="middle">Decode</text>
+<text x="215.0" y="534" font-size="18" fill="#194C96" font-weight="400" text-anchor="middle">第 2 个</text>
+<rect x="298" y="491" width="150" height="50" rx="7" fill="#E8F0FF" stroke="#356BC3" stroke-width="1.2"/>
+<text x="373.0" y="513" font-size="21" fill="#194C96" font-weight="600" text-anchor="middle">Decode</text>
+<text x="373.0" y="534" font-size="18" fill="#194C96" font-weight="400" text-anchor="middle">第 3 个 · 结束</text>
+<rect x="456" y="491" width="150" height="50" rx="7" fill="#F7F9FB" stroke="#C9D3DF" stroke-width="1.2"/>
+<text x="531.0" y="523" font-size="20" fill="#506277" font-weight="400" text-anchor="middle">已结束</text>
+<rect x="614" y="491" width="150" height="50" rx="7" fill="#F7F9FB" stroke="#C9D3DF" stroke-width="1.2"/>
+<text x="689.0" y="523" font-size="20" fill="#506277" font-weight="400" text-anchor="middle">已结束</text>
+<rect x="140" y="547" width="150" height="50" rx="7" fill="#E8F0FF" stroke="#356BC3" stroke-width="1.2"/>
+<text x="215.0" y="569" font-size="21" fill="#194C96" font-weight="600" text-anchor="middle">Decode</text>
+<text x="215.0" y="590" font-size="18" fill="#194C96" font-weight="400" text-anchor="middle">第 2 个 · 结束</text>
+<rect x="298" y="547" width="150" height="50" rx="7" fill="#F7F9FB" stroke="#C9D3DF" stroke-width="1.2"/>
+<text x="373.0" y="579" font-size="20" fill="#506277" font-weight="400" text-anchor="middle">已结束</text>
+<rect x="456" y="547" width="150" height="50" rx="7" fill="#F7F9FB" stroke="#C9D3DF" stroke-width="1.2"/>
+<text x="531.0" y="579" font-size="20" fill="#506277" font-weight="400" text-anchor="middle">已结束</text>
+<rect x="614" y="547" width="150" height="50" rx="7" fill="#F7F9FB" stroke="#C9D3DF" stroke-width="1.2"/>
+<text x="689.0" y="579" font-size="20" fill="#506277" font-weight="400" text-anchor="middle">已结束</text>
+<rect x="140" y="603" width="150" height="50" rx="7" fill="#F7F9FB" stroke="#C9D3DF" stroke-width="1.2"/>
+<text x="215.0" y="635" font-size="20" fill="#506277" font-weight="400" text-anchor="middle">未到达</text>
+<rect x="298" y="603" width="150" height="50" rx="7" fill="#F0E9FF" stroke="#8458BB" stroke-width="1.2"/>
+<text x="373.0" y="625" font-size="21" fill="#68449A" font-weight="600" text-anchor="middle">Prefill</text>
+<text x="373.0" y="646" font-size="18" fill="#68449A" font-weight="400" text-anchor="middle">第 1 个</text>
+<rect x="456" y="603" width="150" height="50" rx="7" fill="#E8F0FF" stroke="#356BC3" stroke-width="1.2"/>
+<text x="531.0" y="625" font-size="21" fill="#194C96" font-weight="600" text-anchor="middle">Decode</text>
+<text x="531.0" y="646" font-size="18" fill="#194C96" font-weight="400" text-anchor="middle">第 2 个</text>
+<rect x="614" y="603" width="150" height="50" rx="7" fill="#E8F0FF" stroke="#356BC3" stroke-width="1.2"/>
+<text x="689.0" y="625" font-size="21" fill="#194C96" font-weight="600" text-anchor="middle">Decode</text>
+<text x="689.0" y="646" font-size="18" fill="#194C96" font-weight="400" text-anchor="middle">第 3 个</text>
+<rect x="28" y="680" width="12" height="12" rx="3" fill="#F0E9FF" stroke="#8458BB" stroke-width="1.2"/>
+<text x="50" y="693" font-size="20" fill="#68449A" font-weight="400" text-anchor="start">Prefill：处理提示词，输出第 1 个 token。</text>
+<rect x="28" y="708" width="12" height="12" rx="3" fill="#E8F0FF" stroke="#356BC3" stroke-width="1.2"/>
+<text x="50" y="721" font-size="20" fill="#194C96" font-weight="400" text-anchor="start">Decode：每轮处理 1 个新位置，再输出 1 个 token。</text>
+<text x="28" y="754" font-size="19" fill="#506277" font-weight="400" text-anchor="start">格内编号表示输出次序；调度轮不代表相同耗时。</text>
+</g></svg>
